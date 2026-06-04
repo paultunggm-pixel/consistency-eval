@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千问小讲堂 · 封面制作 — 完整业务流程分析</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root {
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #2c3e50;
+    --text-secondary: #5a6c7d;
+    --border: #e2e8f0;
+    --accent: #3b82f6;
+    --accent-light: #eff6ff;
+    --orange: #f97316;
+    --orange-light: #fff7ed;
+    --green: #22c55e;
+    --green-light: #f0fdf4;
+    --red: #ef4444;
+    --red-light: #fef2f2;
+    --blue: #3b82f6;
+    --blue-light: #eff6ff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 40px 20px;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%);
+    color: white;
+    padding: 48px 40px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+    text-align: center;
+  }
+  .header h1 { font-size: 2em; margin-bottom: 8px; }
+  .header .meta { opacity: 0.8; font-size: 0.9em; margin-top: 12px; }
+  .header .meta span { margin: 0 12px; }
+
+  /* Sections */
+  .section {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 32px 36px;
+    margin-bottom: 24px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+  }
+  h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent);
+    color: #1e3a5f;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin: 24px 0 12px;
+    color: #334155;
+  }
+  h4 {
+    font-size: 1.05em;
+    margin: 20px 0 10px;
+    color: #475569;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.92em;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid var(--border);
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+  }
+  tr:nth-child(even) { background: #fafbfc; }
+
+  /* Code */
+  code {
+    background: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  }
+  pre {
+    background: #1e293b;
+    color: #e2e8f0;
+    padding: 16px 20px;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 12px 0;
+    font-size: 0.88em;
+    line-height: 1.6;
+  }
+  pre code { background: none; padding: 0; color: inherit; }
+
+  /* Blockquote */
+  blockquote {
+    background: var(--accent-light);
+    border-left: 4px solid var(--accent);
+    padding: 12px 18px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    color: #1e40af;
+  }
+
+  /* Badges */
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 12px; font-size: 0.82em; font-weight: 600; }
+  .badge-orange { background: var(--orange-light); color: #c2410c; }
+  .badge-green { background: var(--green-light); color: #15803d; }
+  .badge-red { background: var(--red-light); color: #b91c1c; }
+  .badge-blue { background: var(--blue-light); color: #1d4ed8; }
+
+  /* Step cards */
+  .step-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 16px 0;
+  }
+  .step-card.orange { border-left: 4px solid var(--orange); background: var(--orange-light); }
+  .step-card.green { border-left: 4px solid var(--green); background: var(--green-light); }
+  .step-card.red { border-left: 4px solid var(--red); background: var(--red-light); }
+  .step-card.blue { border-left: 4px solid var(--blue); background: var(--blue-light); }
+  .step-card h4 { margin-top: 0; }
+
+  /* Flow text */
+  .flow-chain {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 16px;
+    background: #f1f5f9;
+    border-radius: 8px;
+    margin: 16px 0;
+    letter-spacing: 0.05em;
+  }
+
+  /* Mermaid */
+  .mermaid {
+    background: #fafbfc;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 16px 0;
+    overflow-x: auto;
+    text-align: center;
+  }
+
+  /* Summary box */
+  .summary-box {
+    background: linear-gradient(135deg, #1e3a5f 0%, #334155 100%);
+    color: white;
+    padding: 24px 28px;
+    border-radius: 12px;
+    font-size: 1.05em;
+    line-height: 1.9;
+  }
+
+  /* Role tag */
+  .role-tag {
+    display: inline-block;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 1px 8px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: 500;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    body { padding: 16px 8px; }
+    .header { padding: 32px 20px; }
+    .header h1 { font-size: 1.4em; }
+    .section { padding: 20px 16px; }
+    table { font-size: 0.8em; }
+    th, td { padding: 6px 8px; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; padding: 0; }
+    .section { box-shadow: none; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <h1>📋 千问小讲堂 · 封面制作<br>完整业务流程分析</h1>
+  <div class="meta">
+    <span>📅 分析日期：2026-06-04</span>
+    <span>📁 数据来源：千问小讲堂-chat挂载封面制作需求/</span>
+  </div>
+</div>
+
+<!-- 一、业务背景 -->
+<div class="section">
+  <h2>一、业务背景：我们在做什么</h2>
+  <p>"千问小讲堂"是一个面向 K12 学生的在线教育内容产品。每条课程内容需要一张<strong>竖版封面图（144×192 设计尺寸）</strong>在产品中展示。封面不是简单截图，而是将<strong>底图插画 + 品牌文字（课程名/钩子标语）+ 品牌徽标</strong>合成为统一风格的成品图。</p>
+
+  <h3>目前已覆盖的内容类型和样式</h3>
+  <table>
+    <tr><th>样式</th><th>适用学科/内容</th><th>主文案</th><th>所用字体</th></tr>
+    <tr><td><span class="badge badge-blue">style1</span></td><td>小低数学（1-3年级）</td><td>钩子标语（整段自动换行）</td><td>造字工房圆黑 + 阿里巴巴普惠体</td></tr>
+    <tr><td><span class="badge badge-blue">style2</span></td><td>小高数学（4-6年级）</td><td>钩子标语（整段自动换行）</td><td>阿里巴巴普惠体 Bold</td></tr>
+    <tr><td><span class="badge badge-green">style3</span></td><td>语文课文/古诗词、科普、妙题高招</td><td>学名（有书名号《》则只显示书名号内文字）</td><td>HYXinRenWenSong 65W</td></tr>
+    <tr><td><span class="badge badge-orange">成语故事</span></td><td>成语/寓言</td><td>成语名（大字号）+ 钩子（小字号）</td><td>65W 标题 + W 常规钩子（白色70%透明度）</td></tr>
+  </table>
+</div>
+
+<!-- 二、全景流程图 -->
+<div class="section">
+  <h2>二、全景流程图</h2>
+  <p>整个封面制作分为<strong>两条链路</strong>，可以先后串联：</p>
+  <div class="flow-chain">
+    🟠 链路 A（文案 + 生图指令）&nbsp;&nbsp;➜&nbsp;&nbsp;确认底图 URL&nbsp;&nbsp;➜&nbsp;&nbsp;🟢 链路 B（挂载压图）
+  </div>
+
+  <h3>2.1 总览流程图</h3>
+  <div class="mermaid">
+flowchart TB
+    subgraph PREP["🔵 前置准备阶段"]
+        P1["📋 内容方提供课程清单<br/>(Excel/CSV)"] --> P2{"选择链路"}
+    end
+
+    P2 -->|"没有底图<br/>需要从零制作"| A_START
+    P2 -->|"已有确认版底图URL<br/>只需合成封面"| B_START
+
+    subgraph A["🟠 链路 A：文案 + 生图指令（从无到有创建底图）"]
+        direction TB
+        A_START["📥 步骤A1<br/>准备输入清单"] --> A1["📝 步骤A2<br/>AI 生成 A/B/C 三套文案<br/>+ 生图指令"]
+        A1 --> A2{"学科分支判定"}
+        A2 -->|数学低龄| A2a["Pixar 硅胶3D<br/>9色明亮纯色底"]
+        A2 -->|数学高年级| A2b["瑞士国际2.5D<br/>8组背景配色"]
+        A2 -->|语文/科普| A2c["电影级中国风插画<br/>考据→三钩子→画面→生图"]
+        A2 -->|成语故事| A2d["同语文中国风<br/>学名=成语名本身"]
+        A2a & A2b & A2c & A2d --> A3["✅ 产出：xlsx 含 12 列<br/>(A/B/C 各4列：钩子/标签/学名/生图指令)"]
+        A3 --> A4["🎨 步骤A3<br/>人工/生图模型出底图"]
+        A4 --> A5["👁️ 步骤A4<br/>人工挑选审核底图"]
+        A5 --> A6["✅ 确认底图 URL<br/>→ 进入链路 B"]
+    end
+
+    subgraph B["🟢 链路 B：挂载压图（底图合成正式封面）"]
+        direction TB
+        B_START["📥 步骤B1<br/>准备确认版表"] --> B1["必含列：<br/>学名·确认版<br/>url·确认版<br/>（成语还需 钩子·确认版）"]
+        B1 --> B2{"样式判定"}
+        B2 -->|"语文/科普/妙题<br/>（style3 单名）"| B3["📐 步骤B2<br/>run_style3.py<br/>run_kepu.py"]
+        B2 -->|"成语故事<br/>（双行文字）"| B4["📐 步骤B2<br/>run_chengyu_all.py"]
+        B2 -->|"数学<br/>（style1/style2）"| B5["📐 步骤B2<br/>render_covers.py"]
+        B3 & B4 & B5 --> B6["🖼️ 步骤B3<br/>双版本产出"]
+        B6 --> B7["PNG 无损版<br/>（约250-420KB）"]
+        B6 --> B8["JPG 压缩版<br/>（≤50KB 自适应画质）"]
+        B7 & B8 --> B9["☁️ 步骤B4<br/>上传 OSS (ossutil)"]
+        B9 --> B10["🔗 获得 CDN URL"]
+        B10 --> B11["📊 步骤B5<br/>回写内容表"]
+        B11 --> B12["两列 URL：<br/>封面压图压缩前url (PNG)<br/>封面压图压缩后url (JPG)"]
+    end
+
+    A6 -.->|"底图 URL 确认后衔接"| B_START
+
+    subgraph CHECK["🔴 贯穿全流程：审校/QA"]
+        C1["🔍 成品图逐张开图核名"]
+        C2["✏️ 文案/字体合规检查"]
+        C3["👀 浅底白字可读性抽检"]
+        C4["🔄 回写数据一致性校验"]
+    end
+
+    B12 -.-> C1
+    B12 -.-> C2
+    B12 -.-> C3
+    B12 -.-> C4
+  </div>
+
+  <h3>2.2 链路 A 详细流程</h3>
+  <div class="mermaid">
+flowchart LR
+    subgraph A_STEP1["步骤A1：准备清单"]
+        A1a["内容运营提供<br/>Excel/CSV"] --> A1b["需包含字段：<br/>学科、年级、课程名<br/>一句话介绍、guid"]
+    end
+
+    subgraph A_STEP2["步骤A2：AI生成文案+生图指令"]
+        A2a["判定学科分支"] --> A2b["读取对应 Skill 规范"]
+        A2b --> A2c["AI 逐条产出"]
+        A2c --> A2d["先出 2-3 条样例<br/>→ 人工确认画风"]
+        A2d --> A2e["确认后全量生成<br/>50/200/500 条"]
+        A2e --> A2f["自检（条数/格式/约束）"]
+    end
+
+    subgraph A_STEP3["步骤A3：出底图"]
+        A3a["把「生图指令」列<br/>交给生图模型/设计师"] --> A3b["产出底图 jpg/png"]
+    end
+
+    subgraph A_STEP4["步骤A4：审核"]
+        A4a["人工挑选 A/B/C"] --> A4b["确认画风、无文字"]
+        A4b --> A4c["确认底图 URL"]
+    end
+
+    A_STEP1 --> A_STEP2 --> A_STEP3 --> A_STEP4
+  </div>
+
+  <h3>2.3 链路 B 详细流程</h3>
+  <div class="mermaid">
+flowchart TB
+    subgraph B_STEP1["步骤B1：确认版表"]
+        B1a["学名·确认版<br/>（科普有《》则只压篇目名）"] --> B1d["运行 一键自检.sh"]
+        B1b["url·确认版<br/>（干净底图 CDN 地址）"] --> B1d
+        B1c["钩子·确认版<br/>（仅成语必填）"] --> B1d
+    end
+
+    subgraph B_STEP2["步骤B2：运行渲染脚本"]
+        B2a["render_covers.py 主渲染引擎"] --> B2b["选样式 → 排版换行<br/>→ 自适应毛玻璃徽标<br/>→ 渲染文字层"]
+        B2b --> B2c["合成：底图 + 文字 + 徽标"]
+    end
+
+    subgraph B_STEP3["步骤B3：双版本输出"]
+        B3a["PNG 无损版<br/>压缩前，约 250-420KB"] --> B3c["本地 output/ 目录"]
+        B3b["JPG 压缩版<br/>≤50KB，自适应画质"] --> B3c
+    end
+
+    subgraph B_STEP4["步骤B4：上传OSS"]
+        B4a["ossutil 上传"] --> B4b["获得 CDN URL"]
+    end
+
+    subgraph B_STEP5["步骤B5：回写"]
+        B5a["原表新增两列"] --> B5b["封面压图压缩前url<br/>封面压图压缩后url"]
+    end
+
+    B_STEP1 --> B_STEP2 --> B_STEP3 --> B_STEP4 --> B_STEP5
+  </div>
+</div>
+
+<!-- 三、详细步骤说明 -->
+<div class="section">
+  <h2>三、每条链路的详细步骤说明</h2>
+
+  <!-- 前置准备 -->
+  <h3>🔵 前置准备：判断走哪条链路</h3>
+  <p><strong>判断标准</strong>：是否已经有确认版的底图 URL？</p>
+  <table>
+    <tr><th>情况</th><th>走哪条</th></tr>
+    <tr><td>还没有底图，需要从零生成</td><td><span class="badge badge-orange">链路 A</span>（先产文案和生图指令 → 出底图）</td></tr>
+    <tr><td>已有 <code>学名·确认版</code> + <code>url·确认版</code></td><td><span class="badge badge-green">链路 B</span>（直接用底图合成封面）</td></tr>
+    <tr><td>两条都要做</td><td><strong>先 A 后 B</strong>（A 出底图 → 确认 URL → B 合成封面）</td></tr>
+  </table>
+
+  <!-- 链路A -->
+  <h3>🟠 链路 A：文案 + 生图指令（从无到有创建封面底图）</h3>
+
+  <div class="step-card orange">
+    <h4>步骤 A1：准备输入清单</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">内容运营</span></td><td>整理课程清单，提供结构化的内容表</td><td>课程信息</td><td>Excel/CSV 文件</td></tr>
+    </table>
+    <p><strong>输入表需包含的字段</strong>：</p>
+    <ul>
+      <li><code>学科</code> — 数学/语文/成语/科普 等</li>
+      <li><code>年级</code> — 用于自动匹配样式（小低1-3 / 小高4-6）</li>
+      <li><code>课程名</code> — 课程的正式名称</li>
+      <li><code>一句话介绍</code> — 课程核心内容的一句话描述</li>
+      <li><code>guid</code> — 每条内容的唯一标识（理想情况下）</li>
+    </ul>
+    <p>📁 存放位置：<code>输入表/</code> 目录</p>
+    <p>🔧 新学科：先填写 <code>文档/templates/新学科需求登记表.md</code></p>
+  </div>
+
+  <div class="step-card orange">
+    <h4>步骤 A2：AI 生成 A/B/C 三套文案 + 生图指令</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">内容运营</span> + <span class="role-tag">AI (Cursor/Claude)</span></td><td>按学科规范，AI 为每条课程产出 3 套可选方案</td><td>课程清单 CSV</td><td>xlsx 含 12 列 case</td></tr>
+    </table>
+
+    <p><strong>什么是 A/B/C 三套方案？</strong></p>
+    <p>同一条课程，为运营提供 3 套可选方案，差异主要在钩子文案和画面色调：</p>
+    <table>
+      <tr><th>Case</th><th>典型特点</th></tr>
+      <tr><td><strong>A</strong></td><td>推荐方案 — 悬念反问式钩子 + 主色调</td></tr>
+      <tr><td><strong>B</strong></td><td>第二公式钩子 + 暖调黄昏变体</td></tr>
+      <tr><td><strong>C</strong></td><td>第三公式钩子 + 清透晨光变体</td></tr>
+    </table>
+
+    <p><strong>每条课程产出的 12 列</strong>（A/B/C 各 4 列）：</p>
+    <table>
+      <tr><th>字段</th><th>说明</th><th>示例</th></tr>
+      <tr><td><strong>钩子</strong></td><td>主标题文案，口语化，一般 ≤12 字</td><td><code>"这个三角形到底藏着什么秘密？"</code></td></tr>
+      <tr><td><strong>标签</strong></td><td>分类标签</td><td>数学：<code>一年级★超好玩</code>；语文/成语：<code>千问小讲堂</code></td></tr>
+      <tr><td><strong>学名</strong></td><td>课程正式名称</td><td>数学：课程短名；语文：<code>[类型]《篇目名》</code>；成语：成语名本身</td></tr>
+      <tr><td><strong>生图指令</strong></td><td>给生图模型的 Prompt</td><td>含构图、风格、色调、<strong>严禁画面内出现文字</strong></td></tr>
+    </table>
+
+    <p><strong>学科分支差异</strong>：</p>
+    <table>
+      <tr><th>学科</th><th>画风</th><th>标签格式</th><th>特殊规则</th></tr>
+      <tr><td><strong>低龄数学 1-3年级</strong></td><td>Pixar 硅胶 3D，明亮纯色底 + 右下角 3D 角色群</td><td><code>年级★关键词</code></td><td>9色明亮底；禁止画面汉字</td></tr>
+      <tr><td><strong>高年级数学 4-6年级</strong></td><td>瑞士国际 2.5D，等距视角</td><td><code>年级｜关键词</code></td><td>8组背景色；禁止对角线构图</td></tr>
+      <tr><td><strong>语文（诗词/课文/写作）</strong></td><td>电影级中国风数字插画</td><td><code>千问小讲堂</code></td><td>必须先考据→再写画面；红色主题分级</td></tr>
+      <tr><td><strong>成语故事</strong></td><td>同语文中国风</td><td><code>千问小讲堂</code></td><td>学名 = 成语名本身</td></tr>
+    </table>
+
+    <p><strong>推荐工作节奏</strong>：</p>
+    <ol>
+      <li>先让 AI 出 <strong>2-3 条样例</strong>（各学科各一条）</li>
+      <li>运营/内容<strong>确认画风和钩子风格</strong></li>
+      <li>确认后<strong>全量生成</strong>（50/200/500 条）</li>
+      <li>AI <strong>自检</strong>并汇报问题数</li>
+    </ol>
+  </div>
+
+  <div class="step-card orange">
+    <h4>步骤 A3：出底图（人工/生图模型）</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">设计师 / 生图模型</span></td><td>根据生图指令生成底图插画</td><td>xlsx 中的「生图指令」列</td><td>底图 jpg/png 文件</td></tr>
+    </table>
+    <p><strong>关键质量要求</strong>：</p>
+    <ul>
+      <li>🔴 画面<strong>绝对不能出现汉字</strong>（生图指令必须包含负向锚 <code>NOTEXT</code>）</li>
+      <li>📐 主体在画面中下位置（上方留白给后续压文字）</li>
+      <li>🎨 风格符合学科规范（Pixar 3D / Swiss 2.5D / 中国风插画）</li>
+    </ul>
+  </div>
+
+  <div class="step-card orange">
+    <h4>步骤 A4：人工挑选审核底图</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">内容运营</span></td><td>从 A/B/C 三个方案中挑选最佳底图</td><td>生图产出的底图</td><td>确认后的底图 URL</td></tr>
+    </table>
+    <p><strong>审核要点</strong>：画面是否出现文字、风格是否符合学科定位、主体位置是否适合压文字。</p>
+  </div>
+
+  <!-- 链路B -->
+  <h3>🟢 链路 B：挂载压图（底图 → 正式封面 → OSS → 回写）</h3>
+
+  <div class="step-card green">
+    <h4>步骤 B1：准备确认版表</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">内容运营</span></td><td>整理已确认底图 URL 的内容表</td><td>确认后的底图信息</td><td>符合规范的 CSV/xlsx</td></tr>
+    </table>
+    <p><strong>表头约定</strong>：</p>
+    <table>
+      <tr><th>列名</th><th>必填</th><th>说明</th></tr>
+      <tr><td><code>学名·确认版</code></td><td>✅</td><td>科普/妙题有《》时压图只显示书名号内文字</td></tr>
+      <tr><td><code>url·确认版</code></td><td>✅</td><td>干净底图的 CDN 地址</td></tr>
+      <tr><td><code>钩子·确认版</code></td><td>仅成语</td><td>科普/妙题/style3 不需要钩子</td></tr>
+      <tr><td><code>封面压图压缩前url</code></td><td>脚本回写</td><td>PNG 无损版 CDN</td></tr>
+      <tr><td><code>封面压图压缩后url</code></td><td>脚本回写</td><td>JPG 压缩版 CDN</td></tr>
+    </table>
+    <p>🔧 环境检查：运行 <code>一键自检.sh</code>，执行 <code>pip3 install -r requirements.txt --user</code></p>
+  </div>
+
+  <div class="step-card green">
+    <h4>步骤 B2：运行渲染脚本</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">工程/运营 (Cursor)</span></td><td>按内容类型选择脚本运行渲染</td><td>确认版表 CSV</td><td>本地封面图片 PNG+JPG</td></tr>
+    </table>
+    <table>
+      <tr><th>内容类型</th><th>样式</th><th>主文案</th><th>钩子</th><th>脚本</th><th>已跑通</th></tr>
+      <tr><td>语文课文/古诗词</td><td>style3</td><td>学名</td><td>❌</td><td><code>run_style3.py</code></td><td>479条</td></tr>
+      <tr><td>科普、妙题高招</td><td>style3</td><td>仅《》内</td><td>❌</td><td><code>run_kepu.py</code></td><td>105条</td></tr>
+      <tr><td>成语故事</td><td>成语双行</td><td>成语名+钩子</td><td>✅</td><td><code>run_chengyu_all.py</code></td><td>50条</td></tr>
+      <tr><td>小低/小高数学</td><td>style1/2</td><td>钩子+标签</td><td>✅</td><td><code>render_covers.py</code></td><td>待产品化</td></tr>
+    </table>
+    <p><strong>脚本内部处理逻辑</strong>（<code>render_covers.py</code> 主引擎）：</p>
+    <ol>
+      <li><strong>选样式</strong> — 按学科/年级自动匹配</li>
+      <li><strong>排版换行</strong> — 智能断行（按标点断、避免孤字）</li>
+      <li><strong>自适应毛玻璃徽标</strong> — 徽标颜色自动匹配底图主色</li>
+      <li><strong>文字渲染</strong> — 指定字体/字号/字重/位置</li>
+      <li><strong>合成输出</strong> — 底图 + 文字层 + 徽标层合成</li>
+    </ol>
+  </div>
+
+  <div class="step-card green">
+    <h4>步骤 B3：双版本产出</h4>
+    <table>
+      <tr><th>版本</th><th>格式</th><th>大小</th><th>用途</th></tr>
+      <tr><td><strong>压缩前</strong></td><td>PNG 无损</td><td>约 250–420KB</td><td>存档/高清使用</td></tr>
+      <tr><td><strong>压缩后</strong></td><td>JPG 有损</td><td>≤50KB（自适应画质）</td><td>线上加载</td></tr>
+    </table>
+    <p>📁 本地存放：<code>output/&lt;学科&gt;/covers/&lt;md5&gt;.png</code> + <code>.jpg</code></p>
+  </div>
+
+  <div class="step-card green">
+    <h4>步骤 B4：上传 OSS</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">脚本自动 / 工程</span></td><td>使用 ossutil 上传到阿里云 OSS</td><td>本地 PNG + JPG</td><td>CDN URL</td></tr>
+    </table>
+    <p>🔧 工具：<code>~/Desktop/ossutilmac64</code>（需本机配置账号凭证）</p>
+  </div>
+
+  <div class="step-card green">
+    <h4>步骤 B5：回写内容表</h4>
+    <table>
+      <tr><th>负责角色</th><th>做什么</th><th>输入</th><th>产出</th></tr>
+      <tr><td><span class="role-tag">脚本自动</span></td><td>将 CDN URL 回填到原表</td><td>CDN URL</td><td>带 URL 的回填 CSV</td></tr>
+    </table>
+    <p>新增两列：<code>封面压图压缩前url</code>（PNG）、<code>封面压图压缩后url</code>（JPG）</p>
+  </div>
+
+  <!-- 审校 -->
+  <h3>🔴 贯穿全流程：审校/QA</h3>
+  <table>
+    <tr><th>步骤</th><th>负责角色</th><th>做什么</th></tr>
+    <tr><td><strong>核名</strong></td><td>审校</td><td>逐张打开成品图，核对文件名与实际内容是否一致</td></tr>
+    <tr><td><strong>文案合规</strong></td><td>审校</td><td>检查文字内容是否准确、字体是否正确</td></tr>
+    <tr><td><strong>可读性</strong></td><td>审校</td><td>浅底白字场景是否可读（压暗/毛玻璃/阴影）</td></tr>
+    <tr><td><strong>数据一致性</strong></td><td>审校</td><td>回写 URL 与内容是否一一对应</td></tr>
+  </table>
+</div>
+
+<!-- 四、角色分工 -->
+<div class="section">
+  <h2>四、涉及的角色与分工总览</h2>
+  <table>
+    <tr><th>角色</th><th>核心职责</th><th>出现在哪些步骤</th></tr>
+    <tr><td><span class="role-tag">产品经理</span></td><td>制定输入规范、唯一 ID 标准、交付标准、覆盖范围</td><td>A1, B1</td></tr>
+    <tr><td><span class="role-tag">内容/运营</span></td><td>提供课程清单、确认文案/钩子风格、挑选底图</td><td>A1, A2, A4, B1</td></tr>
+    <tr><td><span class="role-tag">设计师</span></td><td>固化 Figma 设计规格、出底图、成品图命名</td><td>A3, B(规格)</td></tr>
+    <tr><td><span class="role-tag">工程</span></td><td>维护渲染/压缩/上传/回写脚本、环境配置</td><td>A2(脚本), B2-B5</td></tr>
+    <tr><td><span class="role-tag">审校/QA</span></td><td>成品图核名、文案字体合规、可读性抽检、回写校验</td><td>全流程末端</td></tr>
+  </table>
+</div>
+
+<!-- 五、当前进展 -->
+<div class="section">
+  <h2>五、当前进展与已完成批次</h2>
+  <table>
+    <tr><th>批次</th><th>条数</th><th>样式</th><th>脚本</th><th>状态</th></tr>
+    <tr><td>语文挂载</td><td>479 条</td><td>style3 单名</td><td><code>run_style3.py</code></td><td>✅ 已全量完成</td></tr>
+    <tr><td>成语故事</td><td>50 条</td><td>成语双行</td><td><code>run_chengyu_all.py</code></td><td>✅ 已全量（20设计+30自动生成）</td></tr>
+    <tr><td>科普+妙题高招</td><td>105 条</td><td>style3 无钩子</td><td><code>run_kepu.py</code></td><td>✅ 已全量完成</td></tr>
+    <tr><td>语文问题重修</td><td>按问题表</td><td>style3</td><td><code>run_yuwen_fix.py</code></td><td>✅ 已完成</td></tr>
+    <tr><td>数学挂载</td><td>-</td><td>style1/2</td><td><code>render_covers.py</code></td><td>🔲 待产品化</td></tr>
+  </table>
+</div>
+
+<!-- 六、卡点 -->
+<div class="section">
+  <h2>六、已知卡点与注意事项</h2>
+  <table>
+    <tr><th>#</th><th>问题</th><th>严重程度</th><th>建议解决方案</th></tr>
+    <tr><td>1</td><td><strong>成品图错名</strong> — 文件名与图片内容不对应</td><td><span class="badge badge-red">🔴 高</span></td><td>设计出图后逐张核名；改用 guid 关联</td></tr>
+    <tr><td>2</td><td><strong>设计规格未沉淀</strong> — 字体/字号/位置靠人工量取</td><td><span class="badge badge-red">🔴 高</span></td><td>设计在 Figma 固化为可读规格文档</td></tr>
+    <tr><td>3</td><td><strong>浅底白字可读性差</strong> — 无统一处理标准</td><td><span class="badge badge-orange">🟡 中</span></td><td>制定压暗/毛玻璃/阴影的判定规则</td></tr>
+    <tr><td>4</td><td><strong>钩子换行孤字</strong> — 如句尾单字独占一行</td><td><span class="badge badge-orange">🟡 中</span></td><td>内容侧约定断行规则</td></tr>
+    <tr><td>5</td><td><strong>列名不统一</strong> — 学名·确认版 vs 学名确认版</td><td><span class="badge badge-orange">🟡 中</span></td><td>产品统一命名规范</td></tr>
+    <tr><td>6</td><td><strong>匹配靠中文名</strong> — 非 guid 关联</td><td><span class="badge badge-orange">🟡 中</span></td><td>增加 guid 做唯一关联</td></tr>
+    <tr><td>7</td><td><strong>OSS 凭证硬编码</strong> — 不可协作</td><td><span class="badge badge-orange">🟡 中</span></td><td>凭证外置、环境变量化</td></tr>
+    <tr><td>8</td><td><strong>审校环节缺失</strong> — 无系统性检查</td><td><span class="badge badge-red">🔴 高</span></td><td>增设审校/QA 角色，建立检查清单</td></tr>
+  </table>
+</div>
+
+<!-- 七、路径速查 -->
+<div class="section">
+  <h2>七、关键文件路径速查</h2>
+  <table>
+    <tr><th>用途</th><th>路径</th></tr>
+    <tr><td>启动包根目录</td><td><code>千问小讲堂-文本挂载封面生产包/</code></td></tr>
+    <tr><td>从此开始</td><td><code>00-从这里开始.md</code></td></tr>
+    <tr><td>完整需求说明</td><td><code>封面生成工作流与需求说明.md</code></td></tr>
+    <tr><td>链路 B 说明</td><td><code>挂载压图分支说明.md</code></td></tr>
+    <tr><td>学科分支说明</td><td><code>文档/学科分支说明.md</code></td></tr>
+    <tr><td>工作流总览</td><td><code>文档/工作流总览.md</code></td></tr>
+    <tr><td>项目演进日志</td><td><code>文档/logs/项目演进记录.md</code></td></tr>
+    <tr><td>AI Skill 定义</td><td><code>SKILL.md</code></td></tr>
+    <tr><td>渲染主脚本</td><td><code>脚本/render_covers.py</code></td></tr>
+    <tr><td>科普脚本</td><td><code>脚本/run_kepu.py</code></td></tr>
+    <tr><td>语文脚本</td><td><code>脚本/run_style3.py</code></td></tr>
+    <tr><td>成语脚本</td><td><code>脚本/run_chengyu_all.py</code></td></tr>
+    <tr><td>字体资源</td><td><code>脚本/assets/*.ttf</code></td></tr>
+    <tr><td>数据归档</td><td><code>../千问小讲堂-封面数据归档/</code></td></tr>
+  </table>
+</div>
+
+<!-- 八、总结 -->
+<div class="section">
+  <h2>八、对新人的一句话总结</h2>
+  <div class="summary-box">
+    <strong>封面制作 = 两条链路</strong><br><br>
+    🟠 <strong>链路 A</strong>：用 AI 为课程写好钩子+生图指令 → 设计师/模型出底图 → 人工审核<br>
+    🟢 <strong>链路 B</strong>：把确认好的底图+课程名用脚本合成统一风格封面 → 双版本输出 → 上传 OSS → 回写 CDN URL<br><br>
+    两条链路中间由「<strong>确认底图 URL</strong>」这个动作衔接。整个流程需要<strong>内容、设计、工程、审校</strong>四方协作，目前最大的痛点是<strong>成品图错名</strong>和<strong>审校环节缺失</strong>。
+  </div>
+</div>
+
+</div><!-- /.container -->
+
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'default',
+    securityLevel: 'loose',
+    flowchart: { useMaxWidth: true, htmlLabels: true, curve: 'basis' }
+  });
+</script>
+</body>
+</html>

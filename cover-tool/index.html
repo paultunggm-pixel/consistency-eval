@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千问小讲堂 · 封面生成工具</title>
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <h1>🎨 千问小讲堂 · 封面生成工具</h1>
+  <p>上传课程数据 → 预览封面 → 一键下载成品（PNG + JPG）</p>
+</div>
+
+<div class="container">
+
+  <!-- Step Navigator -->
+  <div class="stepper" id="stepper">
+    <div class="step-dot active" data-step="1"><span class="num">1</span>上传数据</div>
+    <div class="step-dot" data-step="2"><span class="num">2</span>配置参数</div>
+    <div class="step-dot" data-step="3"><span class="num">3</span>设置底图</div>
+    <div class="step-dot" data-step="4"><span class="num">4</span>预览渲染</div>
+    <div class="step-dot" data-step="5"><span class="num">5</span>下载成品</div>
+  </div>
+
+  <!-- Step 1: Upload Data -->
+  <div class="card" id="panel-step1">
+    <h2>📋 步骤 1：上传课程数据</h2>
+    <p style="color:var(--text-secondary);margin-bottom:16px">支持 Excel (.xlsx)、CSV 文件，或直接粘贴表格数据。</p>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="upload">📁 上传文件</button>
+      <button class="tab" data-tab="paste">📝 粘贴数据</button>
+      <button class="tab" data-tab="sample">🧪 加载示例</button>
+    </div>
+
+    <!-- Upload Tab -->
+    <div class="tab-content" id="tab-upload">
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">📂</div>
+        <p><strong>拖拽文件到此处</strong> 或点击选择</p>
+        <p style="font-size:.82em;margin-top:8px">支持 .xlsx / .csv</p>
+        <input type="file" id="fileInput" accept=".xlsx,.csv">
+      </div>
+    </div>
+
+    <!-- Paste Tab -->
+    <div class="tab-content" id="tab-paste" style="display:none">
+      <div class="form-group">
+        <label>粘贴 CSV 或 TSV 数据（第一行为表头）</label>
+        <textarea id="pasteArea" placeholder="学名,钩子,url&#10;静夜思,床前明月光低头思故乡？,https://...&#10;咏鹅,鹅鹅鹅到底怎么曲项向天歌？,https://..."></textarea>
+      </div>
+      <button class="btn btn-primary" id="btnParsePaste">解析数据</button>
+    </div>
+
+    <!-- Sample Tab -->
+    <div class="tab-content" id="tab-sample" style="display:none">
+      <p style="margin-bottom:12px">点击加载示例数据（含 3 条课程，覆盖不同样式）</p>
+      <button class="btn btn-outline" id="btnLoadSample">📥 加载示例数据</button>
+    </div>
+
+    <!-- Parsed Data Table -->
+    <div id="dataTableWrap" style="display:none;margin-top:20px">
+      <h3 style="margin-bottom:8px">已解析的课程数据 <span id="rowCount" style="color:var(--text-secondary);font-weight:400"></span></h3>
+      <div class="table-wrap" id="dataTable"></div>
+      <div class="btn-group">
+        <button class="btn btn-primary" id="btnToStep2">下一步 → 配置参数</button>
+        <button class="btn btn-outline btn-sm" id="btnClearData">清空数据</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Step 2: Configure -->
+  <div class="card" id="panel-step2" style="display:none">
+    <h2>⚙️ 步骤 2：配置渲染参数</h2>
+    <p style="color:var(--text-secondary);margin-bottom:16px">选择每条课程对应的样式，以及渲染所需的文字字段。</p>
+
+    <div class="form-group">
+      <label>默认样式</label>
+      <select id="defaultStyle">
+        <option value="style3">Style3 — 语文/科普（学名居中 + 毛玻璃徽标）</option>
+        <option value="style1">Style1 — 小低数学（钩子 + 标签 + 垂帘徽标）</option>
+        <option value="style2">Style2 — 小高数学（钩子 + 标签 + 下圆角徽标）</option>
+        <option value="chengyu">成语故事 — 学名 + 钩子双行</option>
+      </select>
+      <p class="hint">对所有课程生效，单条可在表格中覆盖</p>
+    </div>
+
+    <div class="form-group">
+      <label>列映射</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <span style="font-size:.82em;font-weight:600">学名列</span>
+          <select id="colXueming" class="col-map"><option value="">-- 选择列 --</option></select>
+        </div>
+        <div>
+          <span style="font-size:.82em;font-weight:600">钩子列</span>
+          <select id="colHook" class="col-map"><option value="">-- 选择列（可选）--</option></select>
+        </div>
+        <div>
+          <span style="font-size:.82em;font-weight:600">标签列</span>
+          <select id="colTag" class="col-map"><option value="">-- 选择列（可选）--</option></select>
+        </div>
+        <div>
+          <span style="font-size:.82em;font-weight:600">URL列</span>
+          <select id="colUrl" class="col-map"><option value="">-- 选择列（可选）--</option></select>
+        </div>
+      </div>
+      <p class="hint">选择包含底图 URL 的列（如有的话），可在步骤 3 自动填入</p>
+    </div>
+
+    <div class="table-wrap" id="configTable" style="margin-top:16px;max-height:400px;overflow-y:auto"></div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" id="btnBackStep1">← 上一步</button>
+      <button class="btn btn-primary" id="btnToStep3">下一步 → 设置底图</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Base Images -->
+  <div class="card" id="panel-step3" style="display:none">
+    <h2>🖼️ 步骤 3：设置底图</h2>
+    <p style="color:var(--text-secondary);margin-bottom:16px">为每条课程设置底图。可以粘贴图片 URL、上传本地文件，或用纯色背景替代。</p>
+
+    <div class="form-group">
+      <label>全局底图 URL（可选）</label>
+      <div style="display:flex;gap:8px">
+        <input type="url" id="globalBgUrl" placeholder="https://cdn.example.com/bg.jpg">
+        <button class="btn btn-outline btn-sm" id="btnApplyGlobalBg">应用到全部空行</button>
+      </div>
+      <p class="hint">填入后点"应用"，所有未设置底图的行都会使用此 URL</p>
+    </div>
+
+    <div class="table-wrap" id="bgTable" style="max-height:500px;overflow-y:auto"></div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" id="btnBackStep2">← 上一步</button>
+      <button class="btn btn-success" id="btnToStep4">🎨 开始渲染预览</button>
+    </div>
+  </div>
+
+  <!-- Step 4: Render & Preview -->
+  <div class="card" id="panel-step4" style="display:none">
+    <h2>👁️ 步骤 4：预览与调整</h2>
+    <div class="progress-bar" id="progressBar" style="display:none">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-text" id="progressText" style="display:none"></div>
+    <div id="previewArea" class="preview-grid"></div>
+    <div class="btn-group" id="previewActions" style="display:none">
+      <button class="btn btn-outline" id="btnBackStep3">← 上一步</button>
+      <button class="btn btn-outline btn-sm" id="btnRerender">🔄 重新渲染</button>
+      <button class="btn btn-success" id="btnToStep5">下一步 → 下载打包</button>
+    </div>
+  </div>
+
+  <!-- Step 5: Download -->
+  <div class="card" id="panel-step5" style="display:none">
+    <h2>📦 步骤 5：下载成品</h2>
+
+    <div id="downloadSummary" style="margin-bottom:16px"></div>
+
+    <div class="btn-group">
+      <button class="btn btn-outline" id="btnBackStep4">← 上一步</button>
+      <button class="btn btn-primary" id="btnDownloadAll">📥 下载全部（ZIP 含 PNG + JPG + CSV）</button>
+      <button class="btn btn-outline" id="btnDownloadCSV">📊 下载回写 CSV</button>
+      <button class="btn btn-outline btn-sm" id="btnReset">🔄 重新开始</button>
+    </div>
+  </div>
+
+</div><!-- /.container -->
+
+<!-- API Key Modal -->
+<div class="modal-mask" id="apiKeyModal" style="display:none">
+  <div class="modal">
+    <h3>🔑 设置 API Key（可选）</h3>
+    <p style="color:var(--text-secondary)">如需使用 AI 生成文案功能，请填入 DeepSeek API Key。仅存储在您本地浏览器中，不会上传。</p>
+    <div class="form-group" style="margin-top:12px">
+      <input type="password" id="apiKeyInput" placeholder="sk-...">
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-primary" id="btnSaveApiKey">保存</button>
+      <button class="btn btn-outline" id="btnSkipApiKey">跳过（仅渲染）</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/fonts.js"></script>
+<script src="js/styles.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

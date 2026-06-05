@@ -13,7 +13,7 @@
 <!-- Header -->
 <div class="header">
   <h1>🎨 千问小讲堂 · 封面生成工具</h1>
-  <p>上传课程数据 → 预览封面 → 一键下载成品（PNG + JPG）</p>
+  <p>上传课程数据 → 配置样式 → 渲染封面 → 上传 OSS → 返回 CDN URL</p>
 </div>
 
 <div class="container">
@@ -24,7 +24,8 @@
     <div class="step-dot" data-step="2"><span class="num">2</span>配置参数</div>
     <div class="step-dot" data-step="3"><span class="num">3</span>设置底图</div>
     <div class="step-dot" data-step="4"><span class="num">4</span>预览渲染</div>
-    <div class="step-dot" data-step="5"><span class="num">5</span>下载成品</div>
+    <div class="step-dot" data-step="5"><span class="num">5</span>上传 OSS</div>
+    <div class="step-dot" data-step="6"><span class="num">6</span>下载成品</div>
   </div>
 
   <!-- Step 1: Upload Data -->
@@ -38,7 +39,6 @@
       <button class="tab" data-tab="sample">🧪 加载示例</button>
     </div>
 
-    <!-- Upload Tab -->
     <div class="tab-content" id="tab-upload">
       <div class="drop-zone" id="dropZone">
         <div class="icon">📂</div>
@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <!-- Paste Tab -->
     <div class="tab-content" id="tab-paste" style="display:none">
       <div class="form-group">
         <label>粘贴 CSV 或 TSV 数据（第一行为表头）</label>
@@ -57,13 +56,11 @@
       <button class="btn btn-primary" id="btnParsePaste">解析数据</button>
     </div>
 
-    <!-- Sample Tab -->
     <div class="tab-content" id="tab-sample" style="display:none">
-      <p style="margin-bottom:12px">点击加载示例数据（含 3 条课程，覆盖不同样式）</p>
+      <p style="margin-bottom:12px">点击加载示例数据（含 6 条课程，覆盖不同样式）</p>
       <button class="btn btn-outline" id="btnLoadSample">📥 加载示例数据</button>
     </div>
 
-    <!-- Parsed Data Table -->
     <div id="dataTableWrap" style="display:none;margin-top:20px">
       <h3 style="margin-bottom:8px">已解析的课程数据 <span id="rowCount" style="color:var(--text-secondary);font-weight:400"></span></h3>
       <div class="table-wrap" id="dataTable"></div>
@@ -154,44 +151,85 @@
     <div class="btn-group" id="previewActions" style="display:none">
       <button class="btn btn-outline" id="btnBackStep3">← 上一步</button>
       <button class="btn btn-outline btn-sm" id="btnRerender">🔄 重新渲染</button>
-      <button class="btn btn-success" id="btnToStep5">下一步 → 下载打包</button>
+      <button class="btn btn-success" id="btnToStep5">下一步 → 上传 OSS</button>
     </div>
   </div>
 
-  <!-- Step 5: Download -->
+  <!-- Step 5: Upload to OSS -->
   <div class="card" id="panel-step5" style="display:none">
-    <h2>📦 步骤 5：下载成品</h2>
+    <h2>☁️ 步骤 5：上传到 OSS / CDN</h2>
+    <p style="color:var(--text-secondary);margin-bottom:12px">将渲染好的封面图上传到公司 OSS，自动获取 CDN URL。</p>
+
+    <!-- OSS Config (collapsible) -->
+    <details id="ossConfigDetails" style="margin-bottom:16px">
+      <summary style="cursor:pointer;font-weight:600;padding:8px 0">⚙️ OSS 配置（已预填，通常无需修改）</summary>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;padding:12px;background:#f8fafc;border-radius:8px">
+        <div>
+          <label style="font-size:.8em;font-weight:600">Endpoint</label>
+          <input id="ossEndpoint" class="oss-config" style="font-size:.82em" placeholder="oss-cn-hangzhou.aliyuncs.com">
+        </div>
+        <div>
+          <label style="font-size:.8em;font-weight:600">Bucket</label>
+          <input id="ossBucket" class="oss-config" style="font-size:.82em" placeholder="sm-frontend-private-img">
+        </div>
+        <div>
+          <label style="font-size:.8em;font-weight:600">上传路径前缀</label>
+          <input id="ossPrefix" class="oss-config" style="font-size:.82em" placeholder="souti-imgs-tasting/">
+        </div>
+        <div>
+          <label style="font-size:.8em;font-weight:600">CDN 域名</label>
+          <input id="ossCdn" class="oss-config" style="font-size:.82em" placeholder="https://cdn-private.sm.cn">
+        </div>
+        <div>
+          <label style="font-size:.8em;font-weight:600">AccessKey ID</label>
+          <input id="ossKeyId" class="oss-config" style="font-size:.82em" placeholder="LTAI...">
+        </div>
+        <div>
+          <label style="font-size:.8em;font-weight:600">AccessKey Secret</label>
+          <input id="ossKeySecret" type="password" class="oss-config" style="font-size:.82em" placeholder="...">
+        </div>
+      </div>
+    </details>
+
+    <!-- Upload Progress -->
+    <div class="progress-bar" id="ossProgressBar" style="display:none">
+      <div class="progress-fill" id="ossProgressFill" style="width:0%"></div>
+    </div>
+    <div class="progress-text" id="ossProgressText" style="display:none"></div>
+
+    <!-- CDN URL Results -->
+    <div id="cdnResults" style="margin-top:16px"></div>
+
+    <div class="btn-group" style="margin-top:16px">
+      <button class="btn btn-outline" id="btnBackStep4">← 上一步</button>
+      <button class="btn btn-primary" id="btnStartUpload">☁️ 开始上传到 OSS</button>
+      <button class="btn btn-outline btn-sm" id="btnSkipUpload">跳过上传 → 直接下载</button>
+    </div>
+  </div>
+
+  <!-- Step 6: Download -->
+  <div class="card" id="panel-step6" style="display:none">
+    <h2>📦 步骤 6：下载成品 + CDN URL 汇总</h2>
 
     <div id="downloadSummary" style="margin-bottom:16px"></div>
 
+    <div id="cdnUrlTable" style="margin-bottom:16px"></div>
+
     <div class="btn-group">
-      <button class="btn btn-outline" id="btnBackStep4">← 上一步</button>
+      <button class="btn btn-outline" id="btnBackStep5">← 上一步</button>
       <button class="btn btn-primary" id="btnDownloadAll">📥 下载全部（ZIP 含 PNG + JPG + CSV）</button>
-      <button class="btn btn-outline" id="btnDownloadCSV">📊 下载回写 CSV</button>
+      <button class="btn btn-outline" id="btnDownloadCSV">📊 下载回写 CSV（含 CDN URL）</button>
+      <button class="btn btn-outline btn-sm" id="btnCopyUrls">📋 一键复制 CDN URL</button>
       <button class="btn btn-outline btn-sm" id="btnReset">🔄 重新开始</button>
     </div>
   </div>
 
 </div><!-- /.container -->
 
-<!-- API Key Modal -->
-<div class="modal-mask" id="apiKeyModal" style="display:none">
-  <div class="modal">
-    <h3>🔑 设置 API Key（可选）</h3>
-    <p style="color:var(--text-secondary)">如需使用 AI 生成文案功能，请填入 DeepSeek API Key。仅存储在您本地浏览器中，不会上传。</p>
-    <div class="form-group" style="margin-top:12px">
-      <input type="password" id="apiKeyInput" placeholder="sk-...">
-    </div>
-    <div class="btn-group">
-      <button class="btn btn-primary" id="btnSaveApiKey">保存</button>
-      <button class="btn btn-outline" id="btnSkipApiKey">跳过（仅渲染）</button>
-    </div>
-  </div>
-</div>
-
 <script src="js/fonts.js"></script>
 <script src="js/styles.js"></script>
 <script src="js/renderer.js"></script>
+<script src="js/oss.js"></script>
 <script src="js/utils.js"></script>
 <script src="js/main.js"></script>
 </body>

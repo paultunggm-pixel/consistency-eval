@@ -295,6 +295,17 @@ tr:hover { background: var(--primary-light); }
 .modal h3 { margin-bottom: 12px; }
 .modal p { color: var(--text-secondary); font-size: .9em; }
 
+/* ---- OSS Config & CDN ---- */
+details summary { color: var(--text); }
+details summary:hover { color: var(--primary); }
+.cdn-url-cell {
+  font-size: .78em;
+  word-break: break-all;
+  max-width: 300px;
+}
+.cdn-url-cell a { color: var(--primary); text-decoration: none; }
+.cdn-url-cell a:hover { text-decoration: underline; }
+
 /* ---- Responsive ---- */
 @media (max-width: 768px) {
   .container { padding: 12px 8px; }

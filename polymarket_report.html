@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Polymarket 数据源调研 & 2026世界杯预测应用分析报告</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --card: #1a1d27;
+    --border: #2a2d3a;
+    --text: #e1e4eb;
+    --muted: #888b96;
+    --accent: #5b7fff;
+    --green: #00c853;
+    --orange: #ff9100;
+    --red: #ff5252;
+    --purple: #b388ff;
+    --cyan: #00e5ff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.75;
+  }
+  .container { max-width:960px; margin:0 auto; padding:40px 24px 80px; }
+
+  .hero {
+    text-align:center; padding:60px 0 40px; border-bottom:1px solid var(--border); margin-bottom:48px;
+  }
+  .hero .tag {
+    display:inline-block; background:rgba(91,127,255,0.15); color:var(--accent);
+    font-size:12px; font-weight:600; padding:4px 14px; border-radius:20px;
+    letter-spacing:2px; margin-bottom:20px; text-transform:uppercase;
+  }
+  .hero h1 { font-size:36px; font-weight:800; letter-spacing:-0.5px; margin-bottom:12px; }
+
+  section { margin-bottom:56px; }
+  h2 {
+    font-size:24px; font-weight:700; margin-bottom:20px;
+    padding-bottom:12px; border-bottom:2px solid var(--border);
+  }
+  h3 { font-size:17px; font-weight:600; margin:28px 0 12px; color:var(--accent); }
+  h4 { font-size:14px; font-weight:600; margin:20px 0 8px; color:var(--text); }
+
+  p { margin-bottom:14px; color:#c8ccd6; }
+  strong { color:var(--text); }
+
+  .callout {
+    background:rgba(91,127,255,0.08); border-left:3px solid var(--accent);
+    padding:16px 20px; border-radius:0 8px 8px 0; margin:20px 0;
+    font-size:14px; color:#bcc3d1;
+  }
+  .callout strong { color:var(--accent); }
+  .callout.warn {
+    background:rgba(255,145,0,0.08); border-left-color:var(--orange);
+  }
+  .callout.warn strong { color:var(--orange); }
+  .callout.good {
+    background:rgba(0,200,83,0.06); border-left-color:var(--green);
+  }
+  .callout.good strong { color:var(--green); }
+
+  .card-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin:20px 0; }
+  .card-grid.col5 { grid-template-columns:repeat(5, 1fr); }
+  .card {
+    background:var(--card); border:1px solid var(--border); border-radius:10px;
+    padding:20px; text-align:center;
+  }
+  .card .value { font-size:32px; font-weight:800; margin-bottom:4px; }
+  .card .label { color:var(--muted); font-size:13px; }
+  .card.green .value { color:var(--green); }
+  .card.orange .value { color:var(--orange); }
+  .card.accent .value { color:var(--accent); }
+  .card.purple .value { color:var(--purple); }
+  .card.red .value { color:var(--red); }
+
+  .table-wrap { overflow-x:auto; margin:20px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th {
+    background:var(--card); color:var(--accent); font-weight:600;
+    text-align:left; padding:10px 14px; border-bottom:2px solid var(--border);
+    white-space:nowrap;
+  }
+  td { padding:10px 14px; border-bottom:1px solid var(--border); color:#c8ccd6; }
+  tr:hover td { background:rgba(255,255,255,0.02); }
+
+  .badge {
+    display:inline-block; padding:2px 10px; border-radius:12px;
+    font-size:11px; font-weight:600;
+  }
+  .badge.green { background:rgba(0,200,83,0.15); color:var(--green); }
+  .badge.orange { background:rgba(255,145,0,0.15); color:var(--orange); }
+  .badge.red { background:rgba(255,82,82,0.15); color:var(--red); }
+  .badge.accent { background:rgba(91,127,255,0.15); color:var(--accent); }
+  .badge.cyan { background:rgba(0,229,255,0.15); color:var(--cyan); }
+  .badge.purple { background:rgba(179,136,255,0.15); color:var(--purple); }
+
+  .priority-list { list-style:none; }
+  .priority-list li {
+    display:flex; align-items:flex-start; gap:14px; padding:14px 0; border-bottom:1px solid var(--border);
+  }
+  .priority-list .pri {
+    font-size:11px; font-weight:700; padding:4px 8px; border-radius:6px; flex-shrink:0; min-width:36px; text-align:center;
+  }
+  .pri.p0 { background:var(--red); color:#fff; }
+  .pri.p1 { background:var(--orange); color:#fff; }
+  .pri.p2 { background:var(--accent); color:#fff; }
+  .pri.p3 { background:var(--muted); color:#fff; }
+
+  .two-col { display:grid; grid-template-columns:1fr 1fr; gap:32px; margin:24px 0; }
+  @media (max-width:640px) { .two-col { grid-template-columns:1fr; } .card-grid.col5 { grid-template-columns:repeat(2, 1fr); } }
+
+  pre {
+    background:#0d1117; border:1px solid var(--border); border-radius:8px;
+    padding:16px 20px; overflow-x:auto; font-size:12px; line-height:1.6;
+    color:#c9d1d9; margin:16px 0;
+  }
+  code { font-family:"SF Mono", "Fira Code", "Cascadia Code", monospace; }
+  pre .kw { color:#ff7b72; }
+  pre .str { color:#a5d6ff; }
+  pre .cmt { color:#8b949e; font-style:italic; }
+
+  .toc { margin-bottom:40px; }
+  .toc h3 { font-size:14px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:12px; }
+  .toc ol { list-style:none; counter-reset:toc; display:grid; grid-template-columns:1fr 1fr; gap:4px 24px; }
+  @media (max-width:640px) { .toc ol { grid-template-columns:1fr; } }
+  .toc li { counter-increment:toc; font-size:13px; }
+  .toc li::before { content:counter(toc); color:var(--accent); font-weight:700; margin-right:8px; }
+  .toc a { color:var(--muted); text-decoration:none; }
+  .toc a:hover { color:var(--accent); }
+
+  .footer {
+    margin-top:60px; padding-top:30px; border-top:1px solid var(--border);
+    color:var(--muted); font-size:12px; text-align:center;
+  }
+
+  .divider { height:1px; background:var(--border); margin:32px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ====== HERO ====== -->
+<div class="hero">
+  <div class="tag">Research Report</div>
+  <h1>Polymarket 数据源调研<br>&amp; 2026 世界杯预测应用分析</h1>
+</div>
+
+<!-- ====== TABLE OF CONTENTS ====== -->
+<div class="toc">
+  <h3>目录</h3>
+  <ol>
+    <li><a href="#s0">核心结论</a></li>
+    <li><a href="#s1">Polymarket 是什么</a></li>
+    <li><a href="#s2">2026 世界杯上有哪些市场</a></li>
+    <li><a href="#s3">Polymarket 的数据能信吗？</a></li>
+    <li><a href="#s4">怎么拿到这些数据</a></li>
+    <li><a href="#s5">Polymarket 和纳米怎么配合</a></li>
+    <li><a href="#s6">已经有哪些产品在用 Polymarket？</a></li>
+    <li><a href="#s7">我们怎么落地</a></li>
+    <li><a href="#s8">有什么风险</a></li>
+  </ol>
+</div>
+
+<!-- ====== SECTION 0: CORE CONCLUSIONS ====== -->
+<section id="s0">
+  <h2>核心结论</h2>
+
+  <div class="callout">
+    <strong>一句话：Polymarket 的数据值得接。</strong>它和纳米是两层互补的数据——纳米给你"这队强不强"的事实，Polymarket 给你"掏钱的人觉得谁会赢"的共识。用 Polymarket 的实时概率和成交量来给 AI 预测结果加上一个"有多少钱在支持这个判断"的刻度。接入成本低、没有竞品在这么做、世界杯前能搞定。
+  </div>
+
+  <div class="card-grid col5">
+    <div class="card green">
+      <div class="value">$10 亿+</div>
+      <div class="label">冠军市场交易量</div>
+    </div>
+    <div class="card orange">
+      <div class="value">89+</div>
+      <div class="label">世界杯相关合约</div>
+    </div>
+    <div class="card accent">
+      <div class="value">94%</div>
+      <div class="label">赛前4小时准确率</div>
+    </div>
+    <div class="card purple">
+      <div class="value">3 套 API</div>
+      <div class="label">公开免费</div>
+    </div>
+    <div class="card red">
+      <div class="value">0</div>
+      <div class="label">竞品做"AI+市场"模式</div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th style="width:14%">方面</th><th style="width:14%">结论</th><th>简单说就是</th></tr>
+    <tr>
+      <td><strong>数据靠不靠谱</strong></td>
+      <td><span class="badge green">体育市场靠谱</span></td>
+      <td>Brier 分数 0.058（越接近 0 越准），赛前 4 小时准确率 94%。体育市场贡献了平台 81% 的利润——说明在这个品类上交易质量最高。但 58% 的市场有价格噪音，需要只采信交易量大的市场。</td>
+    </tr>
+    <tr>
+      <td><strong>接入难度</strong></td>
+      <td><span class="badge green">很简单</span></td>
+      <td>3 套公开 REST API，不用申请 Key，没有调用次数限制。比纳米数据省事多了——纳米还得走商务流程。</td>
+    </tr>
+    <tr>
+      <td><strong>和纳米的关系</strong></td>
+      <td><span class="badge green">互补，不是替代</span></td>
+      <td>纳米告诉你"这队强不强"（事实），Polymarket 告诉你"掏钱的人觉得谁会赢"（共识）。各干各的，不打架。而且 Polymarket 有成交量和实时概率，这是纳米完全没有的。</td>
+    </tr>
+    <tr>
+      <td><strong>有没有竞品</strong></td>
+      <td><span class="badge purple">暂时没有</span></td>
+      <td>目前没有产品把"AI 写战术分析"和"预测市场数据"放一起。DAZN、UFC 只展示概率数字，MeVu、Betr 只做交易。我们有机会抢到这个位置。</td>
+    </tr>
+    <tr>
+      <td><strong>别人怎么用的</strong></td>
+      <td><span class="badge accent">已经有成熟案例</span></td>
+      <td>DAZN、UFC、Google Finance、Bloomberg 都在用 Polymarket 数据。说明这个数据源已经过了基本的质量门槛。</td>
+    </tr>
+    <tr>
+      <td><strong>能不能在世界杯前搞完</strong></td>
+      <td><span class="badge green">能</span></td>
+      <td>最核心的功能（用 Polymarket 赔率来校准 AI 的信心指数）1-2 周就能上。全套功能在世界杯开赛前可以交付。</td>
+    </tr>
+  </table>
+  </div>
+
+</section>
+
+<div class="divider"></div>
+
+<!-- ====== SECTION 1: WHAT IS POLYMARKET ====== -->
+<section id="s1">
+  <h2>一、Polymarket 是什么</h2>
+
+  <p>Polymarket 是目前全球最大的<strong>去中心化预测市场</strong>，跑在 Polygon 区块链上。用户用 USDC（一种美元稳定币）对现实世界的事件结果下注，<strong>价格直接反映市场觉得这件事发生的概率有多大</strong>。2020 年成立的，累计交易量超过 $100 亿。2024 年美国大选期间，单日交易量最高超过 $2 亿。</p>
+
+  <h3>1.1 怎么定价的</h3>
+  <div class="two-col">
+    <div>
+      <p>每个市场只有两个结果：<strong>会发生（Yes）</strong>和<strong>不会发生（No）</strong>。两者价格加起来恒等于 $1：</p>
+      <p style="font-size:16px;text-align:center;padding:12px;background:var(--card);border-radius:8px;"><strong>1 Yes = $1 - 1 No</strong></p>
+      <p>Yes 报价 $0.55 → 市场认为概率 55%<br>
+      Yes 报价 $0.90 → 市场认为概率 90%</p>
+    </div>
+    <div>
+      <h4>三层结构</h4>
+      <table>
+        <tr><th>层级</th><th>是什么</th><th>例子</th></tr>
+        <tr><td><strong>Event</strong></td><td>一件事</td><td>"法国 vs 塞内加尔"</td></tr>
+        <tr><td><strong>Market</strong></td><td>赌什么</td><td>谁赢 / 进几个球</td></tr>
+        <tr><td><strong>Outcome</strong></td><td>具体选项的代币</td><td>"法国赢" Token</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h3>1.2 和传统博彩公司有什么区别</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>Polymarket</th><th>Kalshi</th><th>Bet365 / 威廉希尔</th></tr>
+    <tr><td><strong>跟谁对赌</strong></td><td>其他用户（P2P）</td><td>其他用户</td><td>庄家坐庄</td></tr>
+    <tr><td><strong>怎么赚钱</strong></td><td>收交易手续费</td><td>收交易手续费</td><td>赔率里藏抽水</td></tr>
+    <tr><td><strong>监管</strong></td><td>CFTC 商品衍生品</td><td>CFTC 注册交易所</td><td>各州博彩委员会</td></tr>
+    <tr><td><strong>实名</strong></td><td>不需要（钱包地址）</td><td>需要实名</td><td>需要实名</td></tr>
+    <tr><td><strong>赢家被封吗</strong></td><td><span class="badge green">不会</span></td><td><span class="badge green">不会</span></td><td><span class="badge red">经常被封</span></td></tr>
+    <tr><td><strong>数据公开</strong></td><td><span class="badge green">链上公开·可审计</span></td><td>CFTC 监管审计</td><td>不公开</td></tr>
+    <tr><td><strong>能拿数据吗</strong></td><td><span class="badge green">3 套免费 API</span></td><td><span class="badge orange">有限的 API</span></td><td><span class="badge red">要付费买</span></td></tr>
+    <tr><td><strong>世界杯合约</strong></td><td><span class="badge green">89+</span></td><td><span class="badge orange">大概 15 个</span></td><td><span class="badge green">100+</span>（但不公开数据）</td></tr>
+  </table>
+  </div>
+
+  <h3>1.3 对我们有什么用</h3>
+  <div class="callout good">
+    <strong>关键区别：</strong>传统博彩赔率 = 庄家定的价（已经算好了自己的利润空间）。Polymarket 价格 = 全球交易者用真金白银博弈出来的结果。这意味着<strong>当有内幕信息的时候——比如首发名单泄露、核心球员突然受伤——Polymarket 的价格变动往往比新闻报道快 15-30 分钟</strong>。这对我们做赛前预测来说，等于是个免费的"信息早鸟"信号。
+  </div>
+</section>
+
+<!-- ====== SECTION 2: WORLD CUP MARKETS ====== -->
+<section id="s2">
+  <h2>二、2026 世界杯上有哪些市场</h2>
+
+  <div class="card-grid">
+    <div class="card green"><div class="value">$10.18 亿</div><div class="label">冠军市场交易量</div></div>
+    <div class="card orange"><div class="value">$10.83 亿</div><div class="label">FIFA 标签下总交易量</div></div>
+    <div class="card accent"><div class="value">72</div><div class="label">可用的单场市场</div></div>
+    <div class="card purple"><div class="value">860</div><div class="label">FIFA 相关市场总数</div></div>
+  </div>
+
+  <h3>2.1 市场清单（按对我们有用的程度排序）</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>市场</th><th>数量</th><th>大概交易量</th><th>对我们有什么用</th><th>优先级</th></tr>
+    <tr>
+      <td>🏆 冠军预测</td><td>1</td><td>$10.18 亿</td>
+      <td><span class="badge green">校准夺冠概率</span> 拿来做对比基准</td>
+      <td><span class="badge green">P0</span></td>
+    </tr>
+    <tr>
+      <td>📊 小组胜者</td><td>12</td><td>$1.2-3 亿/组</td>
+      <td><span class="badge green">校准小组赛预判</span></td>
+      <td><span class="badge green">P0</span></td>
+    </tr>
+    <tr>
+      <td>⚽ 单场胜负</td><td>72</td><td>$500 万-2 亿/场</td>
+      <td><span class="badge green">逐场校准信心指数</span> + 监控赛前异动</td>
+      <td><span class="badge green">P0</span></td>
+    </tr>
+    <tr>
+      <td>📈 大小球</td><td>72</td><td>$50-500 万/场</td>
+      <td>给 AI 的进球预测做交叉验证</td>
+      <td><span class="badge accent">P1</span></td>
+    </tr>
+    <tr>
+      <td>🥇 金靴奖</td><td>1</td><td>$5000 万+</td>
+      <td>丰富射手话题内容</td>
+      <td><span class="badge accent">P1</span></td>
+    </tr>
+    <tr>
+      <td>🌍 哪个大洲夺冠</td><td>1</td><td>$8000 万+</td>
+      <td>宏观叙事素材</td>
+      <td><span class="badge accent">P2</span></td>
+    </tr>
+    <tr>
+      <td>👤 球员花絮</td><td>多个</td><td>$5-50 万/个</td>
+      <td>互动小料（"梅西会进球吗"之类）</td>
+      <td><span class="badge accent">P2</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>2.2 Polymarket 赔率 vs 我们模型——有差异的地方反而是内容机会</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>球队</th><th>Polymarket 概率</th><th>我们模型</th><th>差多少</th><th>怎么理解</th></tr>
+    <tr>
+      <td>🇫🇷 法国</td><td>17%</td><td>35%</td><td><span class="badge orange">我们高 18pp</span></td>
+      <td>市场竞争更分散，对强队之间的差距没我们看得那么大</td>
+    </tr>
+    <tr>
+      <td>🇪🇸 西班牙</td><td>15%</td><td>10%</td><td><span class="badge orange">市场高 5pp</span></td>
+      <td>市场更看好西班牙——2024 欧洲杯夺冠后信心一直在涨</td>
+    </tr>
+    <tr>
+      <td>🏴󠁧󠁢󠁥󠁮󠁧󠁿 英格兰</td><td>11%</td><td>12%</td><td><span class="badge green">差不多</span></td>
+      <td>对英格兰"强但不够强"的判断基本一致</td>
+    </tr>
+    <tr>
+      <td>🇦🇷 阿根廷</td><td>9%</td><td>18%</td><td><span class="badge red">我们高 9pp</span></td>
+      <td><strong>我们最大的偏差。</strong>市场在系统性地 discount 梅西 39 岁的体能问题</td>
+    </tr>
+    <tr>
+      <td>🇧🇷 巴西</td><td>9%</td><td>15%</td><td><span class="badge orange">我们高 6pp</span></td>
+      <td>市场对巴西防守有疑虑，南美预选赛表现不好已经在价格里了</td>
+    </tr>
+    <tr>
+      <td>🇵🇹 葡萄牙</td><td>7%</td><td>8%</td><td><span class="badge green">差不多</span></td>
+      <td>C 罗 41 岁的问题，市场和我们的看法一致</td>
+    </tr>
+    <tr>
+      <td>🇩🇪 德国</td><td>5%</td><td>5%</td><td><span class="badge green">一模一样</span></td>
+      <td>连续两届小组出局，信心打没了</td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="callout">
+    <strong>要点：</strong>我们模型和市场意见不一致的地方，恰好是写内容的好素材。"AI 说法国 35% 夺冠，但市场只给 17%——差在哪？" 这种对比天然有传播性。
+  </div>
+</section>
+
+<!-- ====== SECTION 3: RELIABILITY ====== -->
+<section id="s3">
+  <h2>三、Polymarket 的数据能信吗？</h2>
+
+  <p>这是最关键的问题。我们从四个角度来看：量化指标、学术研究怎么说、体育市场特殊在哪、有什么坑。</p>
+
+  <h3>3.1 看数据</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>指标</th><th>Polymarket</th><th>传统博彩</th><th>人类专家</th><th>什么意思</th></tr>
+    <tr>
+      <td><strong>Brier 分数</strong></td>
+      <td><span class="badge green">0.058</span></td>
+      <td>~0.062</td>
+      <td>~0.085</td>
+      <td>0=完美预测，0.25=瞎猜。Polymarket 比瞎猜准 77%，比传统博彩略好，比专家好不少</td>
+    </tr>
+    <tr>
+      <td><strong>赛前1月准确率</strong></td>
+      <td><span class="badge green">~90%</span></td>
+      <td>~88%</td>
+      <td>~75%</td>
+      <td>提前一个月的预测就很准了</td>
+    </tr>
+    <tr>
+      <td><strong>赛前4小时准确率</strong></td>
+      <td><span class="badge green">~94%</span></td>
+      <td>~92%</td>
+      <td>~82%</td>
+      <td>快到比赛时准确率最高——因为首发、伤病信息都出来了</td>
+    </tr>
+    <tr>
+      <td><strong>体育占利润</strong></td>
+      <td><span class="badge green">81%</span></td>
+      <td>—</td>
+      <td>—</td>
+      <td>体育是 Polymarket 最赚钱的板块，不是政治。说明体育市场的交易质量更高</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>3.2 学术界怎么说</h3>
+  <div class="callout good">
+    <strong>好的方面：</strong>
+    • 耶鲁 + LBS 联合研究（2024）：Polymarket 盈利预测准确率超过华尔街分析师（90% vs 81%）
+    • 体育市场 Brier 分数 0.058，跟最好的统计预测模型一个水平
+    • $10 亿级别的市场不是开玩笑——大资金有动力做深度研究
+  </div>
+  <div class="callout warn">
+    <strong>要注意的：</strong>
+    • 范德堡大学研究（2025）：Polymarket 在 2024 大选预测中准确率只有 67%，三个平台里最差
+    • 58% 的市场出现过价格逆转（就是价格信号是噪音）
+    • 实际上 1-3% 的精英交易者贡献了 76.5% 的利润——大部分人是噪音交易者
+  </div>
+
+  <h3>3.3 体育市场比政治市场好在哪</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th></th><th>体育市场</th><th>政治市场</th></tr>
+    <tr><td><strong>结果</strong></td><td>比赛结束谁赢谁输，没争议</td><td>计票争议、法律挑战一大堆</td></tr>
+    <tr><td><strong>信息</strong></td><td>球员状态、战术、历史——高度透明</td><td>民调不准、信息不对称严重</td></tr>
+    <tr><td><strong>参与者</strong></td><td>研究基本面的人多</td><td>情绪化交易的人多</td></tr>
+    <tr><td><strong>反馈周期</strong></td><td>90 分钟出结果</td><td>几天到几周</td></tr>
+    <tr><td><strong>操纵成本</strong></td><td>$10 亿级别，很难操纵</td><td>小市场容易被操纵</td></tr>
+  </table>
+  </div>
+
+  <h3>3.4 体育市场的额外好处</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>好处</th><th>说明</th></tr>
+    <tr><td>🔄 不封赢家</td><td>传统博彩会封杀长期赢钱的人，Polymarket 不会——所以懂行的人愿意长期待着</td></tr>
+    <tr><td>📊 链上透明</td><td>每笔交易都在区块链上，有人搞鬼能被发现</td></tr>
+    <tr><td>💰 真金白银</td><td>大资金下注前会做深入研究，价格里包含了真实的信息</td></tr>
+    <tr><td>🏟️ 官方数据合作</td><td>MLB 跟 Sportradar、意甲跟 Genius Sports——官方数据直接喂进去，信息不对称比传统博彩低</td></tr>
+    <tr><td>⚡ 价格跑在新闻前面</td><td>重大新闻出来前 15-30 分钟，Polymarket 价格经常先动——交易行为把信息提前泄露了</td></tr>
+  </table>
+  </div>
+
+  <h3>3.5 不同市场的可信度分级</h3>
+  <div class="card-grid">
+    <div class="card green">
+      <div class="value">A-</div>
+      <div class="label"><strong>冠军 / 淘汰赛</strong><br>$10 亿级交易量<br>基本没法操纵</div>
+    </div>
+    <div class="card accent">
+      <div class="value">B+</div>
+      <div class="label"><strong>单场胜负</strong><br>$500 万+ 交易量<br>信息效率高</div>
+    </div>
+    <div class="card orange">
+      <div class="value">B</div>
+      <div class="label"><strong>大小球 / 让球</strong><br>$50-500 万<br>有一定噪音</div>
+    </div>
+    <div class="card">
+      <div class="value" style="color:var(--muted)">C+</div>
+      <div class="label"><strong>球员花絮</strong><br>交易量太小<br>容易被个别人影响</div>
+    </div>
+  </div>
+
+  <h3>3.6 怎么用才靠谱</h3>
+  <div class="callout">
+    <strong>三个原则：</strong><br>
+    ① <strong>只用大市场。</strong>冠军 ≥$1 亿、单场 ≥$500 万——低于这个不采信。<br>
+    ② <strong>取中间价。</strong>不要取最后一笔成交价（容易被操纵），取订单簿中间价。<br>
+    ③ <strong>别单独用。</strong>Polymarket 概率 + 纳米赔率 + Elo 模型，至少两个一致才标"高置信度"。
+  </div>
+</section>
+
+<!-- ====== SECTION 4: TECHNICAL ====== -->
+<section id="s4">
+  <h2>四、怎么拿到这些数据</h2>
+
+  <h3>4.1 三套 API</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>API</th><th>地址</th><th>用来干嘛</th><th>要认证吗</th><th>多快</th></tr>
+    <tr>
+      <td><strong>Gamma API</strong></td>
+      <td><code>gamma-api.polymarket.com</code></td>
+      <td>找赛事、找市场、找标签</td>
+      <td><span class="badge green">不用</span></td>
+      <td>大概 5 分钟刷新</td>
+    </tr>
+    <tr>
+      <td><strong>CLOB API</strong></td>
+      <td><code>clob.polymarket.com</code></td>
+      <td>实时价格、挂单深度、历史价格</td>
+      <td><span class="badge green">读操作不用</span></td>
+      <td><span class="badge green">秒级 / WebSocket</span></td>
+    </tr>
+    <tr>
+      <td><strong>Data API</strong></td>
+      <td><code>data-api.polymarket.com</code></td>
+      <td>持仓、成交量、市场统计</td>
+      <td><span class="badge green">不用</span></td>
+      <td>准实时</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>4.2 拿数据的四个步骤</h3>
+  <pre><span class="cmt"># 第1步：找到所有世界杯相关事件</span>
+GET /events?tag=fifa-world-cup&amp;active=true&amp;closed=false&amp;limit=100
+<span class="cmt">→ 返回: [{slug:"fifa-wc-france-senegal", title:"France vs Senegal",
+           startDate:"2026-06-16T14:00:00Z"}, ...]</span>
+
+<span class="cmt"># 第2步：找到一场比赛下的所有赌盘</span>
+GET /markets?event_id={event_id}
+<span class="cmt">→ 返回: [{question:"Moneyline", outcomes:["France","Draw","Senegal"],
+           outcomePrices:["0.72","0.18","0.10"], volume:2450000}, ...]</span>
+
+<span class="cmt"># 第3步：拿实时价格（REST 或 WebSocket）</span>
+GET /price?token_id={clob_token_id}&amp;side=buy
+<span class="cmt">→ 返回: {price:"0.72", size:5000, timestamp:"..."}</span>
+
+<span class="cmt"># 第4步：拿历史价格曲线（看有没有异常波动）</span>
+GET /prices-history?token_id={clob_token_id}&amp;interval=max&amp;fidelity=1440
+<span class="cmt">→ 返回: [{t:1718409600, price:0.68}, {t:1718496000, price:0.71}, ...]</span></pre>
+
+  <h3>4.3 数据怎么存</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>数据</th><th>从哪拿</th><th>多久更新</th><th>存哪</th></tr>
+    <tr><td>赛事列表</td><td>Gamma API → events</td><td>5 分钟</td><td>Redis</td></tr>
+    <tr><td>概率快照</td><td>Gamma API → outcomePrices</td><td>2 分钟</td><td>PostgreSQL</td></tr>
+    <tr><td>实时报价</td><td>CLOB WebSocket</td><td>秒级</td><td>Redis Stream</td></tr>
+    <tr><td>成交量</td><td>Gamma API → volume</td><td>5 分钟</td><td>PostgreSQL</td></tr>
+    <tr><td>历史价格</td><td>CLOB → prices-history</td><td>每天补一次</td><td>ClickHouse</td></tr>
+  </table>
+  </div>
+</section>
+
+<!-- ====== SECTION 5: POLYMARKET + NAMI ====== -->
+<section id="s5">
+  <h2>五、Polymarket 和纳米怎么配合</h2>
+
+  <p>Polymarket 替代不了纳米，纳米也做不到 Polymarket 的事。它们是两层数据，不是竞品。</p>
+
+  <h3>5.1 各自覆盖什么</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>数据</th><th style="width:15%">纳米</th><th style="width:15%">Polymarket</th><th>结论</th></tr>
+    <tr>
+      <td>赛程 / 比分 / 球员信息</td>
+      <td><span class="badge green">有</span></td>
+      <td><span class="badge red">没有</span></td>
+      <td>纳米独占——这是地基</td>
+    </tr>
+    <tr>
+      <td>球队 / 球员统计数据</td>
+      <td><span class="badge green">有（80+ 字段）</span></td>
+      <td><span class="badge red">没有</span></td>
+      <td>纳米独占</td>
+    </tr>
+    <tr>
+      <td>FIFA 排名 / Elo</td>
+      <td><span class="badge green">有</span></td>
+      <td><span class="badge red">没有</span></td>
+      <td>纳米独占</td>
+    </tr>
+    <tr>
+      <td>赔率 / 盘口</td>
+      <td><span class="badge orange">有基础博彩数据</span></td>
+      <td><span class="badge green">更丰富·实时</span></td>
+      <td>互补，实时场景用 Polymarket</td>
+    </tr>
+    <tr>
+      <td><strong>成交量 / 资金流向</strong></td>
+      <td><span class="badge red">没有</span></td>
+      <td><span class="badge green">独家</span></td>
+      <td><strong>Polymarket 独占</strong></td>
+    </tr>
+    <tr>
+      <td><strong>实时市场概率</strong></td>
+      <td><span class="badge red">没有</span></td>
+      <td><span class="badge green">独家</span></td>
+      <td><strong>Polymarket 独占</strong></td>
+    </tr>
+    <tr>
+      <td><strong>赔率变化曲线</strong></td>
+      <td><span class="badge orange">有延迟</span></td>
+      <td><span class="badge green">秒级 WebSocket</span></td>
+      <td>Polymarket 快得多</td>
+    </tr>
+    <tr>
+      <td>球员话花絮市场</td>
+      <td><span class="badge red">没有</span></td>
+      <td><span class="badge green">有</span></td>
+      <td>Polymarket 补充</td>
+    </tr>
+    <tr>
+      <td>新闻 / 舆情 / 伤病</td>
+      <td><span class="badge green">有</span></td>
+      <td><span class="badge red">没有</span></td>
+      <td>纳米独占</td>
+    </tr>
+    <tr>
+      <td>数据可靠性</td>
+      <td><span class="badge green">官方数据·很稳</span></td>
+      <td><span class="badge orange">市场数据·有操纵风险</span></td>
+      <td>交叉验证最好</td>
+    </tr>
+    <tr>
+      <td>接入门槛</td>
+      <td><span class="badge orange">要商务合作</span></td>
+      <td><span class="badge green">免费·不用申请</span></td>
+      <td>Polymarket 快得多</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>5.2 两层数据怎么叠加</h3>
+
+  <div class="two-col">
+    <div>
+      <div class="callout good">
+        <strong>纳米 = 事实层</strong><br><br>
+        • 谁在踢？<br>
+        • 踢得怎么样？<br>
+        • 外面怎么说？<br>
+        • 庄家怎么定价？<br><br>
+        <em style="color:var(--muted);font-size:13px;">回答"这个队强不强"</em>
+      </div>
+    </div>
+    <div>
+      <div class="callout">
+        <strong>Polymarket = 共识层</strong><br><br>
+        • 聪明钱觉得谁会赢？<br>
+        • 有多少钱在支持这个判断？<br>
+        • 市场情绪什么时候变了？<br>
+        • 有没有内幕信息进来了？<br><br>
+        <em style="color:var(--muted);font-size:13px;">回答"掏钱的人觉得谁会赢"</em>
+      </div>
+    </div>
+  </div>
+
+  <h3>5.3 具体到我们产品的每个输出模块</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>输出内容</th><th>纳米给什么</th><th>Polymarket 给什么</th><th>加起来是什么</th></tr>
+    <tr>
+      <td>🏆 预测结论</td>
+      <td>推理依据（Elo差、身价差、历史）</td>
+      <td><strong>信心指数校准</strong>（★★★ → 有概率数字）</td>
+      <td>有事实 + 有市场背书</td>
+    </tr>
+    <tr>
+      <td>📊 胜负理由</td>
+      <td>全部基本面素材</td>
+      <td>"全球聪明钱也这么想"的佐证</td>
+      <td>有理有据有背书</td>
+    </tr>
+    <tr>
+      <td>⚽ 进球预测</td>
+      <td>攻防数据</td>
+      <td>大小球市场交叉验证</td>
+      <td>两个来源互相确认</td>
+    </tr>
+    <tr>
+      <td>🌡️ 场外因素</td>
+      <td>天气、场地、裁判数据</td>
+      <td>检测市场有没有已经把这些因素定价了</td>
+      <td>因素 + 市场定价</td>
+    </tr>
+    <tr>
+      <td>🐴 爆冷预警</td>
+      <td>实力差距分析</td>
+      <td>赔率异动检测"有人知道了什么"</td>
+      <td><span class="badge accent">新增能力</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>5.4 接入前后的对比</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>现在（只有纳米）</th><th>接入后（纳米+Polymarket）</th></tr>
+    <tr><td>信心指数 = 主观分档判断</td><td>信心指数 = AI 判断 (60%) + 市场概率 (40%) 加权</td></tr>
+    <tr><td>没有外部验证</td><td>$10 亿级资金在给判断背书</td></tr>
+    <tr><td>静态预测，不实时更新</td><td>赛前实时监控赔率变化，有异动自动更新</td></tr>
+    <tr><td>没有冷门预警</td><td>AI vs 市场分歧 >20pp → 自动生成"可能有冷门"内容</td></tr>
+    <tr><td>不知道哪个比赛热度高</td><td>按成交量排热门，内容推送有优先级</td></tr>
+  </table>
+  </div>
+
+  <div class="callout">
+    <strong>总结：</strong>纳米让 AI 说"法国更强，因为 A、B、C"。Polymarket 让 AI 说"法国更强，全球 $10 亿的共识也这么看，但最近 15% 的钱突然转向了——可能有我们不知道的事"。<strong>后面这句话用户才愿意付钱。</strong>
+  </div>
+</section>
+
+<!-- ====== SECTION 6: PRODUCTS USING POLYMARKET ====== -->
+<section id="s6">
+  <h2>六、已经有哪些产品在用 Polymarket？</h2>
+
+  <p>在我们决定要不要用之前，先看看市场上已经有哪些人在用、怎么用的。这既验证了 Polymarket 数据的可用性，也能帮我们找到自己的位置。</p>
+
+  <h3>6.1 四类产品</h3>
+
+  <h4>🏟️ 体育直播 / 流媒体（把概率塞进直播画面）</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>产品</th><th>怎么集成的</th><th>值得关注的点</th><th>进度</th></tr>
+    <tr>
+      <td><strong>DAZN</strong></td>
+      <td>实时赔率叠在直播画面上 + App 里可以直接交易</td>
+      <td>全球最大体育流媒体之一，欧冠/拳击/五大联赛都在上面。边看直播边看赔率，这个"观看+预测"的双屏场景验证了</td>
+      <td><span class="badge green">上了</span></td>
+    </tr>
+    <tr>
+      <td><strong>UFC</strong></td>
+      <td>TKO Group 独家合作，Fan Prediction Scoreboard 直接嵌进赛事直播</td>
+      <td>PPV 赛事直播画面实时显示 Polymarket 概率——证明"实时概率"可以当赛事的第二屏内容，不需要让用户去交易</td>
+      <td><span class="badge green">上了</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <h4>📱 独立预测/博彩 App</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>产品</th><th>和 Polymarket 的关系</th><th>怎么做的</th><th>进度</th></tr>
+    <tr>
+      <td><strong>Sports.com Predict</strong></td>
+      <td>全套技术白标授权，收入分成</td>
+      <td>直接套 Polymarket 的底层技术和流动性，换 Sports.com 的皮。用 Sports.com 本身的内容流量来导流</td>
+      <td><span class="badge orange">世界杯前上</span></td>
+    </tr>
+    <tr>
+      <td><strong>MeVu</strong></td>
+      <td>聚合 Polymarket + Kalshi</td>
+      <td>"Tinder + TikTok 式"滑动下注——不展示复杂图表，只展示概率和滑动操作。把预测市场做得像刷短视频一样</td>
+      <td><span class="badge green">上了</span></td>
+    </tr>
+    <tr>
+      <td><strong>Betr</strong></td>
+      <td>多年战略合作</td>
+      <td>预测市场 + 传统博彩 + 娱乐场三合一超级 App。不是单一预测工具，是赌博/娱乐/预测的超级入口</td>
+      <td><span class="badge orange">2026 内上</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <h4>💰 金融信息平台（把预测市场当"另类数据"）</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>平台</th><th>怎么用的</th><th>说明什么</th></tr>
+    <tr>
+      <td><strong>Google Finance</strong></td>
+      <td>Polymarket 事件概率和股票/ETF 数据放在一起展示</td>
+      <td>全球最大的金融信息入口把预测市场数据当"可投资信息"了</td>
+    </tr>
+    <tr>
+      <td><strong>Yahoo Finance</strong></td>
+      <td>同上</td>
+      <td>再次验证</td>
+    </tr>
+    <tr>
+      <td><strong>Bloomberg Terminal</strong></td>
+      <td>Kalshi / Polymarket 数据已经接入终端</td>
+      <td><strong>最关键的信号：</strong>彭博终端的数据审核标准很严，能进去说明数据质量过了金融级门槛</td>
+    </tr>
+  </table>
+  </div>
+  <div class="callout good">
+    <strong>为什么金融平台选 Polymarket 而不是传统博彩赔率？</strong>因为 Polymarket 的概率是市场出清价格——买卖双方博弈出来的结果，不是庄家自己定的（传统博彩赔率里有庄家的利润空间）。在"另类数据"这个品类里，Polymarket 的数据比 Bet365 赔率更有信息含量。
+  </div>
+
+  <h4>🎮 职业体育联赛 / 范特西 / 博彩合作</h4>
+  <div class="table-wrap">
+  <table>
+    <tr><th>合作方</th><th>模式</th><th>用了什么数据</th></tr>
+    <tr>
+      <td><strong>MLB</strong></td>
+      <td>独家预测市场合作</td>
+      <td>Sportradar 实时比赛数据</td>
+    </tr>
+    <tr>
+      <td><strong>Serie A（意甲）</strong></td>
+      <td>美国市场独家预测市场</td>
+      <td>Genius Sports 官方数据</td>
+    </tr>
+    <tr>
+      <td><strong>NHL</strong></td>
+      <td>多年合作</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>MLS / LaLiga</strong></td>
+      <td>2026 新增合作</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>DraftKings</strong></td>
+      <td>合作开发预测市场功能</td>
+      <td>—</td>
+    </tr>
+    <tr>
+      <td><strong>PrizePicks</strong></td>
+      <td>集成合作</td>
+      <td>—</td>
+    </tr>
+  </table>
+  </div>
+  <div class="callout">
+    <strong>趋势：</strong>MLB → 意甲 → NHL → MLS/LaLiga，职业联赛在逐步从传统博彩转向预测市场。原因是预测市场更透明（链上可查）、不封杀赢家（好的分析师能留下来）、数据可编程（API 友好）。世界杯是 FIFA 的旗舰赛事，Polymarket 在赛前或赛中拿到 FIFA 的官方数据合作也不奇怪。
+  </div>
+
+  <h3>6.2 竞品对比——我们站在哪</h3>
+  <div class="table-wrap">
+  <table>
+    <tr><th>产品</th><th>用 Polymarket</th><th>AI 写内容</th><th>基本面分析</th><th>市场信号</th><th>"AI+市场"模式</th></tr>
+    <tr>
+      <td>DAZN</td><td><span class="badge green">是</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>只展示概率</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr>
+      <td>UFC</td><td><span class="badge green">是</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>只展示概率</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr>
+      <td>Sports.com Predict</td><td><span class="badge green">白标</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>可交易</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr>
+      <td>MeVu</td><td><span class="badge green">聚合</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>可交易</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr>
+      <td>Betr</td><td><span class="badge green">是</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>可交易</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr>
+      <td>Google/Yahoo Finance</td><td><span class="badge green">是</span></td><td><span class="badge red">没有</span></td><td><span class="badge red">没有</span></td><td>数据点</td><td><span class="badge red">没有</span></td>
+    </tr>
+    <tr style="background:rgba(0,200,83,0.04);">
+      <td><strong>我们</strong></td>
+      <td><span class="badge green">可以接</span></td>
+      <td><span class="badge green">AI 写战术+叙事</span></td>
+      <td><span class="badge green">纳米全覆盖</span></td>
+      <td><span class="badge green">信心指数+异动监控</span></td>
+      <td><span class="badge purple">没有人在做</span></td>
+    </tr>
+  </table>
+  </div>
+
+  <div class="callout">
+    <strong>所以我们的位置是：</strong><br>
+    DAZN、UFC 只展示数字，不生产内容。<br>
+    MeVu、Betr 是交易工具，不是内容产品。<br>
+    Google、Bloomberg 把概率当一行数据，不写分析。<br><br>
+    <strong>没有人同时做两件事：用 AI 写"有态度的战术分析" + 用 Polymarket 的实时概率给分析加上"有钱支撑的置信度"。</strong><br><br>
+    这就是我们的机会——"AI 说法国会赢，而且全球 $10 亿的聪明钱也押法国"——这种内容目前市场上<strong>没人做</strong>。
+  </div>
+</section>
+
+<!-- ====== SECTION 7: ROADMAP ====== -->
+<section id="s7">
+  <h2>七、我们怎么落地</h2>
+
+  <ul class="priority-list">
+    <li>
+      <span class="pri p0">P0</span>
+      <div>
+        <strong>接 Polymarket 单场赔率，校准信心指数</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          让 AI 的"★★★"有个数字刻度，不是纯主观判断。<br>
+          • 市场概率 ≥70% → ★★★★+ / "高置信度"<br>
+          • 市场概率 50-70% → ★★★ / "中置信度"<br>
+          • 市场概率 &lt;50% → ★★ / "存在分歧"<br>
+          预计 1-2 周。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p0">P0</span>
+      <div>
+        <strong>接冠军赔率，校准夺冠概率</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          AI 模型概率和 Polymarket 市场概率做加权融合。先按 AI 60% + 市场 40%，世界杯后用实际结果回调权重。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p1">P1</span>
+      <div>
+        <strong>监控赔率异动，做突发信号提醒</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          赛前 1 小时内某队价格变动 >15%，触发"⚠️ 市场出现新信息"标记，提醒 AI 重跑预测或补充说明。<br>
+          典型场景：首发名单泄露（提前 15-30 分钟价格异动）、核心球员突然受伤（新闻出来前市场已经反应了）。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p1">P1</span>
+      <div>
+        <strong>按成交量排比赛热度，决定推送优先级</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          Polymarket 成交量高 = 全球关注度高。成交量 Top 10 的比赛发完整长内容（预测+理由+球星+看点），其他的发精简版。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p2">P2</span>
+      <div>
+        <strong>"AI vs 市场"分歧内容</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          AI 模型和 Polymarket 差 >20pp → 自动生成"AI 和市场，谁对？"的内容。<br>
+          比如："我们模型给法国 70% 胜率，但市场只给 50%——差在哪？" 这种内容自然有传播力。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p2">P2</span>
+      <div>
+        <strong>接 Polymarket 球员市场，丰富小料内容</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          比如："梅西会进球吗？" 市场概率 62% → AI 写："市场给 39 岁的梅西打出了 62% 的进球概率，本身就是一种认可。但具体这场他的防守对位是……"<br>
+          主要是增加内容趣味性。
+        </span>
+      </div>
+    </li>
+    <li>
+      <span class="pri p3">P3</span>
+      <div>
+        <strong>赛后回填数据，做长期评估</strong><br>
+        <span style="color:var(--muted);font-size:12px;">
+          世界杯结束后，用 Polymarket 结算数据 + 实际赛果，算我们"模型+市场"融合预测的 Brier 分数。积累"AI预测 vs 市场预测 vs 实际结果"的历史对比，本身就是数据壁垒。
+        </span>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<!-- ====== SECTION 8: RISKS ====== -->
+<section id="s8">
+  <h2>八、有什么风险</h2>
+
+  <div class="table-wrap">
+  <table>
+    <tr><th>风险</th><th>严重吗</th><th>发生的概率</th><th>影响</th><th>怎么防</th></tr>
+    <tr>
+      <td><strong>大资金操纵</strong><br><span style="color:var(--muted);font-size:11px;">有人用大钱在小市场制造假信号</span></td>
+      <td><span class="badge orange">中等</span></td>
+      <td>大市场低<br>小市场中</td>
+      <td>信心指数被假信号误导</td>
+      <td>① 取订单簿中间价，不取最后一笔<br>② 和纳米赔率交叉验证<br>③ 只用大市场（≥$500万）</td>
+    </tr>
+    <tr>
+      <td><strong>小市场不准</strong><br><span style="color:var(--muted);font-size:11px;">交易量太小的市场，几十万就能左右价格</span></td>
+      <td><span class="badge orange">中等</span></td>
+      <td>球员花絮类市场中</td>
+      <td>小市场概率不可靠</td>
+      <td>设最低量门槛：冠军 ≥$1亿、单场 ≥$500万、大小球 ≥$50万</td>
+    </tr>
+    <tr>
+      <td><strong>监管风险</strong><br><span style="color:var(--muted);font-size:11px;">CFTC 对预测市场的态度还在演变</span></td>
+      <td><span class="badge orange">中等</span></td>
+      <td>低-中</td>
+      <td>极端情况 Polymarket 可能被美国限制</td>
+      <td>纳米为主（≥60%权重），Polymarket 为辅助</td>
+    </tr>
+    <tr>
+      <td><strong>价格噪音</strong><br><span style="color:var(--muted);font-size:11px;">58% 市场有短期噪音假信号</span></td>
+      <td><span class="badge cyan">低</span></td>
+      <td>高但影响可控</td>
+      <td>短期波动被当成趋势</td>
+      <td>用 15 分钟移动平均，不用瞬时价格</td>
+    </tr>
+    <tr>
+      <td><strong>API 不稳定</strong><br><span style="color:var(--muted);font-size:11px;">世界杯期间流量激增</span></td>
+      <td><span class="badge cyan">低</span></td>
+      <td>中（赛事高峰）</td>
+      <td>实时数据中断</td>
+      <td>Polymarket 挂了就自动退回到纯纳米预测；本地缓存最近 3 次快照</td>
+    </tr>
+    <tr>
+      <td><strong>精英交易者偏差</strong><br><span style="color:var(--muted);font-size:11px;">1-3% 的人赚了 76.5% 的钱</span></td>
+      <td><span class="badge cyan">低</span></td>
+      <td>已存在</td>
+      <td>价格不完全代表"群体智慧"</td>
+      <td>这在 $10 亿市场里反而是好事——精英交易者在发现错误定价、推动价格往正确方向走</td>
+    </tr>
+  </table>
+  </div>
+
+  <h3>底线</h3>
+  <div class="callout good">
+    <strong>上面这些风险，没有一个是"不该接"级别的。</strong>每个都有低成本、好操作的应对方案。最大的风险其实是<strong>不接</strong>——在 2026 世界杯这个时间窗口，错过一个零竞品、接入成本又低的差异化数据源。
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<div class="footer">
+  <p>Polymarket 数据源调研 &amp; 2026 世界杯预测应用分析报告 · 2026-05-27</p>
+  <p style="margin-top:8px;">内部材料，不构成投资或博彩建议。</p>
+  <p style="margin-top:12px;font-size:11px;color:var(--muted);">
+    数据来源：Polymarket 官方文档 · CoinDesk / 雅虎财经 / CoinMarketCap · Vanderbilt / LBS / Yale 学术论文 · DAZN / UFC / MLB / Serie A / Google Finance 公开信息
+  </p>
+</div>
+
+</div>
+</body>
+</html>

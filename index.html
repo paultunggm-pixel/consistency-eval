@@ -989,28 +989,33 @@ var progressEl = document.getElementById('loading-progress');
 var progressBar = document.getElementById('loading-progress-bar-fill');
 function updateProgress(text, pct) {
     if (progressEl) progressEl.textContent = text;
-    if (progressBar && pct !== undefined) progressBar.style.width = pct + '%';
+    // 限制进度条不超过100%
+    if (progressBar && pct !== undefined) progressBar.style.width = Math.min(pct, 100) + '%';
 }
 
 // 优先从阿里云 OSS 加载（国内快），失败则回退 GitHub Pages
+var KNOWN_SIZE = 7122203; // data.json 实际大小，避免 gzip Content-Length 偏差
 var DATA_URL = 'https://consistency-eval.oss-cn-hangzhou.aliyuncs.com/data.json';
-fetch(DATA_URL)
+
+function streamFetch(url, fallbackUrl) {
+    return fetch(url)
     .then(function(response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
-        var total = parseInt(response.headers.get('content-length') || '0', 10);
-        var totalMB = total > 0 ? (total / 1024 / 1024).toFixed(1) : '?';
-        
-        // Track download progress using reader
+        var cl = parseInt(response.headers.get('content-length') || '0', 10);
+        var enc = response.headers.get('content-encoding') || '';
+        // gzip/brotli 压缩时 Content-Length 是压缩后大小，用已知实际大小
+        var total = (enc.indexOf('gzip') >= 0 || enc.indexOf('br') >= 0 || (cl > 0 && cl < 3000000)) ? KNOWN_SIZE : (cl > 0 ? cl : KNOWN_SIZE);
+        var totalMB = (total / 1024 / 1024).toFixed(1);
+
         var reader = response.body.getReader();
         var received = 0;
         var chunks = [];
-        updateProgress('正在下载数据 0%', 0);
-        
+        updateProgress('正在下载 0 / ' + totalMB + ' MB', 0);
+
         function pump() {
             return reader.read().then(function(result) {
                 if (result.done) {
-                    // Download complete
-                    updateProgress('正在解析数据...', 100);
+                    updateProgress('正在解析数据...', 95);
                     var blob = new Blob(chunks);
                     return blob.text().then(function(text) { return JSON.parse(text); });
                 }
@@ -1024,6 +1029,17 @@ fetch(DATA_URL)
         }
         return pump();
     })
+    .catch(function(err) {
+        if (fallbackUrl) {
+            console.warn('主源加载失败，尝试备用源:', err.message);
+            updateProgress('主源失败，备用源加载中...', 10);
+            return streamFetch(fallbackUrl, null);
+        }
+        throw err;
+    });
+}
+
+streamFetch(DATA_URL, 'data.json')
     .then(function(data) {
         historyData = data;
         updateProgress('渲染报告中...', 100);
@@ -1032,15 +1048,6 @@ fetch(DATA_URL)
             var overlay = document.getElementById('loading-overlay');
             if (overlay) { overlay.classList.add('hidden'); setTimeout(function() { overlay.remove(); }, 350); }
         }, 50);
-    })
-    .catch(function(err) {
-        // OSS 失败，尝试从 GitHub Pages 加载
-        console.warn('OSS 加载失败，尝试备用源:', err.message);
-        updateProgress('主源加载失败，尝试备用源...', 0);
-        return fetch('data.json').then(function(r2) {
-            if (!r2.ok) throw new Error('备用源也失败: HTTP ' + r2.status);
-            return r2.json();
-        });
     })
     .catch(function(err) {
         updateProgress('加载失败: ' + err.message, 0);

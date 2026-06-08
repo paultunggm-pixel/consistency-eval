@@ -290,7 +290,7 @@ let historyData = [];
 const pairNames = ["千问-豆包", "千问-豆包深思", "千问-元宝", "千问-DeepSeek", "千问-Gemini3.1"];
 
 // === 初始化 ===
-let currentDateIdx = historyData.length - 1;
+let currentDateIdx = 0;  // 数据加载后在 initAll() 中正确设置
 const pairColors = ['#6366f1','#0891b2','#16a34a','#d97706','#dc2626'];
 
 function rateClass(rate) {
@@ -967,6 +967,7 @@ document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); }
 
 // 初始化函数（数据加载后调用）
 function initAll() {
+    currentDateIdx = historyData.length - 1;  // 数据加载后设为最新日期
     var initErrors = [];
     try { renderNav(); } catch(e) { initErrors.push('renderNav: '+e.message); console.error('renderNav failed:', e); }
     try { renderOverview(); } catch(e) { initErrors.push('renderOverview: '+e.message); console.error('renderOverview failed:', e); }

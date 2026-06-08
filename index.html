@@ -264,11 +264,13 @@ tr:hover { background:rgba(99,102,241,0.03); }
 <!-- 数据加载提示（异步加载，页面立即可见） -->
 <style>
 @keyframes spin { to { transform: rotate(360deg); } }
-#loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f9fc; display: flex; align-items: center; justify-content: center; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, sans-serif; transition: opacity 0.3s; }
+#loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, sans-serif; transition: opacity 0.3s; }
 #loading-overlay.hidden { opacity: 0; pointer-events: none; }
-.loading-spinner { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #6366f1; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 16px; }
-.loading-text { color: #6b7280; font-size: 15px; }
-.loading-sub { color: #9ca3af; font-size: 12px; margin-top: 4px; }
+.loading-spinner { width: 44px; height: 44px; border: 3px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 20px; }
+.loading-text { color: rgba(255,255,255,0.9); font-size: 16px; font-weight: 500; }
+.loading-sub { color: rgba(255,255,255,0.7); font-size: 13px; margin-top: 6px; }
+#loading-progress-bar { width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 12px auto 0; overflow: hidden; }
+#loading-progress-bar-fill { height: 100%; background: #fff; border-radius: 2px; width: 0%; transition: width 0.3s; }
 </style>
 <link rel="stylesheet" href="js/vendor/katex.min.css">
 <script src="js/vendor/vendor-bundle.js" defer></script>
@@ -277,6 +279,7 @@ tr:hover { background:rgba(99,102,241,0.03); }
     <div class="loading-spinner"></div>
     <p class="loading-text">正在加载评测数据...</p>
     <p class="loading-sub" id="loading-progress"></p>
+    <div id="loading-progress-bar"><div id="loading-progress-bar-fill"></div></div>
   </div>
 </div>
 
@@ -983,28 +986,57 @@ function initAll() {
 
 // ====== 异步加载数据 ======
 var progressEl = document.getElementById('loading-progress');
-function updateProgress(text) { if (progressEl) progressEl.textContent = text; }
+var progressBar = document.getElementById('loading-progress-bar-fill');
+function updateProgress(text, pct) {
+    if (progressEl) progressEl.textContent = text;
+    if (progressBar && pct !== undefined) progressBar.style.width = pct + '%';
+}
 
 fetch('data.json')
     .then(function(response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         var total = parseInt(response.headers.get('content-length') || '0', 10);
-        if (total > 0) updateProgress('文件大小: ' + (total / 1024 / 1024).toFixed(1) + ' MB');
-        return response.json();
+        var totalMB = total > 0 ? (total / 1024 / 1024).toFixed(1) : '?';
+        
+        // Track download progress using reader
+        var reader = response.body.getReader();
+        var received = 0;
+        var chunks = [];
+        updateProgress('正在下载数据 0%', 0);
+        
+        function pump() {
+            return reader.read().then(function(result) {
+                if (result.done) {
+                    // Download complete
+                    updateProgress('正在解析数据...', 100);
+                    var blob = new Blob(chunks);
+                    return blob.text().then(function(text) { return JSON.parse(text); });
+                }
+                chunks.push(result.value);
+                received += result.value.length;
+                var pct = total > 0 ? Math.round(received / total * 100) : 0;
+                var downloadedMB = (received / 1024 / 1024).toFixed(1);
+                updateProgress('正在下载 ' + downloadedMB + ' / ' + totalMB + ' MB (' + pct + '%)', pct);
+                return pump();
+            });
+        }
+        return pump();
     })
     .then(function(data) {
         historyData = data;
-        updateProgress('数据就绪，渲染中...');
-        initAll();
-        var overlay = document.getElementById('loading-overlay');
-        if (overlay) { overlay.classList.add('hidden'); setTimeout(function() { overlay.remove(); }, 350); }
+        updateProgress('渲染报告中...', 100);
+        setTimeout(function() {
+            initAll();
+            var overlay = document.getElementById('loading-overlay');
+            if (overlay) { overlay.classList.add('hidden'); setTimeout(function() { overlay.remove(); }, 350); }
+        }, 50);
     })
     .catch(function(err) {
-        updateProgress('加载失败: ' + err.message);
+        updateProgress('加载失败: ' + err.message, 0);
         console.error('数据加载失败:', err);
         var overlay = document.getElementById('loading-overlay');
         if (overlay) {
-            overlay.innerHTML = '<div style="text-align:center"><p style="color:#dc2626;font-size:16px;">⚠️ 数据加载失败</p><p style="color:#6b7280;font-size:13px;">' + err.message + '</p><button onclick="location.reload()" style="margin-top:12px;padding:8px 20px;background:#6366f1;color:white;border:none;border-radius:6px;cursor:pointer;">重新加载</button></div>';
+            overlay.innerHTML = '<div style="text-align:center"><p style="color:#fff;font-size:18px;">⚠️ 数据加载失败</p><p style="color:rgba(255,255,255,0.7);font-size:14px;">' + err.message + '</p><button onclick="location.reload()" style="margin-top:16px;padding:10px 24px;background:#fff;color:#764ba2;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">重新加载</button></div>';
         }
     });
 </script>

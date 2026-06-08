@@ -1045,11 +1045,17 @@ streamFetch(DATA_URL, 'data.json')
     .then(function(data) {
         historyData = data;
         updateProgress('渲染报告中...', 100);
-        setTimeout(function() {
+        // 等待 deferred 脚本加载完成（Chart/katex）
+        function tryInit() {
+            if (typeof Chart === 'undefined' || typeof katex === 'undefined') {
+                setTimeout(tryInit, 100);  // 每100ms轮询
+                return;
+            }
             initAll();
             var overlay = document.getElementById('loading-overlay');
             if (overlay) { overlay.classList.add('hidden'); setTimeout(function() { overlay.remove(); }, 350); }
-        }, 50);
+        }
+        tryInit();
     })
     .catch(function(err) {
         updateProgress('加载失败: ' + err.message, 0);

@@ -266,9 +266,27 @@ tr:hover { background:rgba(99,102,241,0.03); }
 <div class="modal" id="modal-content"></div>
 </div>
 
-<script src="data.js"></script>
+<!-- 数据加载提示（异步加载，页面立即可见） -->
+<style>
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f8f9fc; display: flex; align-items: center; justify-content: center; z-index: 9999; font-family: -apple-system, BlinkMacSystemFont, sans-serif; transition: opacity 0.3s; }
+#loading-overlay.hidden { opacity: 0; pointer-events: none; }
+.loading-spinner { width: 40px; height: 40px; border: 3px solid #e5e7eb; border-top-color: #6366f1; border-radius: 50%; animation: spin .8s linear infinite; margin: 0 auto 16px; }
+.loading-text { color: #6b7280; font-size: 15px; }
+.loading-sub { color: #9ca3af; font-size: 12px; margin-top: 4px; }
+</style>
+<div id="loading-overlay">
+  <div style="text-align:center">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">正在加载评测数据...</p>
+    <p class="loading-sub" id="loading-progress"></p>
+  </div>
+</div>
+
+
 <script>
-// historyData 从外部 data.js 加载（浏览器可缓存，加快后续访问）
+// 数据通过异步 fetch 加载，页面不再阻塞
+let historyData = [];
 const pairNames = ["千问-豆包", "千问-豆包深思", "千问-元宝", "千问-DeepSeek", "千问-Gemini3.1"];
 
 // === 初始化 ===
@@ -947,21 +965,50 @@ function closeModal() {
 // 键盘ESC关闭弹窗
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
 
-// 初始化 (每步独立try-catch，避免CDN加载失败导致全页空白)
-var initErrors = [];
-try { renderNav(); } catch(e) { initErrors.push('renderNav: '+e.message); console.error('renderNav failed:', e); }
-try { renderOverview(); } catch(e) { initErrors.push('renderOverview: '+e.message); console.error('renderOverview failed:', e); }
-try { renderTrendChart(); } catch(e) { initErrors.push('renderTrendChart: '+e.message); console.error('renderTrendChart failed:', e); }
-try { renderGradeTable(); } catch(e) { initErrors.push('renderGradeTable: '+e.message); console.error('renderGradeTable failed:', e); }
-try { renderCourseTable(); } catch(e) { initErrors.push('renderCourseTable: '+e.message); console.error('renderCourseTable failed:', e); }
-try { renderDetails(); } catch(e) { initErrors.push('renderDetails: '+e.message); console.error('renderDetails failed:', e); }
-try { renderUncomparables(); } catch(e) { initErrors.push('renderUncomparables: '+e.message); console.error('renderUncomparables failed:', e); }
-if (initErrors.length > 0) {
-    var errDiv = document.createElement('div');
-    errDiv.style.cssText = 'position:fixed;top:10px;right:10px;background:#dc2626;color:white;padding:12px 16px;border-radius:8px;z-index:99999;font-size:13px;max-width:400px;';
-    errDiv.innerHTML = '<strong>初始化错误:</strong><br>' + initErrors.join('<br>');
-    document.body.appendChild(errDiv);
+// 初始化函数（数据加载后调用）
+function initAll() {
+    var initErrors = [];
+    try { renderNav(); } catch(e) { initErrors.push('renderNav: '+e.message); console.error('renderNav failed:', e); }
+    try { renderOverview(); } catch(e) { initErrors.push('renderOverview: '+e.message); console.error('renderOverview failed:', e); }
+    try { renderTrendChart(); } catch(e) { initErrors.push('renderTrendChart: '+e.message); console.error('renderTrendChart failed:', e); }
+    try { renderGradeTable(); } catch(e) { initErrors.push('renderGradeTable: '+e.message); console.error('renderGradeTable failed:', e); }
+    try { renderCourseTable(); } catch(e) { initErrors.push('renderCourseTable: '+e.message); console.error('renderCourseTable failed:', e); }
+    try { renderDetails(); } catch(e) { initErrors.push('renderDetails: '+e.message); console.error('renderDetails failed:', e); }
+    try { renderUncomparables(); } catch(e) { initErrors.push('renderUncomparables: '+e.message); console.error('renderUncomparables failed:', e); }
+    if (initErrors.length > 0) {
+        var errDiv = document.createElement('div');
+        errDiv.style.cssText = 'position:fixed;top:10px;right:10px;background:#dc2626;color:white;padding:12px 16px;border-radius:8px;z-index:99999;font-size:13px;max-width:400px;';
+        errDiv.innerHTML = '<strong>初始化错误:</strong><br>' + initErrors.join('<br>');
+        document.body.appendChild(errDiv);
+    }
 }
+
+// ====== 异步加载数据 ======
+var progressEl = document.getElementById('loading-progress');
+function updateProgress(text) { if (progressEl) progressEl.textContent = text; }
+
+fetch('data.json')
+    .then(function(response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        var total = parseInt(response.headers.get('content-length') || '0', 10);
+        if (total > 0) updateProgress('文件大小: ' + (total / 1024 / 1024).toFixed(1) + ' MB');
+        return response.json();
+    })
+    .then(function(data) {
+        historyData = data;
+        updateProgress('数据就绪，渲染中...');
+        initAll();
+        var overlay = document.getElementById('loading-overlay');
+        if (overlay) { overlay.classList.add('hidden'); setTimeout(function() { overlay.remove(); }, 350); }
+    })
+    .catch(function(err) {
+        updateProgress('加载失败: ' + err.message);
+        console.error('数据加载失败:', err);
+        var overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.innerHTML = '<div style="text-align:center"><p style="color:#dc2626;font-size:16px;">⚠️ 数据加载失败</p><p style="color:#6b7280;font-size:13px;">' + err.message + '</p><button onclick="location.reload()" style="margin-top:12px;padding:8px 20px;background:#6366f1;color:white;border:none;border-radius:6px;cursor:pointer;">重新加载</button></div>';
+        }
+    });
 </script>
 </div><!-- .page-wrap -->
 </body>

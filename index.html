@@ -992,7 +992,9 @@ function updateProgress(text, pct) {
     if (progressBar && pct !== undefined) progressBar.style.width = pct + '%';
 }
 
-fetch('data.json')
+// 优先从阿里云 OSS 加载（国内快），失败则回退 GitHub Pages
+var DATA_URL = 'https://consistency-eval.oss-cn-hangzhou.aliyuncs.com/data.json';
+fetch(DATA_URL)
     .then(function(response) {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         var total = parseInt(response.headers.get('content-length') || '0', 10);
@@ -1032,8 +1034,17 @@ fetch('data.json')
         }, 50);
     })
     .catch(function(err) {
+        // OSS 失败，尝试从 GitHub Pages 加载
+        console.warn('OSS 加载失败，尝试备用源:', err.message);
+        updateProgress('主源加载失败，尝试备用源...', 0);
+        return fetch('data.json').then(function(r2) {
+            if (!r2.ok) throw new Error('备用源也失败: HTTP ' + r2.status);
+            return r2.json();
+        });
+    })
+    .catch(function(err) {
         updateProgress('加载失败: ' + err.message, 0);
-        console.error('数据加载失败:', err);
+        console.error('所有数据源加载失败:', err);
         var overlay = document.getElementById('loading-overlay');
         if (overlay) {
             overlay.innerHTML = '<div style="text-align:center"><p style="color:#fff;font-size:18px;">⚠️ 数据加载失败</p><p style="color:rgba(255,255,255,0.7);font-size:14px;">' + err.message + '</p><button onclick="location.reload()" style="margin-top:16px;padding:10px 24px;background:#fff;color:#764ba2;border:none;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;">重新加载</button></div>';

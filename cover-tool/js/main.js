@@ -18,18 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupStepButtons();
   setupColumnMapping();
   loadOSSConfig();
-
-  showToast('正在加载字体...', '');
-  const loaded = await loadAllFonts((done, total) => {
-    document.querySelector('.header p').textContent = `字体加载中 ${done}/${total}...`;
-  });
-  state.fontsReady = loaded > 0;
-  document.querySelector('.header p').textContent = '上传课程数据 → 配置样式 → 渲染封面 → 上传 OSS → 返回 CDN URL';
-  if (loaded < 3) {
-    showToast('部分字体加载失败，可能影响渲染效果', 'error');
-  } else {
-    showToast('字体加载完成 ✅', 'success');
-  }
 });
 
 // ====== Toast ======
@@ -322,8 +310,34 @@ function fileToDataUrl(file) {
 }
 
 // ====== Step 4: Render ======
+// 按需加载字体（仅在首次点击"生成封面"时触发）
+async function loadFontsIfNeeded() {
+  if (state.fontsReady) return true;
+
+  const headerP = document.querySelector('.header p');
+  const originalText = headerP.textContent;
+  headerP.textContent = '⏳ 首次生成需加载字体，请稍候...';
+
+  const loaded = await loadAllFonts((done, total) => {
+    headerP.textContent = `⏳ 字体加载中 ${done}/${total}（共约 37MB，后续使用无需重复加载）`;
+  });
+
+  state.fontsReady = loaded > 0;
+  headerP.textContent = originalText;
+
+  if (loaded < 3) {
+    showToast(`字体加载完成 (${loaded}/6)，部分字体可能影响渲染效果`, 'warning');
+  } else {
+    showToast(`字体就绪 (${loaded}/6)，开始生成封面`, 'success');
+  }
+  return state.fontsReady;
+}
+
 async function runRender() {
-  if (!state.fontsReady) { showToast('字体尚未加载完成', 'error'); return; }
+  if (!state.fontsReady) {
+    const ok = await loadFontsIfNeeded();
+    if (!ok) { showToast('字体加载失败，无法生成封面', 'error'); return; }
+  }
 
   const total = state.rows.length;
   const progressBar = document.getElementById('progressBar');

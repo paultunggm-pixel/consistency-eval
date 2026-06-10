@@ -151,7 +151,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-11 01:17 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-11 01:21 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
 
 <div id="tier-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
 <div class="modal-box">
@@ -1363,12 +1363,22 @@ function flashBtn(btn){{
 }}
 
 (function(){{
+// Tab切换 + 记忆（刷新后保持）
+var activeTab = sessionStorage.getItem('_active_tab') || 'm-international';
+if (!document.getElementById(activeTab)) activeTab = 'm-international';
+document.querySelectorAll('.tb').forEach(function(x){{x.classList.remove('on')}});
+document.querySelectorAll('.main').forEach(function(x){{x.classList.remove('on')}});
+var savedBtn = document.querySelector('.tb[data-tab="' + activeTab + '"]');
+if (savedBtn) savedBtn.classList.add('on');
+document.getElementById(activeTab).classList.add('on');
 document.querySelectorAll('.tb').forEach(function(b){{
 b.addEventListener('click',function(){{
 document.querySelectorAll('.tb').forEach(function(x){{x.classList.remove('on')}});
 document.querySelectorAll('.main').forEach(function(x){{x.classList.remove('on')}});
 this.classList.add('on');
-document.getElementById(this.dataset.tab).classList.add('on');
+var tid = this.dataset.tab;
+document.getElementById(tid).classList.add('on');
+sessionStorage.setItem('_active_tab', tid);
 }});
 }});
 // 链接点击追踪：点击立即变色，回来时仍高亮

@@ -96,8 +96,19 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 .tier-ex{font-size:11px;color:#64748b;line-height:1.5}
 .modal-note{margin-top:14px;font-size:11px;color:#64748b}
 
-.scrape-info{background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:8px 14px;margin-bottom:16px;font-size:12px;color:#0c4a6e;word-break:break-all}
-.scrape-info a{color:#0369a1}
+.scrape-layout{display:flex;gap:0;min-height:400px}
+.scrape-sites{width:300px;min-width:300px;border-right:1px solid #e2e5ea;overflow-y:auto;background:#fafbfc}
+.scrape-arts{flex:1;overflow-y:auto;padding:0 0 0 16px;min-width:0}
+.site-table{min-width:auto;width:100%}
+.site-table th{font-size:11px;padding:8px 10px}
+.site-table td{font-size:12px;padding:8px 10px;cursor:pointer;white-space:nowrap}
+.site-table tr.site-row:hover td{background:#eff6ff}
+.site-table tr.site-row.on td{background:#dbeafe;font-weight:600;color:#1e40af}
+.article-panel{animation:fadeIn .2s}
+@media(max-width:768px){
+.scrape-layout{flex-direction:column}
+.scrape-sites{width:100%;min-width:0;border-right:none;border-bottom:1px solid #e2e5ea;max-height:200px}
+}
 
 .validate-placeholder{display:flex;align-items:center;justify-content:center;height:300px;color:#94a3b8;font-size:15px;background:#fff;border:2px dashed #e2e5ea;border-radius:10px}
 
@@ -140,7 +151,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-11 00:58 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-11 01:05 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
 
 <div id="tier-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
 <div class="modal-box">
@@ -1054,51 +1065,42 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </div>
 
 <div class="main" id="m-validate-intl">
-<div class="side">
-<div class="ttl">6月9日</div><a class="blk" data-pid="scrape-69-0" class="on">90min-世界杯<span class="bc">20</span></a>
-<a class="blk" data-pid="scrape-69-1">Inside World Football<span class="bc">20</span></a>
-<a class="blk" data-pid="scrape-69-2">Daily Mail-世界杯<span class="bc">20</span></a>
-<a class="blk" data-pid="scrape-69-3">Football Italia<span class="bc">20</span></a>
-<a class="blk" data-pid="scrape-69-4">Premier League官网<span class="bc">11</span></a>
-<a class="blk" data-pid="scrape-69-5">Mirror Sport-足球<span class="bc">5</span></a>
-<a class="blk" data-pid="scrape-69-6">StatsBomb<span class="bc">2</span></a>
-<a class="blk" data-pid="scrape-69-7">Football365<span class="bc">1</span></a>
-<a class="blk" data-pid="scrape-69-8">Bundesliga德甲官网<span class="bc">1</span></a>
-<a class="blk" data-pid="scrape-69-9">World Soccer Talk<span class="bc">1</span></a>
-<a class="blk" data-pid="scrape-69-10">FotMob<span class="bc">1</span></a>
-<a class="blk" data-pid="scrape-69-11">AP通讯-世界杯<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-12">Bleacher Report<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-13">NewsNow<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-14">flashscore<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-15">Planet Football<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-16">One Football<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-17">Mirror / MEN<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-18">SBS Sport（澳洲）<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-19">美联社<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-20">阿斯报<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-21">One Football<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-22">Tribal Football<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-23">AS（西班牙）<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-69-24">Independent-足球<span class="bc">0</span></a>
-
-<div class="ttl" style="margin-top:16px">6月8日</div><a class="blk" data-pid="scrape-68-0" class="on">leaguelane<span class="bc">12</span></a>
-<a class="blk" data-pid="scrape-68-1">opta-世界杯<span class="bc">6</span></a>
-<a class="blk" data-pid="scrape-68-2">442足球<span class="bc">4</span></a>
-<a class="blk" data-pid="scrape-68-3">SOFA-足球<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-4">路透社-足球<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-5">天空体育-足球<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-6">纽约时报-世界杯<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-7">whoscored-足球<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-8">beinsports-足球<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-9">expert-预测<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-10">UEFA官网<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-11">kickoff<span class="bc">0</span></a>
-<a class="blk" data-pid="scrape-68-12">FIFA官网<span class="bc">0</span></a>
-
+<div class="side"><div class="ttl">挖掘批次</div><a class="blk on" data-pid="batch-69">6月9日</a>
+<a class="blk" data-pid="batch-68">6月8日</a>
 </div>
-<div class="ctn"><div class="panel" id="scrape-69-0" style="display:block">
-<div class="scrape-info">来源: <a href="https://www.90min.com/world-cup" target="_blank">https://www.90min.com/world-cup</a> · ✅ 20篇</div>
-<div class="tbl"><table>
+<div class="ctn">
+<div class="panel" id="batch-69" style="display:block">
+<div class="scrape-layout">
+<div class="scrape-sites"><table class="site-table">
+<thead><tr><th>列表页站点</th><th>文章</th><th>URL</th></tr></thead>
+<tbody><tr class="site-row on" data-arts="arts-69-0" data-site="site-69-0"><td>90min-世界杯</td><td>20</td><td style="font-size:11px;color:#94a3b8">https://www.90min.com/world-cup</td></tr>
+<tr class="site-row " data-arts="arts-69-1" data-site="site-69-1"><td>Inside World Football</td><td>20</td><td style="font-size:11px;color:#94a3b8">https://www.insideworldfootball.com/</td></tr>
+<tr class="site-row " data-arts="arts-69-2" data-site="site-69-2"><td>Daily Mail-世界杯</td><td>20</td><td style="font-size:11px;color:#94a3b8">https://www.dailymail.com/sport/index.html</td></tr>
+<tr class="site-row " data-arts="arts-69-3" data-site="site-69-3"><td>Football Italia</td><td>20</td><td style="font-size:11px;color:#94a3b8">https://www.football-italia.net/</td></tr>
+<tr class="site-row " data-arts="arts-69-4" data-site="site-69-4"><td>Premier League官网</td><td>11</td><td style="font-size:11px;color:#94a3b8">https://www.premierleague.com/en/news/4438262</td></tr>
+<tr class="site-row " data-arts="arts-69-5" data-site="site-69-5"><td>Mirror Sport-足球</td><td>5</td><td style="font-size:11px;color:#94a3b8">https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive</td></tr>
+<tr class="site-row " data-arts="arts-69-6" data-site="site-69-6"><td>StatsBomb</td><td>2</td><td style="font-size:11px;color:#94a3b8">https://www.hudl.com/en_gb/products/statsbomb</td></tr>
+<tr class="site-row " data-arts="arts-69-7" data-site="site-69-7"><td>Football365</td><td>1</td><td style="font-size:11px;color:#94a3b8">https://www.football365.com/world-cup</td></tr>
+<tr class="site-row " data-arts="arts-69-8" data-site="site-69-8"><td>Bundesliga德甲官网</td><td>1</td><td style="font-size:11px;color:#94a3b8">https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog</td></tr>
+<tr class="site-row " data-arts="arts-69-9" data-site="site-69-9"><td>World Soccer Talk</td><td>1</td><td style="font-size:11px;color:#94a3b8">https://worldsoccertalk.com/world-cup/</td></tr>
+<tr class="site-row " data-arts="arts-69-10" data-site="site-69-10"><td>FotMob</td><td>1</td><td style="font-size:11px;color:#94a3b8">https://www.fotmob.com/leagues/77/overview/world-cup</td></tr>
+<tr class="site-row " data-arts="arts-69-11" data-site="site-69-11"><td>AP通讯-世界杯</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://apnews.com/hub/soccer</td></tr>
+<tr class="site-row " data-arts="arts-69-12" data-site="site-69-12"><td>Bleacher Report</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://bleacherreport.com/world-football</td></tr>
+<tr class="site-row " data-arts="arts-69-13" data-site="site-69-13"><td>NewsNow</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup</td></tr>
+<tr class="site-row " data-arts="arts-69-14" data-site="site-69-14"><td>flashscore</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://www.flashscore.com/</td></tr>
+<tr class="site-row " data-arts="arts-69-15" data-site="site-69-15"><td>Planet Football</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://www.planetfootball.com/</td></tr>
+<tr class="site-row " data-arts="arts-69-16" data-site="site-69-16"><td>One Football</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://onefootball.com/en/competition/fifa-world-cup-12</td></tr>
+<tr class="site-row " data-arts="arts-69-17" data-site="site-69-17"><td>Mirror / MEN</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-worl</td></tr>
+<tr class="site-row " data-arts="arts-69-18" data-site="site-69-18"><td>SBS Sport（澳洲）</td><td>🔒</td><td style="font-size:11px;color:#94a3b8">https://www.sbs.com.au/sport/fifa-world-cup-2026</td></tr>
+<tr class="site-row " data-arts="arts-69-19" data-site="site-69-19"><td>美联社</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://apnews.com/hub/fifa-world-cup</td></tr>
+<tr class="site-row " data-arts="arts-69-20" data-site="site-69-20"><td>阿斯报</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://en.as.com/soccer/world_cup/</td></tr>
+<tr class="site-row " data-arts="arts-69-21" data-site="site-69-21"><td>One Football</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://onefootball.com/en/home</td></tr>
+<tr class="site-row " data-arts="arts-69-22" data-site="site-69-22"><td>Tribal Football</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://www.tribalfootball.com/world-cup</td></tr>
+<tr class="site-row " data-arts="arts-69-23" data-site="site-69-23"><td>AS（西班牙）</td><td>🚫</td><td style="font-size:11px;color:#94a3b8">https://www.as.com/soccer/world-cup/</td></tr>
+<tr class="site-row " data-arts="arts-69-24" data-site="site-69-24"><td>Independent-足球</td><td>🔒</td><td style="font-size:11px;color:#94a3b8">https://www.independent.co.uk/sport/football/world-cup/</td></tr>
+</tbody>
+</table></div>
+<div class="scrape-arts"><div class="article-panel" id="arts-69-0" style="display:block"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Mexico Predicted Lineup vs. South Africa: World Cup Group A</td><td class="uc"><a href="https://www.si.com/soccer/mexico-predicted-lineup-vs-south-africa-world-cup-6-11-26" target="_blank">https://www.si.com/soccer/mexico-predicted-lineup-vs-south-africa-world-cup-6-11-26</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T16:50:22</td></tr>
 <tr><td>2</td><td>Seven Predictions for the 2026 World Cup Group Stage</td><td class="uc"><a href="https://www.si.com/soccer/seven-predictions-2026-world-cup-group-stage" target="_blank">https://www.si.com/soccer/seven-predictions-2026-world-cup-group-stage</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T15:25:00</td></tr>
@@ -1121,9 +1123,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>19</td><td>World Cup Beginnerâs GuideâEverything You Need to Know to Cheer on the USMNT</td><td class="uc"><a href="https://www.si.com/soccer/world-cup-beginner-guide-everything-you-need-to-know-to-cheer-on-usmnt" target="_blank">https://www.si.com/soccer/world-cup-beginner-guide-everything-you-need-to-know-to-cheer-on-usmnt</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-08T20:30:00</td></tr>
 <tr><td>20</td><td>Why Isnât Josh Sargent on the 2026 USMNT World Cup Roster?</td><td class="uc"><a href="https://www.si.com/soccer/why-isnt-josh-sargent-on-2026-usmnt-world-cup-roster" target="_blank">https://www.si.com/soccer/why-isnt-josh-sargent-on-2026-usmnt-world-cup-roster</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-08T19:00:01</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-1" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.insideworldfootball.com/" target="_blank">https://www.insideworldfootball.com/</a> · ✅ 20篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-1" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Gold Cup 2023 Bracket / Schedule - Inside World Football</td><td class="uc"><a href="https://www.insideworldfootball.com/gold-cup-2023-bracket-schedule/" target="_blank">https://www.insideworldfootball.com/gold-cup-2023-bracket-schedule/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2023-06-06T19:47:09</td></tr>
 <tr><td>2</td><td>Gold Cup 2021 Bracket / Schedule - Inside World Football</td><td class="uc"><a href="https://www.insideworldfootball.com/gold-cup-2021-bracket/" target="_blank">https://www.insideworldfootball.com/gold-cup-2021-bracket/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2021-07-06T02:45:20</td></tr>
@@ -1146,9 +1146,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>19</td><td>Diarra settles landmark transfer case with FIFA - Inside World Football</td><td class="uc"><a href="https://www.insideworldfootball.com/2026/06/09/diarra-settles-landmark-transfer-case-with-fifa/" target="_blank">https://www.insideworldfootball.com/2026/06/09/diarra-settles-landmark-transfer-case-with-fifa/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-09T11:14:30</td></tr>
 <tr><td>20</td><td>Newsletter Subscription - Inside World Football</td><td class="uc"><a href="https://www.insideworldfootball.com/register" target="_blank">https://www.insideworldfootball.com/register</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2019-11-18T09:27:22</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-2" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.dailymail.com/sport/index.html" target="_blank">https://www.dailymail.com/sport/index.html</a> · ✅ 20篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-2" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Premier League News, Fixtures and Results | Daily Mail Online</td><td class="uc"><a href="https://www.dailymail.com/sport/premierleague/index.html" target="_blank">https://www.dailymail.com/sport/premierleague/index.html</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T16:46:44</td></tr>
 <tr><td>2</td><td>This team can get Scotland off to World Cup flier against Haiti</td><td class="uc"><a href="https://www.dailymail.com/sport/football/article-15886227/Steve-Clarke-note-team-Scotland-World-Cup-flier-against-Haiti.html" target="_blank">https://www.dailymail.com/sport/football/article-15886227/Steve-Clarke-note-team-Scotland-World-Cup-</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T07:00:55</td></tr>
@@ -1171,9 +1169,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>19</td><td>Wolves send delegation to Mexico to convince Raul Jimenez to return</td><td class="uc"><a href="https://www.dailymail.com/sport/football/article-15884131/Wolves-send-delegation-Mexico-convince-Raul-Jimenez-return-Molineux-World-Cup-star-35-leaves-Fulham.html" target="_blank">https://www.dailymail.com/sport/football/article-15884131/Wolves-send-delegation-Mexico-convince-Rau</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-08T23:07:02</td></tr>
 <tr><td>20</td><td>Crystal Palace readying bid for in-demand Hayden Hackney</td><td class="uc"><a href="https://www.dailymail.com/sport/football/article-15884163/Hayden-Hackney-Crystal-Palace-Everton-proposal.html" target="_blank">https://www.dailymail.com/sport/football/article-15884163/Hayden-Hackney-Crystal-Palace-Everton-prop</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-08T22:34:01</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-3" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.football-italia.net/" target="_blank">https://www.football-italia.net/</a> · ✅ 20篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-3" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Our Writers - Football Italia</td><td class="uc"><a href="https://football-italia.net/our-writers/" target="_blank">https://football-italia.net/our-writers/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-06-04T13:11:01</td></tr>
 <tr><td>2</td><td>Terms of Service - Football Italia</td><td class="uc"><a href="https://football-italia.net/terms-of-service/" target="_blank">https://football-italia.net/terms-of-service/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2018-06-06T14:09:57</td></tr>
@@ -1196,9 +1192,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>19</td><td>Inter have agreement in principle with Solet and close in on Udinese asking price - Football Italia</td><td class="uc"><a href="https://football-italia.net/inter-have-agreement-in-principle-with-solet/" target="_blank">https://football-italia.net/inter-have-agreement-in-principle-with-solet/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T14:36:03</td></tr>
 <tr><td>20</td><td>2026 World Cup: Top 10 highest-valued Serie A stars</td><td class="uc"><a href="https://football-italia.net/world-cup-highest-valued-stars-world-cup/" target="_blank">https://football-italia.net/world-cup-highest-valued-stars-world-cup/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T12:11:01</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-4" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.premierleague.com/en/news/4438262" target="_blank">https://www.premierleague.com/en/news/4438262</a> · ✅ 11篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-4" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Fantasy Premier League, Official Fantasy Football Game of the Premier League</td><td class="uc"><a href="https://www.premierleague.com/en/fantasy" target="_blank">https://www.premierleague.com/en/fantasy</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b"></td></tr>
 <tr><td>2</td><td>Fantasy Premier League Draft 2025/26</td><td class="uc"><a href="https://draft.premierleague.com/" target="_blank">https://draft.premierleague.com/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b"></td></tr>
@@ -1212,9 +1206,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>10</td><td>Modern Slavery Statement | Premier League</td><td class="uc"><a href="https://www.premierleague.com/en/modern-slavery-statement" target="_blank">https://www.premierleague.com/en/modern-slavery-statement</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b"></td></tr>
 <tr><td>11</td><td>Equality, Diversity & Inclusion Standard | Premier League</td><td class="uc"><a href="https://www.premierleague.com/en/equality-diversity-and-inclusion-standard" target="_blank">https://www.premierleague.com/en/equality-diversity-and-inclusion-standard</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b"></td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-5" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive" target="_blank">https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive</a> · ✅ 5篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-5" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Eye-watering amount refs Michael Oliver & Anthony Taylor will earn at World Cup</td><td class="uc"><a href="https://www.mirror.co.uk/sport/football/news/how-much-referees-michael-oliver-37265781" target="_blank">https://www.mirror.co.uk/sport/football/news/how-much-referees-michael-oliver-37265781</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-08T16:30:00</td></tr>
 <tr><td>2</td><td>Maradona's 'Hand of God' tops list of most notorious moments in footy history</td><td class="uc"><a href="https://www.mirror.co.uk/sport/football/maradonas-hand-god-named-most-35616855" target="_blank">https://www.mirror.co.uk/sport/football/maradonas-hand-god-named-most-35616855</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-07-25T12:43:16</td></tr>
@@ -1222,82 +1214,64 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>4</td><td>Lionel Messi makes World Cup final confession to Zinedine Zidane</td><td class="uc"><a href="https://www.mirror.co.uk/sport/football/news/lionel-messi-zinedine-zidane-worldcup-31406113" target="_blank">https://www.mirror.co.uk/sport/football/news/lionel-messi-zinedine-zidane-worldcup-31406113</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2023-11-10T09:00:00</td></tr>
 <tr><td>5</td><td>Beautiful game unites football fans 5,500 miles - and lack of men is 'magical'</td><td class="uc"><a href="https://www.mirror.co.uk/news/world-news/world-talks-football-fans-share-30135173" target="_blank">https://www.mirror.co.uk/news/world-news/world-talks-football-fans-share-30135173</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2023-06-01T20:16:29</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-6" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.hudl.com/en_gb/products/statsbomb" target="_blank">https://www.hudl.com/en_gb/products/statsbomb</a> · ✅ 2篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-6" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Emerging Talent: Finding Value in Europe's Development Leagues</td><td class="uc"><a href="https://www.hudl.com/blog/emerging-talent-development-leagues" target="_blank">https://www.hudl.com/blog/emerging-talent-development-leagues</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-01-30T05:00:00</td></tr>
 <tr><td>2</td><td>A Whole New Angle: Behind the scenes with the FAI and Hudl Focus Flex</td><td class="uc"><a href="https://www.hudl.com/blog/hudl-focus-flex-football-association-ireland" target="_blank">https://www.hudl.com/blog/hudl-focus-flex-football-association-ireland</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2024-02-15T00:00:00</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-7" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.football365.com/world-cup" target="_blank">https://www.football365.com/world-cup</a> · ✅ 1篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-7" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Planet Football</td><td class="uc"><a href="https://www.planetfootball.com" target="_blank">https://www.planetfootball.com</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10 17:55</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-8" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602" target="_blank">https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602</a> · ✅ 1篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-8" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Bundesliga stars to watch in FIFA World Cup 2026 Groups K and L</td><td class="uc"><a href="https://www.bundesliga.com/en/bundesliga/news/ones-to-watch-world-cup-group-k-l-kane-diaz-vuskovic-37749" target="_blank">https://www.bundesliga.com/en/bundesliga/news/ones-to-watch-world-cup-group-k-l-kane-diaz-vuskovic-3</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-09T07:47:47</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-9" style="display:none">
-<div class="scrape-info">来源: <a href="https://worldsoccertalk.com/world-cup/" target="_blank">https://worldsoccertalk.com/world-cup/</a> · ✅ 1篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-9" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>National team</td><td class="uc"><a href="https://worldsoccertalk.com/world-cup/usmnt/" target="_blank">https://worldsoccertalk.com/world-cup/usmnt/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-05-27T14:46:53</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-10" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.fotmob.com/leagues/77/overview/world-cup" target="_blank">https://www.fotmob.com/leagues/77/overview/world-cup</a> · ✅ 1篇</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-10" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Sync FIFA World Cup's fixtures to your favorite calendar app.</td><td class="uc"><a href="https://www.fotmob.com/leagues/77/synccalendar/fifa-world-cup" target="_blank">https://www.fotmob.com/leagues/77/synccalendar/fifa-world-cup</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b"></td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-69-11" style="display:none">
-<div class="scrape-info">来源: <a href="https://apnews.com/hub/soccer" target="_blank">https://apnews.com/hub/soccer</a> · 非有效列表页(列表特征不足(1))</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(列表特征不足(1))</div></div>
-<div class="panel" id="scrape-69-12" style="display:none">
-<div class="scrape-info">来源: <a href="https://bleacherreport.com/world-football" target="_blank">https://bleacherreport.com/world-football</a> · 非有效列表页(列表特征不足(0))</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(列表特征不足(0))</div></div>
-<div class="panel" id="scrape-69-13" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup" target="_blank">https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup</a> · ✅ 0篇</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
-<div class="panel" id="scrape-69-14" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.flashscore.com/" target="_blank">https://www.flashscore.com/</a> · 非有效列表页(列表特征不足(0))</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(列表特征不足(0))</div></div>
-<div class="panel" id="scrape-69-15" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.planetfootball.com/" target="_blank">https://www.planetfootball.com/</a> · 非有效列表页(列表特征不足(0))</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(列表特征不足(0))</div></div>
-<div class="panel" id="scrape-69-16" style="display:none">
-<div class="scrape-info">来源: <a href="https://onefootball.com/en/competition/fifa-world-cup-12" target="_blank">https://onefootball.com/en/competition/fifa-world-cup-12</a> · ✅ 0篇</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
-<div class="panel" id="scrape-69-17" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-33353446" target="_blank">https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-33353446</a> · ✅ 0篇</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
-<div class="panel" id="scrape-69-18" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.sbs.com.au/sport/fifa-world-cup-2026" target="_blank">https://www.sbs.com.au/sport/fifa-world-cup-2026</a> · 云壳拦截/超时，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截/超时，无法抓取</div></div>
-<div class="panel" id="scrape-69-19" style="display:none">
-<div class="scrape-info">来源: <a href="https://apnews.com/hub/fifa-world-cup" target="_blank">https://apnews.com/hub/fifa-world-cup</a> · 非有效列表页(列表特征不足(1))</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(列表特征不足(1))</div></div>
-<div class="panel" id="scrape-69-20" style="display:none">
-<div class="scrape-info">来源: <a href="https://en.as.com/soccer/world_cup/" target="_blank">https://en.as.com/soccer/world_cup/</a> · 错误:('Connection broken: IncompleteRead(16972 bytes re</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">错误:('Connection broken: IncompleteRead(16972 bytes re</div></div>
-<div class="panel" id="scrape-69-21" style="display:none">
-<div class="scrape-info">来源: <a href="https://onefootball.com/en/home" target="_blank">https://onefootball.com/en/home</a> · ✅ 0篇</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
-<div class="panel" id="scrape-69-22" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.tribalfootball.com/world-cup" target="_blank">https://www.tribalfootball.com/world-cup</a> · 非有效列表页(HTTP 404)</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(HTTP 404)</div></div>
-<div class="panel" id="scrape-69-23" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.as.com/soccer/world-cup/" target="_blank">https://www.as.com/soccer/world-cup/</a> · HTTP403 访问受限，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403 访问受限，无法抓取</div></div>
-<div class="panel" id="scrape-69-24" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.independent.co.uk/sport/football/world-cup/" target="_blank">https://www.independent.co.uk/sport/football/world-cup/</a> · 云壳拦截/超时，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截/超时，无法抓取</div></div>
-<div class="panel" id="scrape-68-0" style="display:block">
-<div class="scrape-info">来源: <a href="https://leaguelane.com/category/articles/" target="_blank">https://leaguelane.com/category/articles/</a> · ✅ 12篇验证通过</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-69-11" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">列表特征不足(1)</div></div>
+<div class="article-panel" id="arts-69-12" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">列表特征不足(0)</div></div>
+<div class="article-panel" id="arts-69-13" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
+<div class="article-panel" id="arts-69-14" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">列表特征不足(0)</div></div>
+<div class="article-panel" id="arts-69-15" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">列表特征不足(0)</div></div>
+<div class="article-panel" id="arts-69-16" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
+<div class="article-panel" id="arts-69-17" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
+<div class="article-panel" id="arts-69-18" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截</div></div>
+<div class="article-panel" id="arts-69-19" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">列表特征不足(1)</div></div>
+<div class="article-panel" id="arts-69-20" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">错误:('Connection broken: IncompleteRead(16972 bytes re</div></div>
+<div class="article-panel" id="arts-69-21" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇</div></div>
+<div class="article-panel" id="arts-69-22" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP 404</div></div>
+<div class="article-panel" id="arts-69-23" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403</div></div>
+<div class="article-panel" id="arts-69-24" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截</div></div>
+</div>
+</div>
+</div>
+<div class="panel" id="batch-68" style="display:none">
+<div class="scrape-layout">
+<div class="scrape-sites"><table class="site-table">
+<thead><tr><th>列表页站点</th><th>文章</th><th>URL</th></tr></thead>
+<tbody><tr class="site-row on" data-arts="arts-68-0" data-site="site-68-0"><td>leaguelane</td><td>12</td><td style="font-size:11px;color:#94a3b8">https://leaguelane.com/category/articles/</td></tr>
+<tr class="site-row " data-arts="arts-68-1" data-site="site-68-1"><td>opta-世界杯</td><td>6</td><td style="font-size:11px;color:#94a3b8">https://theanalyst.com/competition/fifa-world-cup/articles</td></tr>
+<tr class="site-row " data-arts="arts-68-2" data-site="site-68-2"><td>442足球</td><td>4</td><td style="font-size:11px;color:#94a3b8">https://www.fourfourtwo.com/us/news</td></tr>
+<tr class="site-row " data-arts="arts-68-3" data-site="site-68-3"><td>SOFA-足球</td><td>🚫</td><td style="font-size:11px;color:#94a3b8">https://www.sofascore.com/news?category=football</td></tr>
+<tr class="site-row " data-arts="arts-68-4" data-site="site-68-4"><td>路透社-足球</td><td>🔒</td><td style="font-size:11px;color:#94a3b8">https://www.reuters.com/sports/soccer/</td></tr>
+<tr class="site-row " data-arts="arts-68-5" data-site="site-68-5"><td>天空体育-足球</td><td>🚫</td><td style="font-size:11px;color:#94a3b8">https://www.skysports.com/football</td></tr>
+<tr class="site-row " data-arts="arts-68-6" data-site="site-68-6"><td>纽约时报-世界杯</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://www.nytimes.com/athletic/football/world-cup/</td></tr>
+<tr class="site-row " data-arts="arts-68-7" data-site="site-68-7"><td>whoscored-足球</td><td>🚫</td><td style="font-size:11px;color:#94a3b8">https://www.whoscored.com/editorial</td></tr>
+<tr class="site-row " data-arts="arts-68-8" data-site="site-68-8"><td>beinsports-足球</td><td>—</td><td style="font-size:11px;color:#94a3b8">https://www.beinsports.com/en-us/all-news</td></tr>
+<tr class="site-row " data-arts="arts-68-9" data-site="site-68-9"><td>expert-预测</td><td>🚫</td><td style="font-size:11px;color:#94a3b8">https://www.expertpicks.com/en/picks/</td></tr>
+<tr class="site-row " data-arts="arts-68-10" data-site="site-68-10"><td>UEFA官网</td><td>🔒</td><td style="font-size:11px;color:#94a3b8">https://www.uefa.com/news-media/news/</td></tr>
+<tr class="site-row " data-arts="arts-68-11" data-site="site-68-11"><td>kickoff</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://kickoff.guide/blog/tag/worldcup-2026</td></tr>
+<tr class="site-row " data-arts="arts-68-12" data-site="site-68-12"><td>FIFA官网</td><td>0</td><td style="font-size:11px;color:#94a3b8">https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news</td></tr>
+</tbody>
+</table></div>
+<div class="scrape-arts"><div class="article-panel" id="arts-68-0" style="display:block"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>Football Predictions Today & Tomorrow | Free Expert Tips – LeagueLane</td><td class="uc"><a href="https://leaguelane.com/predictions/" target="_blank">https://leaguelane.com/predictions/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-12-15T06:30:08</td></tr>
 <tr><td>2</td><td>Daily Football Tips and Accumulators from Experts</td><td class="uc"><a href="https://leaguelane.com/football-tips/" target="_blank">https://leaguelane.com/football-tips/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-10-08T12:03:38</td></tr>
@@ -1312,9 +1286,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>11</td><td>Terms and Conditions - LeagueLane</td><td class="uc"><a href="https://leaguelane.com/terms-and-conditions/" target="_blank">https://leaguelane.com/terms-and-conditions/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2024-11-20T12:56:15</td></tr>
 <tr><td>12</td><td>Cookie Policy - LeagueLane</td><td class="uc"><a href="https://leaguelane.com/cookie-policy/" target="_blank">https://leaguelane.com/cookie-policy/</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-11-05T03:52:23</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-68-1" style="display:none">
-<div class="scrape-info">来源: <a href="https://theanalyst.com/competition/fifa-world-cup/articles" target="_blank">https://theanalyst.com/competition/fifa-world-cup/articles</a> · ✅ 6篇验证通过</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-68-1" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>FIFA World Cup Predictions | Opta Analyst</td><td class="uc"><a href="https://theanalyst.com/competition/fifa-world-cup/predictions" target="_blank">https://theanalyst.com/competition/fifa-world-cup/predictions</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-11-17T15:56:26</td></tr>
 <tr><td>2</td><td>Saudi Pro League Stats, Tables, Predictions, Fixtures | Opta Analyst</td><td class="uc"><a href="https://theanalyst.com/competition/saudi-pro-league" target="_blank">https://theanalyst.com/competition/saudi-pro-league</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2025-09-18T01:10:12</td></tr>
@@ -1323,45 +1295,26 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <tr><td>5</td><td>FIFA World Cup 2026 Groups: The Opta Supercomputer Predictions | Opta Analyst</td><td class="uc"><a href="https://theanalyst.com/articles/fifa-world-cup-2026-groups-predictions-previews" target="_blank">https://theanalyst.com/articles/fifa-world-cup-2026-groups-predictions-previews</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-09T06:23:09</td></tr>
 <tr><td>6</td><td>History of the FIFA World Cup: Journey Through Time With the Opta Analyst Interactive Atlas | Opta Analyst</td><td class="uc"><a href="https://theanalyst.com/articles/world-cup-2026-history-interactive-atlas-opta-stats" target="_blank">https://theanalyst.com/articles/world-cup-2026-history-interactive-atlas-opta-stats</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-05-31T06:03:00</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-68-2" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.fourfourtwo.com/us/news" target="_blank">https://www.fourfourtwo.com/us/news</a> · ✅ 4篇验证通过</div>
-<div class="tbl"><table>
+<div class="article-panel" id="arts-68-2" style="display:none"><div class="tbl"><table>
 <thead><tr><th style="width:35px">#</th><th>内容标题</th><th>内容URL</th><th style="width:150px">发布时间</th></tr></thead>
 <tbody><tr><td>1</td><td>England's World Cup 2026 squad in full: Thomas Tuchel's 26 men, notable omissions and predicted starting XI</td><td class="uc"><a href="https://www.fourfourtwo.com/features/england-world-cup-2026-squad-thomas-tuchel-roster-line-up-xi-final-uk" target="_blank">https://www.fourfourtwo.com/features/england-world-cup-2026-squad-thomas-tuchel-roster-line-up-xi-fi</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2024-03-14T17:44:47</td></tr>
 <tr><td>2</td><td>Ranked! The 100 best football players of all time</td><td class="uc"><a href="https://www.fourfourtwo.com/person/player/ranked-the-100-best-football-players-of-all-time" target="_blank">https://www.fourfourtwo.com/person/player/ranked-the-100-best-football-players-of-all-time</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T13:57:16</td></tr>
 <tr><td>3</td><td>Why Norway are the 2026 World Cup dark horses... and they don't even need to rely on Erling Haaland</td><td class="uc"><a href="https://www.fourfourtwo.com/team/why-norway-are-the-2026-world-cup-dark-horses-and-they-dont-even-need-to-rely-on-erling-haaland" target="_blank">https://www.fourfourtwo.com/team/why-norway-are-the-2026-world-cup-dark-horses-and-they-dont-even-ne</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T13:08:13</td></tr>
 <tr><td>4</td><td>Carlo Ancelotti is the best manager at the 2026 World Cup. Here's why he could be the Don of New Jersey come July</td><td class="uc"><a href="https://www.fourfourtwo.com/person/coaches-managers/carlo-ancelotti-is-the-best-manager-at-the-2026-world-cup-heres-why-he-could-be-the-don-of-new-jersey-come-july" target="_blank">https://www.fourfourtwo.com/person/coaches-managers/carlo-ancelotti-is-the-best-manager-at-the-2026-</a></td><td style="white-space:nowrap;font-size:11px;color:#64748b">2026-06-10T13:00:00</td></tr>
 </tbody></table></div></div>
-<div class="panel" id="scrape-68-3" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.sofascore.com/news?category=football" target="_blank">https://www.sofascore.com/news?category=football</a> · HTTP403 访问受限，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403 访问受限，无法抓取</div></div>
-<div class="panel" id="scrape-68-4" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.reuters.com/sports/soccer/" target="_blank">https://www.reuters.com/sports/soccer/</a> · 云壳拦截/超时，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截/超时，无法抓取</div></div>
-<div class="panel" id="scrape-68-5" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.skysports.com/football" target="_blank">https://www.skysports.com/football</a> · HTTP403 访问受限，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403 访问受限，无法抓取</div></div>
-<div class="panel" id="scrape-68-6" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.nytimes.com/athletic/football/world-cup/" target="_blank">https://www.nytimes.com/athletic/football/world-cup/</a> · 云壳拦截(本次), 上轮抓取20篇已清空待重试</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截(本次), 上轮抓取20篇已清空待重试</div></div>
-<div class="panel" id="scrape-68-7" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.whoscored.com/editorial" target="_blank">https://www.whoscored.com/editorial</a> · HTTP403 访问受限，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403 访问受限，无法抓取</div></div>
-<div class="panel" id="scrape-68-8" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.beinsports.com/en-us/all-news" target="_blank">https://www.beinsports.com/en-us/all-news</a> · 非有效列表页(非足球/体育类内容)</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">非有效列表页(非足球/体育类内容)</div></div>
-<div class="panel" id="scrape-68-9" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.expertpicks.com/en/picks/" target="_blank">https://www.expertpicks.com/en/picks/</a> · HTTP403 访问受限，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403 访问受限，无法抓取</div></div>
-<div class="panel" id="scrape-68-10" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.uefa.com/news-media/news/" target="_blank">https://www.uefa.com/news-media/news/</a> · 云壳拦截/超时，无法抓取</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截/超时，无法抓取</div></div>
-<div class="panel" id="scrape-68-11" style="display:none">
-<div class="scrape-info">来源: <a href="https://kickoff.guide/blog/tag/worldcup-2026" target="_blank">https://kickoff.guide/blog/tag/worldcup-2026</a> · ✅ 0篇验证通过</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇验证通过</div></div>
-<div class="panel" id="scrape-68-12" style="display:none">
-<div class="scrape-info">来源: <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news" target="_blank">https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news</a> · 无候选链接(页面可能JS渲染)</div>
-<div style="text-align:center;padding:60px 20px;color:#94a3b8">无候选链接(页面可能JS渲染)</div></div>
+<div class="article-panel" id="arts-68-3" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403</div></div>
+<div class="article-panel" id="arts-68-4" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截</div></div>
+<div class="article-panel" id="arts-68-5" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403</div></div>
+<div class="article-panel" id="arts-68-6" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截(本次), 上轮抓取20篇已清空待重试</div></div>
+<div class="article-panel" id="arts-68-7" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403</div></div>
+<div class="article-panel" id="arts-68-8" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">非足球/体育类内容</div></div>
+<div class="article-panel" id="arts-68-9" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">HTTP403</div></div>
+<div class="article-panel" id="arts-68-10" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">云壳拦截</div></div>
+<div class="article-panel" id="arts-68-11" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">✅ 0篇验证通过</div></div>
+<div class="article-panel" id="arts-68-12" style="display:none"><div style="text-align:center;padding:60px 20px;color:#94a3b8">无候选链接(页面可能JS渲染)</div></div>
+</div>
+</div>
+</div>
 </div>
 </div><div class="main" id="m-validate-cn">
 <div class="side"><div class="ttl">待定</div><div style="padding:20px;color:#94a3b8;font-size:13px">待抓取国内数据</div></div>
@@ -1447,6 +1400,19 @@ a.addEventListener('click',function(){{
         }}
     }}
 }})();
+
+// Tab3 站点列表点击 → 切换文章面板
+document.querySelectorAll('.site-row').forEach(function(row){{
+row.addEventListener('click',function(){{
+    var layout=this.closest('.scrape-layout');
+    layout.querySelectorAll('.site-row').forEach(function(r){{r.classList.remove('on')}});
+    this.classList.add('on');
+    var aid=this.dataset.arts;
+    layout.querySelectorAll('.article-panel').forEach(function(p){{p.style.display='none'}});
+    var panel=document.getElementById(aid);
+    if(panel)panel.style.display='block';
+}});
+}});
 
 document.querySelectorAll('.blk').forEach(function(l){{
 l.addEventListener('click',function(e){{

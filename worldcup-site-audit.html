@@ -14,6 +14,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei
 .hd{background:#fff;border-bottom:1px solid #e2e5ea;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;min-width:960px}
 .hd h1{font-size:17px;font-weight:700;color:#0f172a}
 .hd .ts{font-size:12px;color:#8893a4}
+.info-btn{margin-left:8px;padding:2px 10px;font-size:11px;cursor:pointer;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;transition:.15s}
+.info-btn:hover{background:#eff6ff;border-color:#2563eb;color:#2563eb}
 
 .tabs{display:flex;background:#fff;padding:0 32px;border-bottom:1px solid #e2e5ea;min-width:960px}
 .tb{padding:14px 28px;font-size:15px;cursor:pointer;border:none;background:none;color:#64748b;font-weight:500;border-bottom:3px solid transparent;transition:.2s}
@@ -73,26 +75,39 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:44 · 总URL 129 · 有效 61 · 非有效 68</span></div>
+<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:55 · 总URL 112 · 有效 69 · 可能被拦截 43 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+
+<div id="tier-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
+<div style="background:#fff;border-radius:14px;padding:28px 32px;max-width:560px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h3 style="font-size:17px;color:#0f172a">站点权威度排序说明</h3><button onclick="document.getElementById('tier-modal').style.display='none'" style="border:none;background:none;font-size:22px;cursor:pointer;color:#94a3b8">&times;</button></div>
+<table style="font-size:13px;min-width:auto"><thead><tr><th style="width:60px">Tier</th><th>类别</th><th style="width:200px">示例</th></tr></thead>
+<tbody>
+<tr><td style="color:#2563eb;font-weight:700">1</td><td>国际顶级足球/体育媒体 + FIFA/UEFA</td><td>ESPN、BBC Sport、FOX、队报、马卡、米兰体育报、OneFootball、Opta…</td></tr>
+<tr><td style="color:#0d9488;font-weight:700">2</td><td>国际通讯社 + 大型新闻媒体 + 国内权威</td><td>路透社、美联社、CNN、卫报、新华社、央视、腾讯、新浪、虎扑…</td></tr>
+<tr><td style="color:#f59e0b;font-weight:700">3</td><td>洲际足联/联赛官网/垂直足球媒体</td><td>CONMEBOL、AFC、英超、德甲、西甲、Sports Mole、Football Italia…</td></tr>
+<tr><td style="color:#94a3b8;font-weight:700">4</td><td>其他</td><td>未分类站点自动排末位</td></tr>
+</tbody></table>
+<p style="margin-top:16px;font-size:12px;color:#64748b">每个Tier内，有效站点（✅）排在前面</p>
+</div></div>
 
 <div class="tabs">
-<button class="tb on" data-tab="m-international">🌍 境外站点 (116)</button>
+<button class="tb on" data-tab="m-international">🌍 境外站点 (99)</button>
 <button class="tb" data-tab="m-domestic">🇨🇳 国内站点 (13)</button>
 </div>
 
 <div class="main on" id="m-international">
-<div class="side"><div class="ttl">挖掘批次</div><a class="blk on" data-pid="panel-境外-6月10日 17:30">6月10日 17:30<span class="bc">61</span></a>
+<div class="side"><div class="ttl">挖掘批次</div><a class="blk on" data-pid="panel-境外-6月10日 17:30">6月10日 17:30<span class="bc">44</span></a>
 <a class="blk " data-pid="panel-境外-6月9日上午">6月9日上午<span class="bc">29</span></a>
 <a class="blk " data-pid="panel-境外-6月8日">6月8日<span class="bc">13</span></a>
 <a class="blk " data-pid="panel-境外-6月初">6月初<span class="bc">13</span></a>
 </div>
 <div class="ctn"><div class="panel" id="panel-境外-6月10日 17:30" style="display:block">
 <div class="sr">
-<span class="st"><em>61</em> 总计</span>
-<span class="st"><em class="green">17</em> 有效</span>
-<span class="st"><em class="red">44</em> 非有效</span>
+<span class="st"><em>44</em> 总计</span>
+<span class="st"><em class="green">25</em> 有效</span>
+<span class="st"><em class="red">19</em> 可能被拦截</span>
 <span class="st"><em class="orange">0</em> 已补充</span>
-<span class="st"><em class="gray">44</em> 不可达</span>
+<span class="st"><em class="gray">6</em> 不可达</span>
 </div>
 <div class="tbl"><table id="tbl-境外-6月10日 17:30">
 <thead><tr>
@@ -102,7 +117,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <th style="width:80px">国家</th>
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -111,7 +125,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -120,7 +133,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>瑞士</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -129,7 +141,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>4</td>
@@ -138,520 +149,326 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>挪威</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>5</td>
+<td><b>Sky Sports-足球新闻</b></td>
+<td class="uc"><a href="https://www.skysports.com/football/news" target="_blank">https://www.skysports.com/football/news</a></td>
+<td>英国</td>
+<td class="pr">✅ 确认为体育/足球资讯列表页</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>6</td>
+<td><b>beIN Sports-世界杯</b></td>
+<td class="uc"><a href="https://www.beinsports.com/en-us/football/world-cup" target="_blank">https://www.beinsports.com/en-us/football/world-cup</a></td>
+<td>法国</td>
+<td class="pr">✅ 确认为体育/足球资讯列表页</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>7</td>
 <td><b>米兰体育报-足球</b></td>
 <td class="uc"><a href="https://www.gazzetta.it/Calcio/Mondiali/" target="_blank">https://www.gazzetta.it/Calcio/Mondiali/</a></td>
 <td>意大利</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>6</td>
+<td>8</td>
 <td><b>队报-足球新闻</b></td>
 <td class="uc"><a href="https://www.lequipe.fr/Football/Coupe-du-monde/" target="_blank">https://www.lequipe.fr/Football/Coupe-du-monde/</a></td>
 <td>法国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>7</td>
+<td>9</td>
 <td><b>阿斯报-足球(ES)</b></td>
 <td class="uc"><a href="https://as.com/futbol/" target="_blank">https://as.com/futbol/</a></td>
 <td>西班牙</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>8</td>
+<td>10</td>
 <td><b>马卡报-世界杯(ES)</b></td>
 <td class="uc"><a href="https://www.marca.com/futbol/mundial.html" target="_blank">https://www.marca.com/futbol/mundial.html</a></td>
 <td>西班牙</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
-<tr class="unr">
-<td>9</td>
-<td><b>BBC Football-世界杯2026</b></td>
-<td class="uc"><a href="https://www.bbc.com/sport/football/world-cup/2026" target="_blank">https://www.bbc.com/sport/football/world-cup/2026</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>10</td>
-<td><b>BBC Sport-足球</b></td>
-<td class="uc"><a href="https://www.bbc.com/sport/football" target="_blank">https://www.bbc.com/sport/football</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
+<tr>
 <td>11</td>
-<td><b>ESPN-世界杯</b></td>
-<td class="uc"><a href="https://www.espn.com/soccer/league/_/name/fifa.world.cup" target="_blank">https://www.espn.com/soccer/league/_/name/fifa.world.cup</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>12</td>
 <td><b>Eurosport-世界杯</b></td>
 <td class="uc"><a href="https://www.eurosport.com/football/world-cup/" target="_blank">https://www.eurosport.com/football/world-cup/</a></td>
 <td>法国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Eurosport)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>13</td>
-<td><b>FIFA官网-新闻总汇</b></td>
-<td class="uc"><a href="https://inside.fifa.com/en/news" target="_blank">https://inside.fifa.com/en/news</a></td>
-<td>瑞士</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>14</td>
-<td><b>Goal-世界杯新闻</b></td>
-<td class="uc"><a href="https://www.goal.com/en/fifa-world-cup/news" target="_blank">https://www.goal.com/en/fifa-world-cup/news</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>15</td>
-<td><b>Marca墨西哥-世界杯</b></td>
-<td class="uc"><a href="https://www.marca.com/mx/futbol/mundial/" target="_blank">https://www.marca.com/mx/futbol/mundial/</a></td>
-<td>西班牙</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>16</td>
-<td><b>Record葡萄牙-世界杯</b></td>
-<td class="uc"><a href="https://www.record.pt/internacional/competicoes/mundial-2026" target="_blank">https://www.record.pt/internacional/competicoes/mundial-2026</a></td>
-<td>葡萄牙</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>17</td>
-<td><b>Sky Sports-足球新闻</b></td>
-<td class="uc"><a href="https://www.skysports.com/football/news" target="_blank">https://www.skysports.com/football/news</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>18</td>
+<tr>
+<td>12</td>
 <td><b>SofaScore-足球新闻</b></td>
 <td class="uc"><a href="https://www.sofascore.com/news/category/football" target="_blank">https://www.sofascore.com/news/category/football</a></td>
 <td>克罗地亚</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(SofaScore)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>19</td>
+<tr>
+<td>13</td>
 <td><b>Sporting News-世界杯</b></td>
 <td class="uc"><a href="https://www.sportingnews.com/us/soccer/news/world-cup" target="_blank">https://www.sportingnews.com/us/soccer/news/world-cup</a></td>
 <td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Sporting News)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>20</td>
+<tr>
+<td>14</td>
 <td><b>Transfermarkt-世界杯2026新闻</b></td>
 <td class="uc"><a href="https://www.transfermarkt.com/weltmeisterschaft-2026/news/wettbewerb/WM26" target="_blank">https://www.transfermarkt.com/weltmeisterschaft-2026/news/wettbewerb/WM26</a></td>
 <td>德国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP405 云壳拦截(Transfermarkt)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>21</td>
-<td><b>Washington Post-足球</b></td>
-<td class="uc"><a href="https://www.washingtonpost.com/sports/soccer/" target="_blank">https://www.washingtonpost.com/sports/soccer/</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>22</td>
-<td><b>beIN Sports-世界杯</b></td>
-<td class="uc"><a href="https://www.beinsports.com/en-us/football/world-cup" target="_blank">https://www.beinsports.com/en-us/football/world-cup</a></td>
-<td>法国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>23</td>
+<tr>
+<td>15</td>
 <td><b>踢球者Kicker-世界杯</b></td>
 <td class="uc"><a href="https://www.kicker.de/fifa-wm-2026/news" target="_blank">https://www.kicker.de/fifa-wm-2026/news</a></td>
 <td>德国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Kicker)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
-<td>24</td>
-<td><b>马卡报-世界杯(EN)</b></td>
-<td class="uc"><a href="https://www.marca.com/en/football/world-cup.html" target="_blank">https://www.marca.com/en/football/world-cup.html</a></td>
-<td>西班牙</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td>16</td>
+<td><b>BBC Football-世界杯2026</b></td>
+<td class="uc"><a href="https://www.bbc.com/sport/football/world-cup/2026" target="_blank">https://www.bbc.com/sport/football/world-cup/2026</a></td>
+<td>英国</td>
+<td class="pr">HTTP0 云壳拦截(BBC世界杯2026)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
+</tr>
+<tr class="unr">
+<td>17</td>
+<td><b>BBC Sport-足球</b></td>
+<td class="uc"><a href="https://www.bbc.com/sport/football" target="_blank">https://www.bbc.com/sport/football</a></td>
+<td>英国</td>
+<td class="pr">HTTP0 云壳拦截(BBC足球频道)</td>
+<td class="uc">-</td>
+</tr>
+<tr class="unr">
+<td>18</td>
+<td><b>Washington Post-足球</b></td>
+<td class="uc"><a href="https://www.washingtonpost.com/sports/soccer/" target="_blank">https://www.washingtonpost.com/sports/soccer/</a></td>
+<td>美国</td>
+<td class="pr">HTTP0 云壳拦截(华盛顿邮报足球)</td>
+<td class="uc">-</td>
 </tr>
 <tr>
-<td>25</td>
+<td>19</td>
 <td><b>CNN Sports-足球</b></td>
 <td class="uc"><a href="https://edition.cnn.com/sport/football" target="_blank">https://edition.cnn.com/sport/football</a></td>
 <td>美国</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>26</td>
+<td>20</td>
 <td><b>Mirror-世界杯2026</b></td>
 <td class="uc"><a href="https://www.mirror.co.uk/all-about/world-cup-2026" target="_blank">https://www.mirror.co.uk/all-about/world-cup-2026</a></td>
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>27</td>
+<td>21</td>
+<td><b>NBC Sports-足球</b></td>
+<td class="uc"><a href="https://www.nbcsports.com/soccer" target="_blank">https://www.nbcsports.com/soccer</a></td>
+<td>美国</td>
+<td class="pr">✅ 体育资讯列表页(NBC足球频道)</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>22</td>
 <td><b>Sportsnet加拿大-足球</b></td>
 <td class="uc"><a href="https://www.sportsnet.ca/soccer/world-cup-2026/" target="_blank">https://www.sportsnet.ca/soccer/world-cup-2026/</a></td>
 <td>加拿大</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>28</td>
+<td>23</td>
+<td><b>TSN加拿大-世界杯2026</b></td>
+<td class="uc"><a href="https://www.tsn.ca/soccer/fifa-world-cup" target="_blank">https://www.tsn.ca/soccer/fifa-world-cup</a></td>
+<td>加拿大</td>
+<td class="pr">✅ 体育资讯列表页(TSN世界杯)</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>24</td>
 <td><b>USA Today Sports-足球</b></td>
 <td class="uc"><a href="https://www.usatoday.com/sports/soccer/" target="_blank">https://www.usatoday.com/sports/soccer/</a></td>
 <td>美国</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
-<tr class="unr">
-<td>29</td>
-<td><b>CBC Sports加拿大-足球</b></td>
-<td class="uc"><a href="https://www.cbc.ca/sports/soccer" target="_blank">https://www.cbc.ca/sports/soccer</a></td>
-<td>加拿大</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>30</td>
-<td><b>DAZN-足球新闻</b></td>
-<td class="uc"><a href="https://www.dazn.com/en-US/news/soccer/" target="_blank">https://www.dazn.com/en-US/news/soccer/</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>31</td>
-<td><b>NBC Sports-足球</b></td>
-<td class="uc"><a href="https://www.nbcsports.com/soccer" target="_blank">https://www.nbcsports.com/soccer</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>32</td>
-<td><b>TSN加拿大-世界杯2026</b></td>
-<td class="uc"><a href="https://www.tsn.ca/soccer/fifa-world-cup" target="_blank">https://www.tsn.ca/soccer/fifa-world-cup</a></td>
-<td>加拿大</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>33</td>
+<tr>
+<td>25</td>
 <td><b>TalkSport-世界杯2026</b></td>
 <td class="uc"><a href="https://talksport.com/football/world-cup-2026/" target="_blank">https://talksport.com/football/world-cup-2026/</a></td>
 <td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(TalkSport)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>34</td>
+<tr>
+<td>26</td>
 <td><b>Telegraph-世界杯2026</b></td>
 <td class="uc"><a href="https://www.telegraph.co.uk/world-cup-2026/" target="_blank">https://www.telegraph.co.uk/world-cup-2026/</a></td>
 <td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Telegraph)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>35</td>
+<tr>
+<td>27</td>
 <td><b>The Sun-世界杯2026</b></td>
 <td class="uc"><a href="https://www.thesun.co.uk/sport/football/world-cup-2026/" target="_blank">https://www.thesun.co.uk/sport/football/world-cup-2026/</a></td>
 <td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(The Sun)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
-<td>36</td>
-<td><b>法新社-体育</b></td>
-<td class="uc"><a href="https://www.afp.com/en/news/131/sports" target="_blank">https://www.afp.com/en/news/131/sports</a></td>
-<td>法国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td>28</td>
+<td><b>CBC Sports加拿大-足球</b></td>
+<td class="uc"><a href="https://www.cbc.ca/sports/soccer" target="_blank">https://www.cbc.ca/sports/soccer</a></td>
+<td>加拿大</td>
+<td class="pr">HTTP0 云壳拦截(CBC体育)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
-<td>37</td>
+<td>29</td>
 <td><b>路透社-世界杯专题</b></td>
 <td class="uc"><a href="https://www.reuters.com/topic/event/fifa-world-cup/" target="_blank">https://www.reuters.com/topic/event/fifa-world-cup/</a></td>
 <td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP0 云壳拦截(路透社世界杯专题)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
-<td>38</td>
+<td>30</td>
 <td><b>AFC亚洲足联-新闻</b></td>
 <td class="uc"><a href="https://www.the-afc.com/en/national/fifa_world_cup/news.html" target="_blank">https://www.the-afc.com/en/national/fifa_world_cup/news.html</a></td>
 <td>马来西亚</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>39</td>
+<td>31</td>
 <td><b>Bundesliga-新闻(EN)</b></td>
 <td class="uc"><a href="https://www.bundesliga.com/en/bundesliga/news" target="_blank">https://www.bundesliga.com/en/bundesliga/news</a></td>
 <td>德国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>40</td>
+<td>32</td>
 <td><b>CAF非洲足联-新闻</b></td>
 <td class="uc"><a href="https://www.cafonline.com/news/" target="_blank">https://www.cafonline.com/news/</a></td>
 <td>埃及</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>41</td>
+<td>33</td>
+<td><b>CONCACAF-新闻</b></td>
+<td class="uc"><a href="https://www.concacaf.com/news/" target="_blank">https://www.concacaf.com/news/</a></td>
+<td>美国</td>
+<td class="pr">✅ 确认为体育/足球资讯列表页</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>34</td>
+<td><b>La Liga-新闻(EN)</b></td>
+<td class="uc"><a href="https://www.laliga.com/en-GB/news" target="_blank">https://www.laliga.com/en-GB/news</a></td>
+<td>西班牙</td>
+<td class="pr">✅ 体育资讯列表页(西甲官方新闻)</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>35</td>
+<td><b>Premier League-新闻</b></td>
+<td class="uc"><a href="https://www.premierleague.com/news" target="_blank">https://www.premierleague.com/news</a></td>
+<td>英国</td>
+<td class="pr">✅ 体育资讯列表页(英超官方新闻)</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>36</td>
+<td><b>RÉCORD墨西哥-世界杯2026</b></td>
+<td class="uc"><a href="https://www.record.com.mx/futbol-noticias/mundial-2026" target="_blank">https://www.record.com.mx/futbol-noticias/mundial-2026</a></td>
+<td>墨西哥</td>
+<td class="pr">✅ 体育资讯列表页(RÉCORD足球)</td>
+<td class="uc">-</td>
+</tr>
+<tr>
+<td>37</td>
 <td><b>Sports Mole-世界杯</b></td>
 <td class="uc"><a href="https://www.sportsmole.co.uk/football/world-cup-2026/" target="_blank">https://www.sportsmole.co.uk/football/world-cup-2026/</a></td>
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
-<td>42</td>
+<td>38</td>
 <td><b>TUDN墨西哥-世界杯2026</b></td>
 <td class="uc"><a href="https://www.tudn.mx/futbol/copa-mundial-de-la-fifa-2026" target="_blank">https://www.tudn.mx/futbol/copa-mundial-de-la-fifa-2026</a></td>
 <td>墨西哥</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
-<tr class="unr">
-<td>43</td>
-<td><b>90min-世界杯</b></td>
-<td class="uc"><a href="https://www.90min.com/fifa-world-cup" target="_blank">https://www.90min.com/fifa-world-cup</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>44</td>
+<tr>
+<td>39</td>
 <td><b>Azteca Deportes墨西哥</b></td>
 <td class="uc"><a href="https://www.tvazteca.com/aztecadeportes/futbol/" target="_blank">https://www.tvazteca.com/aztecadeportes/futbol/</a></td>
 <td>墨西哥</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Azteca体育)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>45</td>
-<td><b>CONCACAF-新闻</b></td>
-<td class="uc"><a href="https://www.concacaf.com/news/" target="_blank">https://www.concacaf.com/news/</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>46</td>
+<tr>
+<td>40</td>
 <td><b>CONMEBOL-新闻</b></td>
 <td class="uc"><a href="https://www.conmebol.com/news/" target="_blank">https://www.conmebol.com/news/</a></td>
 <td>巴拉圭</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(南美足联官网)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>47</td>
+<tr>
+<td>41</td>
 <td><b>Globo Esporte巴西-世界杯</b></td>
 <td class="uc"><a href="https://globoesporte.globo.com/futebol/copa-do-mundo/" target="_blank">https://globoesporte.globo.com/futebol/copa-do-mundo/</a></td>
 <td>巴西</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Globo Esporte)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>48</td>
+<tr>
+<td>42</td>
 <td><b>La Afición墨西哥-世界杯</b></td>
 <td class="uc"><a href="https://www.milenio.com/deportes/mundial-2026" target="_blank">https://www.milenio.com/deportes/mundial-2026</a></td>
 <td>墨西哥</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(La Afición)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
-<tr class="unr">
-<td>49</td>
-<td><b>La Liga-新闻(EN)</b></td>
-<td class="uc"><a href="https://www.laliga.com/en-GB/news" target="_blank">https://www.laliga.com/en-GB/news</a></td>
-<td>西班牙</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>50</td>
-<td><b>Ligue 1-新闻(EN)</b></td>
-<td class="uc"><a href="https://www.ligue1.com/Articles" target="_blank">https://www.ligue1.com/Articles</a></td>
-<td>法国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>51</td>
-<td><b>MLS-世界杯2026</b></td>
-<td class="uc"><a href="https://www.mlssoccer.com/news/topic/world-cup" target="_blank">https://www.mlssoccer.com/news/topic/world-cup</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>52</td>
-<td><b>MLS-新闻</b></td>
-<td class="uc"><a href="https://www.mlssoccer.com/news/" target="_blank">https://www.mlssoccer.com/news/</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>53</td>
+<tr>
+<td>43</td>
 <td><b>Olé阿根廷-世界杯</b></td>
 <td class="uc"><a href="https://www.ole.com.ar/futbol-internacional/mundial/" target="_blank">https://www.ole.com.ar/futbol-internacional/mundial/</a></td>
 <td>阿根廷</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP403 云壳拦截(Olé阿根廷)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
-<td>54</td>
-<td><b>Planet Football-世界杯</b></td>
-<td class="uc"><a href="https://www.planetfootball.com/world-cup" target="_blank">https://www.planetfootball.com/world-cup</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>55</td>
-<td><b>Premier League-新闻</b></td>
-<td class="uc"><a href="https://www.premierleague.com/news" target="_blank">https://www.premierleague.com/news</a></td>
-<td>英国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>56</td>
-<td><b>RÉCORD墨西哥-世界杯2026</b></td>
-<td class="uc"><a href="https://www.record.com.mx/futbol-noticias/mundial-2026" target="_blank">https://www.record.com.mx/futbol-noticias/mundial-2026</a></td>
-<td>墨西哥</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>57</td>
-<td><b>Serie A-新闻(EN)</b></td>
-<td class="uc"><a href="https://www.legaseriea.it/en/media/news" target="_blank">https://www.legaseriea.it/en/media/news</a></td>
-<td>意大利</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>58</td>
-<td><b>TUDN美国-世界杯</b></td>
-<td class="uc"><a href="https://www.tudn.com/futbol/copa-mundial-de-la-fifa" target="_blank">https://www.tudn.com/futbol/copa-mundial-de-la-fifa</a></td>
+<td>44</td>
+<td><b>MLS-新闻</b></td>
+<td class="uc"><a href="https://www.mlssoccer.com/news/" target="_blank">https://www.mlssoccer.com/news/</a></td>
 <td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
+<td class="pr">HTTP0 云壳拦截(MLS官网)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>59</td>
-<td><b>Telemundo Deportes</b></td>
-<td class="uc"><a href="https://www.telemundo.com/deportes/futbol" target="_blank">https://www.telemundo.com/deportes/futbol</a></td>
-<td>美国</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>60</td>
-<td><b>巴西足协CBF-新闻</b></td>
-<td class="uc"><a href="https://www.cbf.com.br/selecao-brasileira/noticias" target="_blank">https://www.cbf.com.br/selecao-brasileira/noticias</a></td>
-<td>巴西</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
-</tr>
-<tr class="unr">
-<td>61</td>
-<td><b>阿根廷足协AFA-新闻</b></td>
-<td class="uc"><a href="https://www.afa.com.ar/es/pages/noticias" target="_blank">https://www.afa.com.ar/es/pages/noticias</a></td>
-<td>阿根廷</td>
-<td class="pr">云壳拦截,待外网验证(URL本身指向体育/足球频道)</td>
-<td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 </tbody>
 </table></div>
@@ -660,7 +477,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <div class="sr">
 <span class="st"><em>29</em> 总计</span>
 <span class="st"><em class="green">19</em> 有效</span>
-<span class="st"><em class="red">10</em> 非有效</span>
+<span class="st"><em class="red">10</em> 可能被拦截</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">2</em> 不可达</span>
 </div>
@@ -672,7 +489,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <th style="width:80px">国家</th>
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -681,7 +497,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>挪威</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -690,7 +505,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>西班牙</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -699,7 +513,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>德国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>4</td>
@@ -708,7 +521,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>5</td>
@@ -717,7 +529,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>葡萄牙</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>6</td>
@@ -726,7 +537,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>西班牙</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>7</td>
@@ -735,7 +545,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>葡萄牙</td>
 <td class="pr">列表特征不足(1)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>8</td>
@@ -744,7 +553,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>西班牙</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 <tr>
 <td>9</td>
@@ -753,7 +561,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">列表特征不足(0)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>10</td>
@@ -762,7 +569,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>捷克</td>
 <td class="pr">列表特征不足(0)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>11</td>
@@ -771,7 +577,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>12</td>
@@ -780,7 +585,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>13</td>
@@ -789,7 +593,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>14</td>
@@ -798,7 +601,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">列表特征不足(1)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>15</td>
@@ -807,7 +609,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">列表特征不足(1)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="unr">
 <td>16</td>
@@ -816,7 +617,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">请求超时</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
 <td>17</td>
@@ -825,7 +625,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>18</td>
@@ -834,7 +633,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>德国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>19</td>
@@ -843,7 +641,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>意大利</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>20</td>
@@ -852,7 +649,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>21</td>
@@ -861,7 +657,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>22</td>
@@ -870,7 +665,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>23</td>
@@ -879,7 +673,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="fix">
 <td>24</td>
@@ -888,7 +681,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc"><a href="https://worldsoccertalk.com/football/world-cup" target="_blank" class="fxl">https://worldsoccertalk.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr class="fix">
 <td>25</td>
@@ -897,7 +689,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">列表特征不足(0)</td>
 <td class="uc"><a href="https://www.planetfootball.com/football/world-cup" target="_blank" class="fxl">https://www.planetfootball.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>26</td>
@@ -906,7 +697,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">HTTP 404</td>
 <td class="uc">-</td>
-<td class="hc">404</td>
 </tr>
 <tr class="unr">
 <td>27</td>
@@ -915,7 +705,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>澳大利亚</td>
 <td class="pr">请求超时</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
 <td>28</td>
@@ -924,7 +713,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>德国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>29</td>
@@ -933,7 +721,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>德国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 </tbody>
 </table></div>
@@ -942,7 +729,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <div class="sr">
 <span class="st"><em>13</em> 总计</span>
 <span class="st"><em class="green">6</em> 有效</span>
-<span class="st"><em class="red">7</em> 非有效</span>
+<span class="st"><em class="red">7</em> 可能被拦截</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">2</em> 不可达</span>
 </div>
@@ -954,7 +741,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <th style="width:80px">国家</th>
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -963,7 +749,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>瑞士</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -972,7 +757,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -981,7 +765,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 <tr class="unr">
 <td>4</td>
@@ -990,7 +773,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>瑞士</td>
 <td class="pr">请求超时</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
 <td>5</td>
@@ -999,16 +781,14 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="unr">
 <td>6</td>
 <td><b>路透社-足球</b></td>
 <td class="uc"><a href="https://www.reuters.com/sports/soccer/" target="_blank">https://www.reuters.com/sports/soccer/</a></td>
 <td>英国</td>
-<td class="pr">请求超时</td>
+<td class="pr">HTTP0 云壳拦截(路透社足球频道)</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
 <td>7</td>
@@ -1017,7 +797,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>8</td>
@@ -1026,7 +805,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="fix">
 <td>9</td>
@@ -1035,7 +813,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc"><a href="https://leaguelane.com/football/world-cup" target="_blank" class="fxl">https://leaguelane.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>10</td>
@@ -1044,7 +821,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>克罗地亚</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 <tr class="fix">
 <td>11</td>
@@ -1053,7 +829,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>法国</td>
 <td class="pr">非足球/体育类内容</td>
 <td class="uc"><a href="https://www.beinsports.com/football/world-cup" target="_blank" class="fxl">https://www.beinsports.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>12</td>
@@ -1062,7 +837,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 <tr>
 <td>13</td>
@@ -1071,7 +845,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 </tbody>
 </table></div>
@@ -1080,7 +853,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <div class="sr">
 <span class="st"><em>13</em> 总计</span>
 <span class="st"><em class="green">6</em> 有效</span>
-<span class="st"><em class="red">7</em> 非有效</span>
+<span class="st"><em class="red">7</em> 可能被拦截</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">4</em> 不可达</span>
 </div>
@@ -1092,7 +865,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <th style="width:80px">国家</th>
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -1101,7 +873,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -1110,7 +881,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -1119,7 +889,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>意大利</td>
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1128,7 +897,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>捷克</td>
 <td class="pr">列表特征不足(0)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="unr">
 <td>5</td>
@@ -1137,7 +905,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">请求超时</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
 <td>6</td>
@@ -1146,7 +913,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>德国</td>
 <td class="pr">请求超时</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
 <td>7</td>
@@ -1155,7 +921,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>西班牙</td>
 <td class="pr">连接失败</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr class="unr">
 <td>8</td>
@@ -1164,7 +929,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">连接失败</td>
 <td class="uc">-</td>
-<td class="hc">0</td>
 </tr>
 <tr>
 <td>9</td>
@@ -1173,7 +937,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr class="fix">
 <td>10</td>
@@ -1182,7 +945,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>英国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc"><a href="https://www.sportsmole.co.uk/football/world-cup" target="_blank" class="fxl">https://www.sportsmole.co.uk/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr class="fix">
 <td>11</td>
@@ -1191,7 +953,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc"><a href="https://www.si.com/soccer/world-cup" target="_blank" class="fxl">https://www.si.com/soccer/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>12</td>
@@ -1200,7 +961,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">列表特征不足(1)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>13</td>
@@ -1209,7 +969,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <td>美国</td>
 <td class="pr">HTTP 403 访问受限(可能反爬)</td>
 <td class="uc">-</td>
-<td class="hc">403</td>
 </tr>
 </tbody>
 </table></div>
@@ -1225,7 +984,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <div class="sr">
 <span class="st"><em>6</em> 总计</span>
 <span class="st"><em class="green">6</em> 有效</span>
-<span class="st"><em class="red">0</em> 非有效</span>
+<span class="st"><em class="red">0</em> 可能被拦截</span>
 <span class="st"><em class="orange">0</em> 已补充</span>
 <span class="st"><em class="gray">0</em> 不可达</span>
 </div>
@@ -1237,7 +996,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -1246,7 +1004,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ CCTV体育足球频道(世界杯专题403,用足球频道替代)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -1255,7 +1012,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -1264,7 +1020,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1273,7 +1028,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育资讯列表页(新华体育)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>5</td>
@@ -1282,7 +1036,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 腾讯体育世界杯专题(HTTP301重定向,含足球+世界杯内容)</td>
 <td class="uc">-</td>
-<td class="hc">301</td>
 </tr>
 <tr>
 <td>6</td>
@@ -1291,7 +1044,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 </tbody>
 </table></div>
@@ -1300,7 +1052,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 <div class="sr">
 <span class="st"><em>7</em> 总计</span>
 <span class="st"><em class="green">7</em> 有效</span>
-<span class="st"><em class="red">0</em> 非有效</span>
+<span class="st"><em class="red">0</em> 可能被拦截</span>
 <span class="st"><em class="orange">0</em> 已补充</span>
 <span class="st"><em class="gray">0</em> 不可达</span>
 </div>
@@ -1312,7 +1064,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <th style="width:180px">拨测结果</th>
 <th>补充URL</th>
-<th style="width:50px">HTTP</th>
 </tr></thead>
 <tbody><tr>
 <td>1</td>
@@ -1321,7 +1072,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>2</td>
@@ -1330,7 +1080,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>3</td>
@@ -1339,7 +1088,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>4</td>
@@ -1348,7 +1096,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>5</td>
@@ -1357,7 +1104,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 体育资讯列表页(列表特征较少但内容相关)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>6</td>
@@ -1366,7 +1112,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ 确认为体育/足球资讯列表页</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 <tr>
 <td>7</td>
@@ -1375,7 +1120,6 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 
 <td class="pr">✅ URL识别为体育资讯列表页(JS渲染·静态HTML特征不足)</td>
 <td class="uc">-</td>
-<td class="hc">200</td>
 </tr>
 </tbody>
 </table></div>
@@ -1383,7 +1127,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </div>
 </div>
 
-<div class="ft">Generated by AI · 2026-06-10 17:44 · 2026 World Cup Site Audit</div>
+<div class="ft">Generated by AI · 2026-06-10 17:55 · 2026 World Cup Site Audit</div>
 
 <script>
 function copyAllUrls(tblId){
@@ -1447,7 +1191,7 @@ if(panel)panel.style.display='block';
 })();
 
 // === 版本检测：每次访问都检测更新 ===
-const BUILD_TIME = '20260610174436';
+const BUILD_TIME = '20260610175556';
 (function(){
     if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
     var vurl = 'https://paultunggm-pixel.github.io/consistency-eval/version.json?t=' + Date.now();

@@ -110,8 +110,15 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 .article-panel td.uc{white-space:normal;word-break:break-all}
 @media(max-width:768px){
 .scrape-layout{flex-direction:column}
-.scrape-sites{width:100%;min-width:0;border-right:none;border-bottom:1px solid #e2e5ea;max-height:200px}
+.scrape-sites{width:100%!important;min-width:0!important;border-right:none!important;border-bottom:1px solid #e2e5ea;max-height:200px}
+.scrape-arts{padding:12px 0 0 0!important}
 .article-panel table{min-width:480px}
+.site-table{min-width:auto}
+/* 所有side在手机端变横向滚动 */
+.main.on .side,.main .side{width:100%!important;min-width:0!important;flex-direction:row;display:flex;overflow-x:auto;padding:8px 12px!important;border-right:none!important;border-bottom:1px solid #e2e5ea;height:auto}
+.main.on .side .ttl,.main .side .ttl{display:none}
+.main.on .side .blk,.main .side .blk{border-left:none;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;font-size:12px;padding:7px 12px;border-radius:6px 6px 0 0}
+.main.on .side .blk.on,.main .side .blk.on{border-bottom-color:#1e40af;background:#eff6ff;border-left-color:transparent}
 }
 
 .validate-placeholder{display:flex;align-items:center;justify-content:center;height:300px;color:#94a3b8;font-size:15px;background:#fff;border:2px dashed #e2e5ea;border-radius:10px}
@@ -155,7 +162,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 「美加墨世界杯」时效性资讯内容挖掘</h1><span class="ts">排查时间: 2026-06-11 01:49 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+<div class="hd"><h1>🏆 「美加墨世界杯」时效性资讯内容挖掘</h1><span class="ts">排查时间: 2026-06-11 01:53 · 总URL 94 · 有效 58 · 可能被拦截 36 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
 
 <div id="tier-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
 <div class="modal-box">

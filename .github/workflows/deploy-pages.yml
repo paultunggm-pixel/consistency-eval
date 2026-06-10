@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'polymarket_report.html'
+      - 'worldcup-site-audit.html'
       - 'cover-tool/**'
       - 'qianwen-lecture/**'
   workflow_dispatch:

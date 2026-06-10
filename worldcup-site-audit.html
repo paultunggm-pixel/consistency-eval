@@ -11,71 +11,106 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.6}
 
-.hd{background:#fff;border-bottom:1px solid #e2e5ea;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;min-width:960px}
-.hd h1{font-size:17px;font-weight:700;color:#0f172a}
-.hd .ts{font-size:12px;color:#8893a4}
-.info-btn{margin-left:8px;padding:2px 10px;font-size:11px;cursor:pointer;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;transition:.15s}
+/* header */
+.hd{background:#fff;border-bottom:1px solid #e2e5ea;padding:12px 16px;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.hd h1{font-size:16px;font-weight:700;color:#0f172a}
+.hd .ts{font-size:11px;color:#8893a4;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.info-btn{padding:2px 10px;font-size:11px;cursor:pointer;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#64748b;transition:.15s;white-space:nowrap}
 .info-btn:hover{background:#eff6ff;border-color:#2563eb;color:#2563eb}
 
-.tabs{display:flex;background:#fff;padding:0 32px;border-bottom:1px solid #e2e5ea;min-width:960px}
-.tb{padding:14px 28px;font-size:15px;cursor:pointer;border:none;background:none;color:#64748b;font-weight:500;border-bottom:3px solid transparent;transition:.2s}
+/* tabs */
+.tabs{display:flex;background:#fff;padding:0 12px;border-bottom:1px solid #e2e5ea;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tb{padding:14px 18px;font-size:14px;cursor:pointer;border:none;background:none;color:#64748b;font-weight:500;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap;flex-shrink:0}
 .tb:hover{color:#1e40af}
 .tb.on{color:#1e40af;border-bottom-color:#1e40af;font-weight:700}
 
+/* main layout */
 .main{display:none}
-.main.on{display:flex;min-height:calc(100vh - 116px)}
+.main.on{display:flex;min-height:calc(100vh - 140px)}
 
-.side{width:200px;min-width:200px;background:#fff;border-right:1px solid #e2e5ea;overflow-y:auto;padding:16px 0}
-.side .ttl{font-size:11px;color:#8893a4;text-transform:uppercase;letter-spacing:1px;padding:0 18px 12px;font-weight:600}
-.blk{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;text-decoration:none;color:#475569;font-size:14px;border-left:3px solid transparent;transition:.15s;cursor:pointer}
+/* sidebar */
+.side{width:185px;min-width:185px;background:#fff;border-right:1px solid #e2e5ea;overflow-y:auto;padding:12px 0}
+.side .ttl{font-size:10px;color:#8893a4;text-transform:uppercase;letter-spacing:1px;padding:0 14px 10px;font-weight:600}
+.blk{display:flex;justify-content:space-between;align-items:center;padding:9px 14px;text-decoration:none;color:#475569;font-size:13px;border-left:3px solid transparent;transition:.15s;cursor:pointer}
 .blk:hover{background:#f1f5f9;color:#1e40af}
 .blk.on{background:#eff6ff;color:#1e40af;border-left-color:#1e40af;font-weight:600}
-.bc{font-size:11px;color:#94a3b8;background:#f1f5f9;padding:1px 8px;border-radius:10px}
+.bc{font-size:10px;color:#94a3b8;background:#f1f5f9;padding:1px 7px;border-radius:10px}
 .blk.on .bc{background:#dbeafe;color:#1e40af}
 
-.ctn{flex:1;overflow-y:auto;padding:24px 28px;min-width:0}
+/* content */
+.ctn{flex:1;overflow-y:auto;padding:20px 16px;min-width:0}
 .panel{animation:fadeIn .2s}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-.sr{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.st{background:#fff;border:1px solid #e2e5ea;border-radius:10px;padding:12px 18px;text-align:center;min-width:85px;font-size:13px;color:#64748b}
-.st em{display:block;font-size:24px;font-weight:700;font-style:normal;margin-bottom:1px}
+/* stats */
+.sr{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.st{background:#fff;border:1px solid #e2e5ea;border-radius:8px;padding:10px 14px;text-align:center;min-width:70px;font-size:12px;color:#64748b;flex:1}
+.st em{display:block;font-size:22px;font-weight:700;font-style:normal;margin-bottom:1px}
 .st em.green{color:#0d9488}
 .st em.red{color:#ef4444}
 .st em.orange{color:#f59e0b}
 .st em.gray{color:#94a3b8}
 
-.tbl{background:#fff;border:1px solid #e2e5ea;border-radius:10px;overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:750px}
+/* table */
+.tbl{background:#fff;border:1px solid #e2e5ea;border-radius:8px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:650px}
 thead{background:#f8fafc}
-th{padding:10px 10px;text-align:left;font-weight:600;color:#475569;font-size:12px;letter-spacing:.3px;white-space:nowrap}
-td{padding:8px 10px;border-top:1px solid #f1f5f9;vertical-align:middle;font-size:13px;white-space:nowrap}
+th{padding:8px 8px;text-align:left;font-weight:600;color:#475569;font-size:11px;letter-spacing:.3px;white-space:nowrap}
+td{padding:7px 8px;border-top:1px solid #f1f5f9;vertical-align:middle;font-size:12px;white-space:nowrap}
 td.uc{white-space:normal;word-break:break-all}
 td.pr{white-space:normal}
 tr:hover td{background:#f8fafc}
 tr.unr td{background:#fef2f2}
 tr.fix td:first-child{border-left:3px solid #f59e0b}
-.uc{font-family:"SF Mono",Menlo,monospace;font-size:11px;position:relative}
+.uc{font-family:"SF Mono",Menlo,monospace;font-size:10px}
 .uc a{color:#2563eb;text-decoration:none}
 .uc a:hover{text-decoration:underline}
 .fxl{color:#f59e0b!important}
-.ok{color:#0d9488;font-weight:700;font-size:15px}
-.no{color:#ef4444;font-weight:700;font-size:15px}
-.warn{color:#f59e0b;font-weight:700;font-size:15px}
-.hc{font-weight:600}
-.pr{font-size:12px;color:#64748b}
-.note{color:#94a3b8;font-size:11px}
+.ok{color:#0d9488;font-weight:700;font-size:14px}
+.no{color:#ef4444;font-weight:700;font-size:14px}
+.warn{color:#f59e0b;font-weight:700;font-size:14px}
+.pr{font-size:11px;color:#64748b}
+.note{color:#94a3b8;font-size:10px}
 
-/* copy header buttons */
-.cpy-hdr{margin-left:6px;padding:2px 8px;font-size:11px;cursor:pointer;border:1px solid #93c5fd;border-radius:4px;background:#eff6ff;color:#2563eb;font-weight:500;white-space:nowrap;transition:.15s}
+/* copy buttons */
+.cpy-hdr{margin-left:4px;padding:1px 6px;font-size:10px;cursor:pointer;border:1px solid #93c5fd;border-radius:4px;background:#eff6ff;color:#2563eb;font-weight:500;white-space:nowrap;transition:.15s}
 .cpy-hdr:hover{background:#2563eb;color:#fff;border-color:#2563eb}
 .cpy-hdr.copied{background:#d1fae5;border-color:#0d9488;color:#0d9488}
 
-.ft{text-align:center;padding:14px;font-size:12px;color:#94a3b8;background:#fff;border-top:1px solid #e2e5ea}
+.ft{text-align:center;padding:12px;font-size:11px;color:#94a3b8;background:#fff;border-top:1px solid #e2e5ea}
+
+/* === 移动端 === */
+@media (max-width:768px){
+  .hd{padding:10px 12px}
+  .hd h1{font-size:14px;width:100%}
+  .hd .ts{font-size:10px;width:100%}
+
+  .tabs{padding:0 8px}
+  .tb{padding:12px 14px;font-size:13px}
+
+  .main.on{flex-direction:column;min-height:auto}
+
+  .side{width:100%;min-width:0;border-right:none;border-bottom:1px solid #e2e5ea;overflow-x:auto;overflow-y:hidden;padding:8px 12px;display:flex;gap:6px;flex-shrink:0}
+  .side .ttl{display:none}
+  .blk{border-left:none;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0;font-size:12px;padding:7px 12px;border-radius:6px 6px 0 0}
+  .blk.on{border-bottom-color:#1e40af;background:#eff6ff;border-left-color:transparent}
+  .bc{margin-left:4px}
+
+  .ctn{padding:14px 10px}
+
+  .sr{gap:6px}
+  .st{min-width:55px;padding:8px 10px;font-size:11px}
+  .st em{font-size:18px}
+
+  .tbl{border-radius:6px}
+  table{min-width:560px;font-size:11px}
+  th{padding:6px 6px;font-size:10px}
+  td{padding:6px 6px;font-size:11px}
+}
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:55 · 总URL 112 · 有效 69 · 可能被拦截 43 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:57 · 总URL 112 · 有效 69 · 可能被拦截 43 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
 
 <div id="tier-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
 <div style="background:#fff;border-radius:14px;padding:28px 32px;max-width:560px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
@@ -1127,7 +1162,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </div>
 </div>
 
-<div class="ft">Generated by AI · 2026-06-10 17:55 · 2026 World Cup Site Audit</div>
+<div class="ft">Generated by AI · 2026-06-10 17:57 · 2026 World Cup Site Audit</div>
 
 <script>
 function copyAllUrls(tblId){
@@ -1191,7 +1226,7 @@ if(panel)panel.style.display='block';
 })();
 
 // === 版本检测：每次访问都检测更新 ===
-const BUILD_TIME = '20260610175556';
+const BUILD_TIME = '20260610175721';
 (function(){
     if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
     var vurl = 'https://paultunggm-pixel.github.io/consistency-eval/version.json?t=' + Date.now();

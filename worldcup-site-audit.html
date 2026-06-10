@@ -77,6 +77,24 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 .cpy-hdr:hover{background:#2563eb;color:#fff;border-color:#2563eb}
 .cpy-hdr.copied{background:#d1fae5;border-color:#0d9488;color:#0d9488}
 
+/* modal */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center;padding:16px}
+.modal-box{background:#fff;border-radius:14px;padding:24px 28px;max-width:520px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.2)}
+.modal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.modal-hd h3{font-size:16px;color:#0f172a}
+.modal-close{border:none;background:none;font-size:24px;cursor:pointer;color:#94a3b8;line-height:1;padding:0 4px}
+.modal-close:hover{color:#ef4444}
+.tier-table-wrap{overflow-x:auto}
+.tier-table{min-width:auto;font-size:12px}
+.tier-table th{background:#f8fafc;padding:8px 10px}
+.tier-table td{padding:8px 10px;white-space:normal}
+.tier-table .t1{color:#2563eb;font-weight:700;font-size:16px}
+.tier-table .t2{color:#0d9488;font-weight:700;font-size:16px}
+.tier-table .t3{color:#f59e0b;font-weight:700;font-size:16px}
+.tier-table .t4{color:#94a3b8;font-weight:700;font-size:16px}
+.tier-ex{font-size:11px;color:#64748b;line-height:1.5}
+.modal-note{margin-top:14px;font-size:11px;color:#64748b}
+
 .ft{text-align:center;padding:12px;font-size:11px;color:#94a3b8;background:#fff;border-top:1px solid #e2e5ea}
 
 /* === 移动端 === */
@@ -106,23 +124,32 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
   table{min-width:560px;font-size:11px}
   th{padding:6px 6px;font-size:10px}
   td{padding:6px 6px;font-size:11px}
+
+  .modal-box{padding:18px 16px;border-radius:10px;max-height:90vh}
+  .modal-hd h3{font-size:14px}
+  .tier-table{font-size:11px}
+  .tier-table th,.tier-table td{padding:6px 8px}
+  .tier-table .t1,.tier-table .t2,.tier-table .t3,.tier-table .t4{font-size:14px}
 }
 </style>
 </head>
 <body>
-<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:57 · 总URL 112 · 有效 69 · 可能被拦截 43 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
+<div class="hd"><h1>🏆 2026「美加墨世界杯」时效性资讯列表网页挖掘</h1><span class="ts">排查时间: 2026-06-10 17:58 · 总URL 112 · 有效 69 · 可能被拦截 43 <button class="info-btn" onclick="document.getElementById('tier-modal').style.display='flex'">ⓘ 权威度说明</button></span></div>
 
-<div id="tier-modal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.45);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===this)this.style.display='none'">
-<div style="background:#fff;border-radius:14px;padding:28px 32px;max-width:560px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.2)">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px"><h3 style="font-size:17px;color:#0f172a">站点权威度排序说明</h3><button onclick="document.getElementById('tier-modal').style.display='none'" style="border:none;background:none;font-size:22px;cursor:pointer;color:#94a3b8">&times;</button></div>
-<table style="font-size:13px;min-width:auto"><thead><tr><th style="width:60px">Tier</th><th>类别</th><th style="width:200px">示例</th></tr></thead>
+<div id="tier-modal" class="modal-overlay" onclick="if(event.target===this)this.style.display='none'">
+<div class="modal-box">
+<div class="modal-hd"><h3>站点权威度排序说明</h3><button class="modal-close" onclick="document.getElementById('tier-modal').style.display='none'">&times;</button></div>
+<div class="tier-table-wrap">
+<table class="tier-table">
+<thead><tr><th>Tier</th><th>类别</th><th>示例</th></tr></thead>
 <tbody>
-<tr><td style="color:#2563eb;font-weight:700">1</td><td>国际顶级足球/体育媒体 + FIFA/UEFA</td><td>ESPN、BBC Sport、FOX、队报、马卡、米兰体育报、OneFootball、Opta…</td></tr>
-<tr><td style="color:#0d9488;font-weight:700">2</td><td>国际通讯社 + 大型新闻媒体 + 国内权威</td><td>路透社、美联社、CNN、卫报、新华社、央视、腾讯、新浪、虎扑…</td></tr>
-<tr><td style="color:#f59e0b;font-weight:700">3</td><td>洲际足联/联赛官网/垂直足球媒体</td><td>CONMEBOL、AFC、英超、德甲、西甲、Sports Mole、Football Italia…</td></tr>
-<tr><td style="color:#94a3b8;font-weight:700">4</td><td>其他</td><td>未分类站点自动排末位</td></tr>
+<tr><td class="t1">1</td><td>国际顶级足球/体育媒体 + FIFA/UEFA</td><td class="tier-ex">ESPN、BBC Sport、FOX、队报、马卡、米兰体育报、OneFootball、Opta…</td></tr>
+<tr><td class="t2">2</td><td>国际通讯社 + 大型新闻媒体 + 国内权威</td><td class="tier-ex">路透社、美联社、CNN、卫报、新华社、央视、腾讯、新浪、虎扑…</td></tr>
+<tr><td class="t3">3</td><td>洲际足联/联赛官网/垂直足球媒体</td><td class="tier-ex">CONMEBOL、AFC、英超、德甲、西甲、Sports Mole、Football Italia…</td></tr>
+<tr><td class="t4">4</td><td>其他</td><td class="tier-ex">未分类站点自动排末位</td></tr>
 </tbody></table>
-<p style="margin-top:16px;font-size:12px;color:#64748b">每个Tier内，有效站点（✅）排在前面</p>
+</div>
+<p class="modal-note">每个Tier内，有效站点（✅）排在前面</p>
 </div></div>
 
 <div class="tabs">
@@ -1162,7 +1189,7 @@ tr.fix td:first-child{border-left:3px solid #f59e0b}
 </div>
 </div>
 
-<div class="ft">Generated by AI · 2026-06-10 17:57 · 2026 World Cup Site Audit</div>
+<div class="ft">Generated by AI · 2026-06-10 17:58 · 2026 World Cup Site Audit</div>
 
 <script>
 function copyAllUrls(tblId){
@@ -1226,7 +1253,7 @@ if(panel)panel.style.display='block';
 })();
 
 // === 版本检测：每次访问都检测更新 ===
-const BUILD_TIME = '20260610175721';
+const BUILD_TIME = '20260610175839';
 (function(){
     if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
     var vurl = 'https://paultunggm-pixel.github.io/consistency-eval/version.json?t=' + Date.now();

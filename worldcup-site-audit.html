@@ -8,55 +8,52 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f6f8;color:#1a1a2e;line-height:1.6}
 
-/* header */
-.hd{background:#fff;border-bottom:1px solid #e2e5ea;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.hd{background:#fff;border-bottom:1px solid #e2e5ea;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:56px;min-width:900px}
 .hd h1{font-size:17px;font-weight:700;color:#0f172a}
 .hd .ts{font-size:12px;color:#8893a4}
 
-/* tabs */
-.tabs{display:flex;background:#fff;padding:0 32px;border-bottom:1px solid #e2e5ea}
+.tabs{display:flex;background:#fff;padding:0 32px;border-bottom:1px solid #e2e5ea;min-width:900px}
 .tb{padding:14px 28px;font-size:15px;cursor:pointer;border:none;background:none;color:#64748b;font-weight:500;border-bottom:3px solid transparent;transition:.2s}
 .tb:hover{color:#1e40af}
 .tb.on{color:#1e40af;border-bottom-color:#1e40af;font-weight:700}
 
-/* main layout */
 .main{display:none}
-.main.on{display:flex;height:calc(100vh - 116px)}
-.side{width:220px;background:#fff;border-right:1px solid #e2e5ea;overflow-y:auto;padding:16px 0;flex-shrink:0}
-.side .ttl{font-size:11px;color:#8893a4;text-transform:uppercase;letter-spacing:1px;padding:0 20px 12px;font-weight:600}
-.blk{display:flex;justify-content:space-between;align-items:center;padding:10px 20px;text-decoration:none;color:#475569;font-size:14px;border-left:3px solid transparent;transition:.15s;cursor:pointer}
+.main.on{display:flex;min-height:calc(100vh - 116px)}
+
+.side{width:200px;min-width:200px;background:#fff;border-right:1px solid #e2e5ea;overflow-y:auto;padding:16px 0}
+.side .ttl{font-size:11px;color:#8893a4;text-transform:uppercase;letter-spacing:1px;padding:0 18px 12px;font-weight:600}
+.blk{display:flex;justify-content:space-between;align-items:center;padding:10px 18px;text-decoration:none;color:#475569;font-size:14px;border-left:3px solid transparent;transition:.15s;cursor:pointer}
 .blk:hover{background:#f1f5f9;color:#1e40af}
 .blk.on{background:#eff6ff;color:#1e40af;border-left-color:#1e40af;font-weight:600}
 .bc{font-size:11px;color:#94a3b8;background:#f1f5f9;padding:1px 8px;border-radius:10px}
 .blk.on .bc{background:#dbeafe;color:#1e40af}
 
-/* content */
-.ctn{flex:1;overflow-y:auto;padding:24px 32px}
-.panel{animation:fadeIn .25s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.ctn{flex:1;overflow-y:auto;padding:24px 28px;min-width:0}
+.panel{animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-/* stats */
-.sr{display:flex;gap:14px;margin-bottom:22px;flex-wrap:wrap}
-.st{background:#fff;border:1px solid #e2e5ea;border-radius:10px;padding:12px 20px;text-align:center;min-width:90px;font-size:13px;color:#64748b}
-.st em{display:block;font-size:26px;font-weight:700;font-style:normal}
+.sr{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.st{background:#fff;border:1px solid #e2e5ea;border-radius:10px;padding:12px 18px;text-align:center;min-width:85px;font-size:13px;color:#64748b}
+.st em{display:block;font-size:24px;font-weight:700;font-style:normal;margin-bottom:1px}
 .st em.green{color:#0d9488}
 .st em.red{color:#ef4444}
 .st em.orange{color:#f59e0b}
 .st em.gray{color:#94a3b8}
 
-/* table */
-.tbl{background:#fff;border:1px solid #e2e5ea;border-radius:10px;overflow:hidden}
-table{width:100%;border-collapse:collapse;font-size:13px}
+.tbl{background:#fff;border:1px solid #e2e5ea;border-radius:10px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:700px}
 thead{background:#f8fafc}
 th{padding:10px 10px;text-align:left;font-weight:600;color:#475569;font-size:12px;letter-spacing:.3px;white-space:nowrap}
-td{padding:8px 10px;border-top:1px solid #f1f5f9;vertical-align:middle;font-size:13px}
+td{padding:8px 10px;border-top:1px solid #f1f5f9;vertical-align:middle;font-size:13px;white-space:nowrap}
+td.uc{white-space:normal;word-break:break-all}
+td.pr{white-space:normal}
 tr:hover td{background:#f8fafc}
-tr.unreachable td{background:#fef2f2}
-tr.corrected td:first-child{border-left:3px solid #f59e0b}
-.uc{font-family:"SF Mono",Menlo,monospace;font-size:11px;word-break:break-all}
+tr.unr td{background:#fef2f2}
+tr.fix td:first-child{border-left:3px solid #f59e0b}
+.uc{font-family:"SF Mono",Menlo,monospace;font-size:11px}
 .uc a{color:#2563eb;text-decoration:none}
 .uc a:hover{text-decoration:underline}
-.fix-link{color:#f59e0b!important}
+.fxl{color:#f59e0b!important}
 .ok{color:#0d9488;font-weight:700;font-size:15px}
 .no{color:#ef4444;font-weight:700;font-size:15px}
 .warn{color:#f59e0b;font-weight:700;font-size:15px}
@@ -65,650 +62,168 @@ tr.corrected td:first-child{border-left:3px solid #f59e0b}
 .note{color:#94a3b8;font-size:11px}
 
 .ft{text-align:center;padding:14px;font-size:12px;color:#94a3b8;background:#fff;border-top:1px solid #e2e5ea}
-
-@media(max-width:768px){
-.main.on{flex-direction:column}
-.side{width:100%;flex-direction:row;display:flex;overflow-x:auto;padding:8px 12px;border-right:none;border-bottom:1px solid #e2e5ea;height:auto}
-.side .ttl{display:none}
-.blk{border-left:none;border-bottom:3px solid transparent;white-space:nowrap;flex-shrink:0;font-size:13px;padding:8px 14px}
-.blk.on{border-bottom-color:#1e40af;background:transparent}
-}
 </style>
 </head>
 <body>
-<div class="hd">
-<h1>🏆 2026世界杯时效性站点排查报告</h1>
-<span class="ts">排查时间: 2026-06-10 15:51 · 总URL 65 · 有效 16 · 非有效 49</span>
-</div>
+<div class="hd"><h1>🏆 2026世界杯时效性站点排查报告</h1><span class="ts">排查时间: 2026-06-10 15:56 · 总URL 65 · 有效 16 · 非有效 49</span></div>
 
 <div class="tabs">
 <button class="tb on" data-tab="m-domestic">🇨🇳 国内站点 (7)</button>
 <button class="tb" data-tab="m-international">🌍 境外站点 (58)</button>
 </div>
 
-<!-- 国内 -->
 <div class="main on" id="m-domestic">
-<div class="side">
-<div class="ttl">挖掘批次</div>
-<a class="batch-link " panel-id="panel-国内-6月初">6月初<span class="bc">7</span></a>
-
+<div class="side"><div class="ttl">挖掘批次</div><a class="blk on" data-pid="panel-国内-6月初">6月初<span class="bc">7</span></a>
 </div>
-<div class="ctn"><div class="panel" id="panel-国内-6月初" style="display:none">
-<div class="stats-row">
+<div class="ctn"><div class="panel" id="panel-国内-6月初" style="display:block">
+<div class="sr">
 <span class="st"><em class="green">4</em> 有效</span>
 <span class="st"><em class="red">3</em> 非有效</span>
 <span class="st"><em>7</em> 总计</span>
 <span class="st"><em class="orange">0</em> 已补充</span>
 <span class="st"><em class="gray">0</em> 不可达</span>
 </div>
-<div class="tbl">
-<table>
-<thead><tr><th style="width:40px">#</th><th style="width:130px">站点</th><th>URL</th><th style="width:50px">HTTP</th><th style="width:50px">有效</th><th style="width:190px">拨测结果</th><th>补充URL</th></tr></thead>
-<tbody><tr>
-<td>1</td><td><b>懂球帝</b></td>
-<td class="uc"><a href="https://m.dongqiudi.com/home/253" target="_blank">https://m.dongqiudi.com/home/253</a></td>
-
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>2</td><td><b>直播吧</b></td>
-<td class="uc"><a href="https://m.zhibo8.com/news.htm" target="_blank">https://m.zhibo8.com/news.htm</a></td>
-
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>3</td><td><b>网易体育-国际足球</b></td>
-<td class="uc"><a href="https://m.163.com/touch/sport_sub.html?cid=isocce" target="_blank">https://m.163.com/touch/sport_sub.html?cid=isocce</a></td>
-
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>4</td><td><b>新浪体育-国际足球</b></td>
-<td class="uc"><a href="https://sports.sina.com.cn/global/" target="_blank">https://sports.sina.com.cn/global/</a></td>
-
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>5</td><td><b>PP体育</b></td>
-<td class="uc"><a href="https://www.ppsport.com/rollnews" target="_blank">https://www.ppsport.com/rollnews</a></td>
-
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>6</td><td><b>新浪体育世界杯专题</b></td>
-<td class="uc"><a href="https://sports.sina.com.cn/g/worldcup/" target="_blank">https://sports.sina.com.cn/g/worldcup/</a></td>
-
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>7</td><td><b>网易体育-世界杯</b></td>
-<td class="uc"><a href="https://sports.163.com/special/2026worldcupnews_10/" target="_blank">https://sports.163.com/special/2026worldcupnews_10/</a></td>
-
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr></tbody>
-</table>
+<div class="tbl"><table>
+<thead><tr><th style="width:35px">#</th><th style="width:125px">站点</th><th>URL</th><th style="width:45px">HTTP</th><th style="width:42px">有效</th><th style="width:180px">拨测结果</th><th>补充URL</th></tr></thead>
+<tbody><tr><td>1</td><td><b>懂球帝</b></td><td class="uc"><a href="https://m.dongqiudi.com/home/253" target="_blank">https://m.dongqiudi.com/home/253</a></td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>2</td><td><b>直播吧</b></td><td class="uc"><a href="https://m.zhibo8.com/news.htm" target="_blank">https://m.zhibo8.com/news.htm</a></td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>3</td><td><b>网易体育-国际足球</b></td><td class="uc"><a href="https://m.163.com/touch/sport_sub.html?cid=isocce" target="_blank">https://m.163.com/touch/sport_sub.html?cid=isocce</a></td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>4</td><td><b>新浪体育-国际足球</b></td><td class="uc"><a href="https://sports.sina.com.cn/global/" target="_blank">https://sports.sina.com.cn/global/</a></td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>5</td><td><b>PP体育</b></td><td class="uc"><a href="https://www.ppsport.com/rollnews" target="_blank">https://www.ppsport.com/rollnews</a></td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>6</td><td><b>新浪体育世界杯专题</b></td><td class="uc"><a href="https://sports.sina.com.cn/g/worldcup/" target="_blank">https://sports.sina.com.cn/g/worldcup/</a></td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>7</td><td><b>网易体育-世界杯</b></td><td class="uc"><a href="https://sports.163.com/special/2026worldcupnews_10/" target="_blank">https://sports.163.com/special/2026worldcupnews_10/</a></td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+</tbody>
+</table></div>
 </div>
-</div></div>
+</div>
 </div>
 
-<!-- 境外 -->
 <div class="main" id="m-international">
-<div class="side">
-<div class="ttl">挖掘批次</div>
-<a class="batch-link active" panel-id="panel-境外-6月9日上午">6月9日上午<span class="bc">29</span></a>
-<a class="batch-link " panel-id="panel-境外-6月8日">6月8日<span class="bc">13</span></a>
-<a class="batch-link " panel-id="panel-境外-6月初">6月初<span class="bc">16</span></a>
-
+<div class="side"><div class="ttl">挖掘批次</div><a class="blk on" data-pid="panel-境外-6月9日上午">6月9日上午<span class="bc">29</span></a>
+<a class="blk " data-pid="panel-境外-6月8日">6月8日<span class="bc">13</span></a>
+<a class="blk " data-pid="panel-境外-6月初">6月初<span class="bc">16</span></a>
 </div>
 <div class="ctn"><div class="panel" id="panel-境外-6月9日上午" style="display:block">
-<div class="stats-row">
+<div class="sr">
 <span class="st"><em class="green">8</em> 有效</span>
 <span class="st"><em class="red">21</em> 非有效</span>
 <span class="st"><em>29</em> 总计</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">3</em> 不可达</span>
 </div>
-<div class="tbl">
-<table>
-<thead><tr><th style="width:40px">#</th><th style="width:130px">站点</th><th>URL</th><th>国家</th><th style="width:50px">HTTP</th><th style="width:50px">有效</th><th style="width:190px">拨测结果</th><th>补充URL</th></tr></thead>
-<tbody><tr>
-<td>1</td><td><b>AP通讯-世界杯</b></td>
-<td class="uc"><a href="https://apnews.com/hub/soccer" target="_blank">https://apnews.com/hub/soccer</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>2</td><td><b>Bleacher Report</b></td>
-<td class="uc"><a href="https://bleacherreport.com/world-football" target="_blank">https://bleacherreport.com/world-football</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>3</td><td><b>NewsNow</b></td>
-<td class="uc"><a href="https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup" target="_blank">https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">疑似单篇详情页</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>4</td><td><b>flashscore</b></td>
-<td class="uc"><a href="https://www.flashscore.com/" target="_blank">https://www.flashscore.com/</a></td>
-<td>捷克</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>5</td><td><b>90min-世界杯</b></td>
-<td class="uc"><a href="https://www.90min.com/world-cup" target="_blank">https://www.90min.com/world-cup</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>6</td><td><b>Premier League官网</b></td>
-<td class="uc"><a href="https://www.premierleague.com/en/news/4438262" target="_blank">https://www.premierleague.com/en/news/4438262</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>7</td><td><b>Football365</b></td>
-<td class="uc"><a href="https://www.football365.com/world-cup" target="_blank">https://www.football365.com/world-cup</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>8</td><td><b>StatsBomb</b></td>
-<td class="uc"><a href="https://www.hudl.com/en_gb/products/statsbomb" target="_blank">https://www.hudl.com/en_gb/products/statsbomb</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr class="corrected">
-<td>9</td><td><b>Planet Football</b></td>
-<td class="uc"><a href="https://www.planetfootball.com/" target="_blank">https://www.planetfootball.com/</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://www.planetfootball.com/football/world-cup" target="_blank" class="fix-link">https://www.planetfootball.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr>
-<td>10</td><td><b>Spielverlagerung</b></td>
-<td class="uc"><a href="https://spielverlagerung.de/" target="_blank">https://spielverlagerung.de/</a></td>
-<td>德国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>11</td><td><b>One Football</b></td>
-<td class="uc"><a href="https://onefootball.com/en/competition/fifa-world-cup-12" target="_blank">https://onefootball.com/en/competition/fifa-world-cup-12</a></td>
-<td>德国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>12</td><td><b>Mirror / MEN</b></td>
-<td class="uc"><a href="https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-33353446" target="_blank">https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-3335</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>13</td><td><b>A Bola-世界杯</b></td>
-<td class="uc"><a href="https://www.abola.pt/futebol/competicao/mundial-30" target="_blank">https://www.abola.pt/futebol/competicao/mundial-30</a></td>
-<td>葡萄牙</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr class="unreachable">
-<td>14</td><td><b>record</b></td>
-<td class="uc"><a href="https://www.record.pt/" target="_blank">https://www.record.pt/</a></td>
-<td>葡萄牙</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">连接失败</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>15</td><td><b>Bundesliga德甲官网</b></td>
-<td class="uc"><a href="https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602" target="_blank">https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602</a></td>
-<td>德国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>16</td><td><b>SBS Sport（澳洲）</b></td>
-<td class="uc"><a href="https://www.sbs.com.au/sport/fifa-world-cup-2026" target="_blank">https://www.sbs.com.au/sport/fifa-world-cup-2026</a></td>
-<td>澳大利亚</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>17</td><td><b>美联社</b></td>
-<td class="uc"><a href="https://apnews.com/hub/fifa-world-cup" target="_blank">https://apnews.com/hub/fifa-world-cup</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>18</td><td><b>阿斯报</b></td>
-<td class="uc"><a href="https://en.as.com/soccer/world_cup/" target="_blank">https://en.as.com/soccer/world_cup/</a></td>
-<td>西班牙</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>19</td><td><b>One Football</b></td>
-<td class="uc"><a href="https://onefootball.com/en/home" target="_blank">https://onefootball.com/en/home</a></td>
-<td>德国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>20</td><td><b>Tribal Football</b></td>
-<td class="uc"><a href="https://www.tribalfootball.com/world-cup" target="_blank">https://www.tribalfootball.com/world-cup</a></td>
-<td>英国</td>
-<td class="hc">404</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="corrected">
-<td>21</td><td><b>World Soccer Talk</b></td>
-<td class="uc"><a href="https://worldsoccertalk.com/world-cup/" target="_blank">https://worldsoccertalk.com/world-cup/</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://worldsoccertalk.com/football/world-cup" target="_blank" class="fix-link">https://worldsoccertalk.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr>
-<td>22</td><td><b>Inside World Football</b></td>
-<td class="uc"><a href="https://www.insideworldfootball.com/" target="_blank">https://www.insideworldfootball.com/</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>23</td><td><b>Mirror Sport-足球</b></td>
-<td class="uc"><a href="https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive" target="_blank">https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>24</td><td><b>FotMob</b></td>
-<td class="uc"><a href="https://www.fotmob.com/leagues/77/overview/world-cup" target="_blank">https://www.fotmob.com/leagues/77/overview/world-cup</a></td>
-<td>挪威</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>25</td><td><b>AS（西班牙）</b></td>
-<td class="uc"><a href="https://www.as.com/soccer/world-cup/" target="_blank">https://www.as.com/soccer/world-cup/</a></td>
-<td>西班牙</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>26</td><td><b>Independent-足球</b></td>
-<td class="uc"><a href="https://www.independent.co.uk/sport/football/world-cup/" target="_blank">https://www.independent.co.uk/sport/football/world-cup/</a></td>
-<td>英国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">连接失败</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>27</td><td><b>Daily Mail-世界杯</b></td>
-<td class="uc"><a href="https://www.dailymail.com/sport/index.html" target="_blank">https://www.dailymail.com/sport/index.html</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>28</td><td><b>Mundo Deportivo</b></td>
-<td class="uc"><a href="https://www.mundodeportivo.com/futbol/mundial/" target="_blank">https://www.mundodeportivo.com/futbol/mundial/</a></td>
-<td>西班牙</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>29</td><td><b>Football Italia</b></td>
-<td class="uc"><a href="https://www.football-italia.net/" target="_blank">https://www.football-italia.net/</a></td>
-<td>意大利</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr></tbody>
-</table>
+<div class="tbl"><table>
+<thead><tr><th style="width:35px">#</th><th style="width:125px">站点</th><th>URL</th><th style="width:80px">国家</th><th style="width:45px">HTTP</th><th style="width:42px">有效</th><th style="width:180px">拨测结果</th><th>补充URL</th></tr></thead>
+<tbody><tr><td>1</td><td><b>AP通讯-世界杯</b></td><td class="uc"><a href="https://apnews.com/hub/soccer" target="_blank">https://apnews.com/hub/soccer</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>2</td><td><b>Bleacher Report</b></td><td class="uc"><a href="https://bleacherreport.com/world-football" target="_blank">https://bleacherreport.com/world-football</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>3</td><td><b>NewsNow</b></td><td class="uc"><a href="https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup" target="_blank">https://www.newsnow.co.uk/h/Sport/Football/International/2026+FIFA+World+Cup</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">疑似单篇详情页</td><td class="uc">-</td></tr>
+<tr><td>4</td><td><b>flashscore</b></td><td class="uc"><a href="https://www.flashscore.com/" target="_blank">https://www.flashscore.com/</a></td><td>捷克</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>5</td><td><b>90min-世界杯</b></td><td class="uc"><a href="https://www.90min.com/world-cup" target="_blank">https://www.90min.com/world-cup</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>6</td><td><b>Premier League官网</b></td><td class="uc"><a href="https://www.premierleague.com/en/news/4438262" target="_blank">https://www.premierleague.com/en/news/4438262</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>7</td><td><b>Football365</b></td><td class="uc"><a href="https://www.football365.com/world-cup" target="_blank">https://www.football365.com/world-cup</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>8</td><td><b>StatsBomb</b></td><td class="uc"><a href="https://www.hudl.com/en_gb/products/statsbomb" target="_blank">https://www.hudl.com/en_gb/products/statsbomb</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="fix"><td>9</td><td><b>Planet Football</b></td><td class="uc"><a href="https://www.planetfootball.com/" target="_blank">https://www.planetfootball.com/</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://www.planetfootball.com/football/world-cup" target="_blank" class="fxl">https://www.planetfootball.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr><td>10</td><td><b>Spielverlagerung</b></td><td class="uc"><a href="https://spielverlagerung.de/" target="_blank">https://spielverlagerung.de/</a></td><td>德国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>11</td><td><b>One Football</b></td><td class="uc"><a href="https://onefootball.com/en/competition/fifa-world-cup-12" target="_blank">https://onefootball.com/en/competition/fifa-world-cup-12</a></td><td>德国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>12</td><td><b>Mirror / MEN</b></td><td class="uc"><a href="https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-33353446" target="_blank">https://www.manchestereveningnews.co.uk/sport/football/football-news/latest-world-cup-2026-news-3335</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>13</td><td><b>A Bola-世界杯</b></td><td class="uc"><a href="https://www.abola.pt/futebol/competicao/mundial-30" target="_blank">https://www.abola.pt/futebol/competicao/mundial-30</a></td><td>葡萄牙</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr class="unr"><td>14</td><td><b>record</b></td><td class="uc"><a href="https://www.record.pt/" target="_blank">https://www.record.pt/</a></td><td>葡萄牙</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">连接失败</td><td class="uc">-</td></tr>
+<tr><td>15</td><td><b>Bundesliga德甲官网</b></td><td class="uc"><a href="https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602" target="_blank">https://www.bundesliga.com/en/bundesliga/news/2026-fifa-world-cup-live-news-blog-germany-37602</a></td><td>德国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr class="unr"><td>16</td><td><b>SBS Sport（澳洲）</b></td><td class="uc"><a href="https://www.sbs.com.au/sport/fifa-world-cup-2026" target="_blank">https://www.sbs.com.au/sport/fifa-world-cup-2026</a></td><td>澳大利亚</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>17</td><td><b>美联社</b></td><td class="uc"><a href="https://apnews.com/hub/fifa-world-cup" target="_blank">https://apnews.com/hub/fifa-world-cup</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>18</td><td><b>阿斯报</b></td><td class="uc"><a href="https://en.as.com/soccer/world_cup/" target="_blank">https://en.as.com/soccer/world_cup/</a></td><td>西班牙</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>19</td><td><b>One Football</b></td><td class="uc"><a href="https://onefootball.com/en/home" target="_blank">https://onefootball.com/en/home</a></td><td>德国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>20</td><td><b>Tribal Football</b></td><td class="uc"><a href="https://www.tribalfootball.com/world-cup" target="_blank">https://www.tribalfootball.com/world-cup</a></td><td>英国</td><td class="hc">404</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr class="fix"><td>21</td><td><b>World Soccer Talk</b></td><td class="uc"><a href="https://worldsoccertalk.com/world-cup/" target="_blank">https://worldsoccertalk.com/world-cup/</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://worldsoccertalk.com/football/world-cup" target="_blank" class="fxl">https://worldsoccertalk.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr><td>22</td><td><b>Inside World Football</b></td><td class="uc"><a href="https://www.insideworldfootball.com/" target="_blank">https://www.insideworldfootball.com/</a></td><td>英国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>23</td><td><b>Mirror Sport-足球</b></td><td class="uc"><a href="https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive" target="_blank">https://www.mirror.co.uk/all-about/2014-world-cup?service=responsive</a></td><td>英国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>24</td><td><b>FotMob</b></td><td class="uc"><a href="https://www.fotmob.com/leagues/77/overview/world-cup" target="_blank">https://www.fotmob.com/leagues/77/overview/world-cup</a></td><td>挪威</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>25</td><td><b>AS（西班牙）</b></td><td class="uc"><a href="https://www.as.com/soccer/world-cup/" target="_blank">https://www.as.com/soccer/world-cup/</a></td><td>西班牙</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="unr"><td>26</td><td><b>Independent-足球</b></td><td class="uc"><a href="https://www.independent.co.uk/sport/football/world-cup/" target="_blank">https://www.independent.co.uk/sport/football/world-cup/</a></td><td>英国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">连接失败</td><td class="uc">-</td></tr>
+<tr><td>27</td><td><b>Daily Mail-世界杯</b></td><td class="uc"><a href="https://www.dailymail.com/sport/index.html" target="_blank">https://www.dailymail.com/sport/index.html</a></td><td>美国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>28</td><td><b>Mundo Deportivo</b></td><td class="uc"><a href="https://www.mundodeportivo.com/futbol/mundial/" target="_blank">https://www.mundodeportivo.com/futbol/mundial/</a></td><td>西班牙</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>29</td><td><b>Football Italia</b></td><td class="uc"><a href="https://www.football-italia.net/" target="_blank">https://www.football-italia.net/</a></td><td>意大利</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+</tbody>
+</table></div>
 </div>
-</div><div class="panel" id="panel-境外-6月8日" style="display:none">
-<div class="stats-row">
+<div class="panel" id="panel-境外-6月8日" style="display:none">
+<div class="sr">
 <span class="st"><em class="green">0</em> 有效</span>
 <span class="st"><em class="red">13</em> 非有效</span>
 <span class="st"><em>13</em> 总计</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">3</em> 不可达</span>
 </div>
-<div class="tbl">
-<table>
-<thead><tr><th style="width:40px">#</th><th style="width:130px">站点</th><th>URL</th><th>国家</th><th style="width:50px">HTTP</th><th style="width:50px">有效</th><th style="width:190px">拨测结果</th><th>补充URL</th></tr></thead>
-<tbody><tr>
-<td>1</td><td><b>442足球</b></td>
-<td class="uc"><a href="https://www.fourfourtwo.com/us/news" target="_blank">https://www.fourfourtwo.com/us/news</a></td>
-<td>英国</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>2</td><td><b>opta-世界杯</b></td>
-<td class="uc"><a href="https://theanalyst.com/competition/fifa-world-cup/articles" target="_blank">https://theanalyst.com/competition/fifa-world-cup/articles</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>3</td><td><b>SOFA-足球</b></td>
-<td class="uc"><a href="https://www.sofascore.com/news?category=football" target="_blank">https://www.sofascore.com/news?category=football</a></td>
-<td>克罗地亚</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>4</td><td><b>路透社-足球</b></td>
-<td class="uc"><a href="https://www.reuters.com/sports/soccer/" target="_blank">https://www.reuters.com/sports/soccer/</a></td>
-<td>英国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>5</td><td><b>天空体育-足球</b></td>
-<td class="uc"><a href="https://www.skysports.com/football" target="_blank">https://www.skysports.com/football</a></td>
-<td>英国</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>6</td><td><b>纽约时报-世界杯</b></td>
-<td class="uc"><a href="https://www.nytimes.com/athletic/football/world-cup/" target="_blank">https://www.nytimes.com/athletic/football/world-cup/</a></td>
-<td>美国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>7</td><td><b>whoscored-足球</b></td>
-<td class="uc"><a href="https://www.whoscored.com/editorial" target="_blank">https://www.whoscored.com/editorial</a></td>
-<td>英国</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="corrected">
-<td>8</td><td><b>beinsports-足球</b></td>
-<td class="uc"><a href="https://www.beinsports.com/en-us/all-news" target="_blank">https://www.beinsports.com/en-us/all-news</a></td>
-<td>法国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://www.beinsports.com/football/world-cup" target="_blank" class="fix-link">https://www.beinsports.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr>
-<td>9</td><td><b>expert-预测</b></td>
-<td class="uc"><a href="https://www.expertpicks.com/en/picks/" target="_blank">https://www.expertpicks.com/en/picks/</a></td>
-<td>美国</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="corrected">
-<td>10</td><td><b>leaguelane</b></td>
-<td class="uc"><a href="https://leaguelane.com/category/articles/" target="_blank">https://leaguelane.com/category/articles/</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://leaguelane.com/football/world-cup" target="_blank" class="fix-link">https://leaguelane.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr class="unreachable">
-<td>11</td><td><b>UEFA官网</b></td>
-<td class="uc"><a href="https://www.uefa.com/news-media/news/" target="_blank">https://www.uefa.com/news-media/news/</a></td>
-<td>瑞士</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>12</td><td><b>kickoff</b></td>
-<td class="uc"><a href="https://kickoff.guide/blog/tag/worldcup-2026" target="_blank">https://kickoff.guide/blog/tag/worldcup-2026</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>13</td><td><b>FIFA官网</b></td>
-<td class="uc"><a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news" target="_blank">https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news</a></td>
-<td>瑞士</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr></tbody>
-</table>
+<div class="tbl"><table>
+<thead><tr><th style="width:35px">#</th><th style="width:125px">站点</th><th>URL</th><th style="width:80px">国家</th><th style="width:45px">HTTP</th><th style="width:42px">有效</th><th style="width:180px">拨测结果</th><th>补充URL</th></tr></thead>
+<tbody><tr><td>1</td><td><b>442足球</b></td><td class="uc"><a href="https://www.fourfourtwo.com/us/news" target="_blank">https://www.fourfourtwo.com/us/news</a></td><td>英国</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>2</td><td><b>opta-世界杯</b></td><td class="uc"><a href="https://theanalyst.com/competition/fifa-world-cup/articles" target="_blank">https://theanalyst.com/competition/fifa-world-cup/articles</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>3</td><td><b>SOFA-足球</b></td><td class="uc"><a href="https://www.sofascore.com/news?category=football" target="_blank">https://www.sofascore.com/news?category=football</a></td><td>克罗地亚</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="unr"><td>4</td><td><b>路透社-足球</b></td><td class="uc"><a href="https://www.reuters.com/sports/soccer/" target="_blank">https://www.reuters.com/sports/soccer/</a></td><td>英国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>5</td><td><b>天空体育-足球</b></td><td class="uc"><a href="https://www.skysports.com/football" target="_blank">https://www.skysports.com/football</a></td><td>英国</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="unr"><td>6</td><td><b>纽约时报-世界杯</b></td><td class="uc"><a href="https://www.nytimes.com/athletic/football/world-cup/" target="_blank">https://www.nytimes.com/athletic/football/world-cup/</a></td><td>美国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>7</td><td><b>whoscored-足球</b></td><td class="uc"><a href="https://www.whoscored.com/editorial" target="_blank">https://www.whoscored.com/editorial</a></td><td>英国</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="fix"><td>8</td><td><b>beinsports-足球</b></td><td class="uc"><a href="https://www.beinsports.com/en-us/all-news" target="_blank">https://www.beinsports.com/en-us/all-news</a></td><td>法国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://www.beinsports.com/football/world-cup" target="_blank" class="fxl">https://www.beinsports.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr><td>9</td><td><b>expert-预测</b></td><td class="uc"><a href="https://www.expertpicks.com/en/picks/" target="_blank">https://www.expertpicks.com/en/picks/</a></td><td>美国</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr class="fix"><td>10</td><td><b>leaguelane</b></td><td class="uc"><a href="https://leaguelane.com/category/articles/" target="_blank">https://leaguelane.com/category/articles/</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://leaguelane.com/football/world-cup" target="_blank" class="fxl">https://leaguelane.com/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr class="unr"><td>11</td><td><b>UEFA官网</b></td><td class="uc"><a href="https://www.uefa.com/news-media/news/" target="_blank">https://www.uefa.com/news-media/news/</a></td><td>瑞士</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>12</td><td><b>kickoff</b></td><td class="uc"><a href="https://kickoff.guide/blog/tag/worldcup-2026" target="_blank">https://kickoff.guide/blog/tag/worldcup-2026</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>13</td><td><b>FIFA官网</b></td><td class="uc"><a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news" target="_blank">https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/news</a></td><td>瑞士</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+</tbody>
+</table></div>
 </div>
-</div><div class="panel" id="panel-境外-6月初" style="display:none">
-<div class="stats-row">
+<div class="panel" id="panel-境外-6月初" style="display:none">
+<div class="sr">
 <span class="st"><em class="green">4</em> 有效</span>
 <span class="st"><em class="red">12</em> 非有效</span>
 <span class="st"><em>16</em> 总计</span>
 <span class="st"><em class="orange">2</em> 已补充</span>
 <span class="st"><em class="gray">4</em> 不可达</span>
 </div>
-<div class="tbl">
-<table>
-<thead><tr><th style="width:40px">#</th><th style="width:130px">站点</th><th>URL</th><th>国家</th><th style="width:50px">HTTP</th><th style="width:50px">有效</th><th style="width:190px">拨测结果</th><th>补充URL</th></tr></thead>
-<tbody><tr>
-<td>1</td><td><b>ESPN</b></td>
-<td class="uc"><a href="https://www.espn.com/soccer/" target="_blank">https://www.espn.com/soccer/</a></td>
-<td>美国</td>
-<td class="hc">202</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>2</td><td><b>FLASHSCORE</b></td>
-<td class="uc"><a href="https://www.flashscore.com/news/world-championship/lvUBR5F8CdnS0XT8/" target="_blank">https://www.flashscore.com/news/world-championship/lvUBR5F8CdnS0XT8/</a></td>
-<td>捷克</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr>
-<td>3</td><td><b>Goal-世界杯最新新闻</b></td>
-<td class="uc"><a href="https://www.goal.com/en/news" target="_blank">https://www.goal.com/en/news</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>4</td><td><b>bbc世界杯专题</b></td>
-<td class="uc"><a href="https://www.bbc.com/sport/football/world-cup" target="_blank">https://www.bbc.com/sport/football/world-cup</a></td>
-<td>英国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>5</td><td><b>卫报</b></td>
-<td class="uc"><a href="https://www.theguardian.com/football/world-cup-2026" target="_blank">https://www.theguardian.com/football/world-cup-2026</a></td>
-<td>英国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">连接失败</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>6</td><td><b>CBS体育</b></td>
-<td class="uc"><a href="https://www.cbssports.com/soccer/world-cup/" target="_blank">https://www.cbssports.com/soccer/world-cup/</a></td>
-<td>美国</td>
-<td class="hc">429</td>
-<td class="no">⚠️</td>
-<td class="pr">未找到世界杯相关内容</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>7</td><td><b>Fox体育</b></td>
-<td class="uc"><a href="https://www.foxsports.com/soccer" target="_blank">https://www.foxsports.com/soccer</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="corrected">
-<td>8</td><td><b>sportsmole</b></td>
-<td class="uc"><a href="https://www.sportsmole.co.uk/football/preview/" target="_blank">https://www.sportsmole.co.uk/football/preview/</a></td>
-<td>英国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://www.sportsmole.co.uk/football/world-cup" target="_blank" class="fix-link">https://www.sportsmole.co.uk/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr>
-<td>9</td><td><b>马卡报</b></td>
-<td class="uc"><a href="https://www.marca.com/en/world-cup.html" target="_blank">https://www.marca.com/en/world-cup.html</a></td>
-<td>西班牙</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>10</td><td><b>队报</b></td>
-<td class="uc"><a href="https://www.lequipe.fr/Football/Coupe-du-monde/" target="_blank">https://www.lequipe.fr/Football/Coupe-du-monde/</a></td>
-<td>法国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr><tr class="unreachable">
-<td>11</td><td><b>图片报</b></td>
-<td class="uc"><a href="https://www.bild.de/sport/fussball/fifa-wm-2026-QNToDBgFYEJ5vy2KN6mE" target="_blank">https://www.bild.de/sport/fussball/fifa-wm-2026-QNToDBgFYEJ5vy2KN6mE</a></td>
-<td>德国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>12</td><td><b>体育新闻</b></td>
-<td class="uc"><a href="https://www.sportingnews.com/us/world-cup" target="_blank">https://www.sportingnews.com/us/world-cup</a></td>
-<td>美国</td>
-<td class="hc">403</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="unreachable">
-<td>13</td><td><b>BBC</b></td>
-<td class="uc"><a href="https://www.bbc.com/sport/football/world-cup" target="_blank">https://www.bbc.com/sport/football/world-cup</a></td>
-<td>英国</td>
-<td class="hc">0</td>
-<td class="warn">🔴</td>
-<td class="pr">超时(>8s)</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr>
-<td>14</td><td><b>米兰体育报</b></td>
-<td class="uc"><a href="https://www.gazzetta.it/Calcio/Mondiali/?refresh_ce-cp" target="_blank">https://www.gazzetta.it/Calcio/Mondiali/?refresh_ce-cp</a></td>
-<td>意大利</td>
-<td class="hc">200</td>
-<td class="ok">✅</td>
-<td class="pr">✅ 确认为资讯列表页</td>
-<td class="uc">-<br><small class="note"></small></td>
-</tr><tr class="corrected">
-<td>15</td><td><b>体育画报</b></td>
-<td class="uc"><a href="https://www.si.com/soccer/world-cup" target="_blank">https://www.si.com/soccer/world-cup</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc"><a href="https://www.si.com/soccer/world-cup" target="_blank" class="fix-link">https://www.si.com/soccer/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td>
-</tr><tr>
-<td>16</td><td><b>The Action Network</b></td>
-<td class="uc"><a href="https://www.actionnetwork.com/soccer/archive/1" target="_blank">https://www.actionnetwork.com/soccer/archive/1</a></td>
-<td>美国</td>
-<td class="hc">200</td>
-<td class="no">⚠️</td>
-<td class="pr">列表特征不明显</td>
-<td class="uc">-<br><small class="note">未找到有效替代</small></td>
-</tr></tbody>
-</table>
+<div class="tbl"><table>
+<thead><tr><th style="width:35px">#</th><th style="width:125px">站点</th><th>URL</th><th style="width:80px">国家</th><th style="width:45px">HTTP</th><th style="width:42px">有效</th><th style="width:180px">拨测结果</th><th>补充URL</th></tr></thead>
+<tbody><tr><td>1</td><td><b>ESPN</b></td><td class="uc"><a href="https://www.espn.com/soccer/" target="_blank">https://www.espn.com/soccer/</a></td><td>美国</td><td class="hc">202</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>2</td><td><b>FLASHSCORE</b></td><td class="uc"><a href="https://www.flashscore.com/news/world-championship/lvUBR5F8CdnS0XT8/" target="_blank">https://www.flashscore.com/news/world-championship/lvUBR5F8CdnS0XT8/</a></td><td>捷克</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr><td>3</td><td><b>Goal-世界杯最新新闻</b></td><td class="uc"><a href="https://www.goal.com/en/news" target="_blank">https://www.goal.com/en/news</a></td><td>英国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr class="unr"><td>4</td><td><b>bbc世界杯专题</b></td><td class="uc"><a href="https://www.bbc.com/sport/football/world-cup" target="_blank">https://www.bbc.com/sport/football/world-cup</a></td><td>英国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr class="unr"><td>5</td><td><b>卫报</b></td><td class="uc"><a href="https://www.theguardian.com/football/world-cup-2026" target="_blank">https://www.theguardian.com/football/world-cup-2026</a></td><td>英国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">连接失败</td><td class="uc">-</td></tr>
+<tr><td>6</td><td><b>CBS体育</b></td><td class="uc"><a href="https://www.cbssports.com/soccer/world-cup/" target="_blank">https://www.cbssports.com/soccer/world-cup/</a></td><td>美国</td><td class="hc">429</td><td class="no">⚠️</td><td class="pr">未找到世界杯相关内容</td><td class="uc">-</td></tr>
+<tr><td>7</td><td><b>Fox体育</b></td><td class="uc"><a href="https://www.foxsports.com/soccer" target="_blank">https://www.foxsports.com/soccer</a></td><td>美国</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr class="fix"><td>8</td><td><b>sportsmole</b></td><td class="uc"><a href="https://www.sportsmole.co.uk/football/preview/" target="_blank">https://www.sportsmole.co.uk/football/preview/</a></td><td>英国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://www.sportsmole.co.uk/football/world-cup" target="_blank" class="fxl">https://www.sportsmole.co.uk/football/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr><td>9</td><td><b>马卡报</b></td><td class="uc"><a href="https://www.marca.com/en/world-cup.html" target="_blank">https://www.marca.com/en/world-cup.html</a></td><td>西班牙</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr><td>10</td><td><b>队报</b></td><td class="uc"><a href="https://www.lequipe.fr/Football/Coupe-du-monde/" target="_blank">https://www.lequipe.fr/Football/Coupe-du-monde/</a></td><td>法国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr class="unr"><td>11</td><td><b>图片报</b></td><td class="uc"><a href="https://www.bild.de/sport/fussball/fifa-wm-2026-QNToDBgFYEJ5vy2KN6mE" target="_blank">https://www.bild.de/sport/fussball/fifa-wm-2026-QNToDBgFYEJ5vy2KN6mE</a></td><td>德国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>12</td><td><b>体育新闻</b></td><td class="uc"><a href="https://www.sportingnews.com/us/world-cup" target="_blank">https://www.sportingnews.com/us/world-cup</a></td><td>美国</td><td class="hc">403</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+<tr class="unr"><td>13</td><td><b>BBC</b></td><td class="uc"><a href="https://www.bbc.com/sport/football/world-cup" target="_blank">https://www.bbc.com/sport/football/world-cup</a></td><td>英国</td><td class="hc">0</td><td class="warn">🔴</td><td class="pr">超时(>8s)</td><td class="uc">-</td></tr>
+<tr><td>14</td><td><b>米兰体育报</b></td><td class="uc"><a href="https://www.gazzetta.it/Calcio/Mondiali/?refresh_ce-cp" target="_blank">https://www.gazzetta.it/Calcio/Mondiali/?refresh_ce-cp</a></td><td>意大利</td><td class="hc">200</td><td class="ok">✅</td><td class="pr">✅ 确认为资讯列表页</td><td class="uc">-</td></tr>
+<tr class="fix"><td>15</td><td><b>体育画报</b></td><td class="uc"><a href="https://www.si.com/soccer/world-cup" target="_blank">https://www.si.com/soccer/world-cup</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc"><a href="https://www.si.com/soccer/world-cup" target="_blank" class="fxl">https://www.si.com/soccer/world-cup</a><br><small class="note">自动发现(含WC内容)</small></td></tr>
+<tr><td>16</td><td><b>The Action Network</b></td><td class="uc"><a href="https://www.actionnetwork.com/soccer/archive/1" target="_blank">https://www.actionnetwork.com/soccer/archive/1</a></td><td>美国</td><td class="hc">200</td><td class="no">⚠️</td><td class="pr">列表特征不明显</td><td class="uc">-</td></tr>
+</tbody>
+</table></div>
 </div>
-</div></div>
+</div>
 </div>
 
-<div class="ft">Generated by AI · 2026-06-10 15:51 · 2026 World Cup Site Audit</div>
+<div class="ft">Generated by AI · 2026-06-10 15:56 · 2026 World Cup Site Audit</div>
 
 <script>
 (function(){
-// Tab switching
-document.querySelectorAll('.tb').forEach(function(btn){
-btn.addEventListener('click',function(){
-document.querySelectorAll('.tb').forEach(function(b){b.classList.remove('on')});
-document.querySelectorAll('.main').forEach(function(m){m.classList.remove('on')});
+document.querySelectorAll('.tb').forEach(function(b){
+b.addEventListener('click',function(){
+document.querySelectorAll('.tb').forEach(function(x){x.classList.remove('on')});
+document.querySelectorAll('.main').forEach(function(x){x.classList.remove('on')});
 this.classList.add('on');
 document.getElementById(this.dataset.tab).classList.add('on');
 });
 });
-
-// Batch switching
-document.querySelectorAll('.blk').forEach(function(link){
-link.addEventListener('click',function(e){
+document.querySelectorAll('.blk').forEach(function(l){
+l.addEventListener('click',function(e){
 e.preventDefault();
-var main = this.closest('.main');
-main.querySelectorAll('.blk').forEach(function(l){l.classList.remove('on')});
+var main=this.closest('.main');
+main.querySelectorAll('.blk').forEach(function(x){x.classList.remove('on')});
 this.classList.add('on');
-var pid = this.getAttribute('panel-id');
 main.querySelectorAll('.panel').forEach(function(p){p.style.display='none'});
-var panel = document.getElementById(pid);
-if(panel) panel.style.display='block';
+var panel=document.getElementById(this.dataset.pid);
+if(panel)panel.style.display='block';
 });
 });
 })();

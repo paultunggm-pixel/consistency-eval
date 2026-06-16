@@ -43,3 +43,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  # 同步 cover-tool 到阿里云 OSS（国内加速）
+  oss-sync:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && vars.OSS_ENDPOINT != '' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ossutil
+        run: |
+          curl -fsSL https://gosspublic.alicdn.com/ossutil/install.sh | sudo bash
+          ossutil version
+
+      - name: Configure ossutil
+        run: |
+          ossutil config --endpoint "${{ vars.OSS_ENDPOINT }}" \
+            --access-key-id "${{ secrets.OSS_ACCESS_KEY_ID }}" \
+            --access-key-secret "${{ secrets.OSS_ACCESS_KEY_SECRET }}" \
+            --sts-token "" --mode AK
+
+      - name: Sync cover-tool to OSS
+        run: |
+          ossutil sync ./cover-tool/ "oss://${{ vars.OSS_BUCKET }}/cover-tool/" \
+            --update --include "*.html" --include "*.css" --include "*.js" --include "*.svg" --include "*.ttf" \
+            --meta "Cache-Control:public,max-age=3600"

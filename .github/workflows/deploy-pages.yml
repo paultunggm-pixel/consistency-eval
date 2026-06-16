@@ -45,14 +45,10 @@ jobs:
         uses: actions/deploy-pages@v5
 
   # ====== 双通道：同步 cover-tool 到阿里云 OSS ======
+  # 说明：workflow 触发（on.push.paths）已保证只有 cover-tool/ 变更时运行
   sync-oss:
     runs-on: ubuntu-latest
     needs: deploy
-    # 仅当 cover-tool/ 有变更时执行
-    if: |
-      github.event_name == 'workflow_dispatch' ||
-      contains(join(github.event.commits.*.modified, ','), 'cover-tool/') ||
-      contains(join(github.event.commits.*.added, ','), 'cover-tool/')
     steps:
       - name: Checkout
         uses: actions/checkout@v4

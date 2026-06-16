@@ -190,7 +190,7 @@ tr:hover { background:rgba(99,102,241,0.03); }
 <div class="main">
 <div class="header">
 <h1>千问与竞对模型解题【答案一致性】评测 <span id="header-date" style="font-size:14px;font-weight:normal;color:#6b7280;"></span></h1>
-<p class="subtitle">以千问为基准，与其他模型进行答案一致性对比分析 · 构建时间: 2026-06-16 10:11 · 数据日期: <span id="header-date"></span></p>
+<p class="subtitle">以千问为基准，与其他模型进行答案一致性对比分析 · 构建时间: 2026-06-16 14:54 · 数据日期: <span id="header-date"></span></p>
 <div class="download-group">
 <a href="javascript:void(0)" class="download-btn" style="color:#ffffff;background:#7c3aed;border-color:#7c3aed;" onclick="document.getElementById('method-modal-overlay').style.display='flex'">评测方法说明</a>
 <a href="https://alidocs.dingtalk.com/i/nodes/r1R7q3QmWew5lo02fZNnXl01JxkXOEP2?utm_scene=person_space" target="_blank" class="download-btn" style="color:#ffffff;background:#059669;border-color:#059669;">下载评测明细记录</a>
@@ -199,7 +199,7 @@ tr:hover { background:rgba(99,102,241,0.03); }
 
 <!-- 模块一：总体概览 -->
 <div class="card" id="section-overview">
-<h2 style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">总体一致率概览 <span id="overview-date" style="font-size:13px;color:#6b7280;"></span><span style="font-size:12px;color:#6b7280;font-weight:normal;margin-left:auto;">说明：一致率 = 一致题数 / 可比对题数 × 100%（DS抓取待打通暂缺）</span></h2>
+<h2 style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;">总体一致率概览 <span id="overview-date" style="font-size:13px;color:#6b7280;"></span><span style="font-size:12px;color:#6b7280;font-weight:normal;margin-left:auto;">说明：一致率 = 一致题数 / 可比对题数 × 100%</span></h2>
 <div class="overview-grid" id="overview-grid"></div>
 </div>
 
@@ -216,6 +216,7 @@ tr:hover { background:rgba(99,102,241,0.03); }
 <div class="card" id="section-grade">
 <h2>按学段统计一致率</h2>
 <div class="table-scroll-wrap" id="grade-table-wrap"></div>
+<div class="chart-container" style="height:300px;margin-top:16px;"><canvas id="gradeTrendChart"></canvas></div>
 </div>
 
 <!-- 模块四：按学科统计 -->
@@ -245,10 +246,10 @@ tr:hover { background:rgba(99,102,241,0.03); }
 <button class="close-btn" onclick="document.getElementById('method-modal-overlay').style.display='none'">关闭</button>
 <h2 style="margin-bottom:16px;">评测方法说明</h2>
 <table>
-<tr><th style="width:130px;">评测基准</th><td>以千问(app_qianwen_text)为参照，分别与豆包、豆包深思、元宝、DeepSeek、Gemini3.1进行答案比对</td></tr>
+<tr><th style="width:130px;">评测基准</th><td>以千问(app_qianwen_text)为参照，分别与豆包、豆包深思、元宝、Gemini3.1进行答案比对</td></tr>
 <tr><th>答案提取</th><td>多层正则匹配：选择题(A-E) → 判断题(正确/错误) → 填空/结论题 → 数值题。复杂解答/论述/多步证明题暂无法结构化提取</td></tr>
 <tr><th>一致性判定</th><td>选择题按选项集合比对；判断题语义归一化；数值题精度比对（误差&lt;0.01）；填空题深度归一化+子串匹配+数字集合比较；LaTeX格式统一去除后比对</td></tr>
-<tr><th>DeepSeek说明</th><td>ds字段在源数据中仅为日期值，不含模型解题内容，DS抓取待打通</td></tr>
+
 </table>
 <h3 style="margin-top:20px;margin-bottom:10px;font-size:14px;color:#1e293b;">关于"无法判断"</h3>
 <p style="font-size:13px;color:#374151;line-height:1.8;margin-bottom:8px;">以下情况记录不参与一致率计算（不计入分母），标记为"无法判断"：</p>
@@ -273,7 +274,7 @@ tr:hover { background:rgba(99,102,241,0.03); }
 // === 数据注入 ===
 // v1.12: 数据异步加载（页面秒开，数据后台加载）
 let historyData = [];
-let pairNames = ["千问-豆包", "千问-豆包深思", "千问-元宝", "千问-DeepSeek", "千问-Gemini3.1"];
+let pairNames = ["千问-豆包", "千问-豆包深思", "千问-元宝", "千问-Gemini3.1"];
 let currentDateIdx = 0;
 let dataLoaded = false;
 
@@ -308,7 +309,7 @@ function showError(msg) {
 }
 
 // === 版本检测（每次会话最多刷新一次） ===
-const BUILD_TIME = '2026-06-16 10:11';
+const BUILD_TIME = '2026-06-16 14:54';
 (function(){
     if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return;
     if (sessionStorage.getItem('_ver_checked')) return;
@@ -344,7 +345,7 @@ function initAll() {
     try { renderUncomparables(); } catch(e) { console.error(e); }
 }
 
-const pairColors = ['#6366f1','#0891b2','#16a34a','#d97706','#dc2626'];
+const pairColors = ['#6366f1','#0891b2','#16a34a','#dc2626'];
 
 function rateClass(rate) {
     if (rate >= 75) return 'rate-high';
@@ -498,6 +499,50 @@ function renderGradeTable() {
     });
     html += '</tbody></table>';
     document.getElementById('grade-table-wrap').innerHTML = html;
+    renderGradeTrend();
+}
+
+// 学段一致率趋势曲线
+function renderGradeTrend() {
+    if (typeof Chart === 'undefined' || historyData.length < 2) return;
+    const grades = Object.keys(historyData[currentDateIdx].grade_stats[pairNames[0]] || {}).sort();
+    if (grades.length === 0) return;
+    const canvas = document.getElementById('gradeTrendChart');
+    if (!canvas) return;
+    // 销毁旧图表
+    if (canvas._chart) canvas._chart.destroy();
+
+    const labels = historyData.map(h => h.date);
+    const gradeColors = ['#6366f1','#0891b2','#16a34a','#d97706','#dc2626','#8b5cf6','#ec4899'];
+
+    // 为每个学段 × 每个对比对生成一条曲线（取第一个对比对的学段一致率，因为学段一致率是跨模型共享的）
+    const datasets = [];
+    grades.forEach((g, gi) => {
+        datasets.push({
+            label: g,
+            data: historyData.map(h => {
+                const s = (h.grade_stats[pairNames[0]] || {})[g];
+                return s && s.comparable > 0 ? s.rate : null;
+            }),
+            borderColor: gradeColors[gi % gradeColors.length],
+            backgroundColor: gradeColors[gi % gradeColors.length] + '20',
+            tension: 0.3, pointRadius: 3, borderWidth: 2, spanGaps: true
+        });
+    });
+
+    const ctx = canvas.getContext('2d');
+    canvas._chart = new Chart(ctx, {
+        type: 'line',
+        data: { labels, datasets },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, padding: 10, font: { size: 11 } } } },
+            scales: {
+                x: { ticks: { color: '#6b7280', maxRotation: 45 }, grid: { color: 'rgba(99,102,241,0.08)', borderDash: [4,4] } },
+                y: { ticks: { color: '#6b7280', callback: v => v + '%' }, grid: { color: 'rgba(99,102,241,0.08)', borderDash: [4,4] } }
+            }
+        }
+    });
 }
 
 // 渲染学科表格

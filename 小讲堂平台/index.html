@@ -1,0 +1,1680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>千问小讲堂内容生产运营</title>
+<style>
+/* ============================================
+   Design Tokens
+   ============================================ */
+:root {
+  --bg:                #F5F5F7;
+  --sidebar-bg:        rgba(245, 245, 247, 0.74);
+  --sidebar-border:    rgba(0, 0, 0, 0.08);
+  --surface:           #FFFFFF;
+  --text-primary:      #1D1D1F;
+  --text-secondary:    #6E6E73;
+  --text-tertiary:     #AEAEB2;
+  --accent:            #007AFF;
+  --accent-subtle:     rgba(0, 122, 255, 0.08);
+  --divider:           rgba(0, 0, 0, 0.06);
+  --hover:             rgba(0, 0, 0, 0.04);
+  --shadow-card:       0 1px 3px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.06);
+  --radius-sm:         6px;
+  --radius-md:         10px;
+  --sidebar-width:     250px;
+  --transition-fast:   160ms ease;
+  --transition-normal: 240ms ease;
+
+  /* CMS tokens — matched from original */
+  --cms-surface:       #F8F9FB;
+  --cms-on-surface:    #191C1E;
+  --cms-secondary:     #4F5F7B;
+  --cms-outline:       #737685;
+  --cms-primary:       #003D9B;
+  --cms-primary-container: #0052CC;
+  --cms-gradient:      #0011FF;
+  --cms-error:         #BA1A1A;
+  --cms-surface-lowest:#FFFFFF;
+  --cms-surface-high:  #E7E8EA;
+  --cms-surface-highest:#E1E2E4;
+  --cms-radius-md:     12px;
+  --cms-radius-lg:     24px;
+  --cms-radius-sm:     8px;
+  --font-stack:        "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+                       "PingFang SC", "Helvetica Neue", sans-serif;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%; overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Helvetica Neue", "PingFang SC", sans-serif;
+  font-size: 14px; line-height: 1.5; color: var(--text-primary);
+  background: var(--bg); -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   App Shell
+   ============================================ */
+.app { display: flex; height: 100vh; width: 100vw; }
+
+/* ============================================
+   Sidebar — Frosted Glass
+   ============================================ */
+.sidebar {
+  width: var(--sidebar-width); min-width: var(--sidebar-width); height: 100%;
+  display: flex; flex-direction: column;
+  background: var(--sidebar-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-right: 1px solid var(--sidebar-border);
+  user-select: none; -webkit-user-select: none; z-index: 10;
+}
+
+.sidebar-header { padding: 20px 20px 12px; }
+.sidebar-logo { display: flex; align-items: center; gap: 10px; }
+.sidebar-logo-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; overflow: hidden; }
+.sidebar-logo-icon svg { width: 32px; height: 32px; }
+.sidebar-title { font-size: 12px; font-weight: 600; color: var(--text-primary); line-height: 1.3; letter-spacing: -0.01em; }
+.sidebar-subtitle { font-size: 10px; font-weight: 400; color: var(--text-tertiary); letter-spacing: 0.02em; text-transform: uppercase; }
+
+.sidebar-nav { flex: 1; overflow-y: auto; padding: 0 12px 16px; }
+.sidebar-nav::-webkit-scrollbar { width: 4px; }
+.sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+.sidebar-nav::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.12); border-radius: 100px; }
+
+.nav-section { margin-bottom: 4px; }
+.nav-section + .nav-section { margin-top: 2px; }
+.nav-section-label { display: flex; align-items: center; gap: 6px; width: 100%; padding: 8px 10px; font-size: 12px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.01em; }
+.nav-section-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-right: 2px; }
+.nav-section-dot.manual { background: #5856D6; }
+.nav-section-dot.auto   { background: #34C759; }
+.nav-section-count { margin-left: auto; font-size: 10px; font-weight: 500; color: var(--text-tertiary); background: rgba(0,0,0,0.04); padding: 1px 6px; border-radius: 100px; }
+
+.nav-child { display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 10px 7px 34px; border: none; background: none; border-radius: var(--radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 400; color: var(--text-primary); text-align: left; position: relative; transition: background var(--transition-fast), color var(--transition-fast); }
+.nav-child::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 0; border-radius: 0 2px 2px 0; background: var(--accent); transition: height var(--transition-normal); }
+.nav-child:hover { background: var(--hover); }
+.nav-child.active { background: var(--accent-subtle); color: var(--accent); font-weight: 500; }
+.nav-child.active::before { height: 18px; }
+.nav-child-icon { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-tertiary); transition: color var(--transition-fast); }
+.nav-child.active .nav-child-icon { color: var(--accent); }
+.nav-child-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.sidebar-footer { padding: 12px 20px; border-top: 1px solid var(--divider); }
+.sidebar-footer-meta { display: flex; align-items: center; gap: 8px; }
+.sidebar-footer-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #E8E8ED, #D2D2D7); display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--text-secondary); }
+.sidebar-footer-text { font-size: 11px; color: var(--text-tertiary); }
+
+/* ============================================
+   Content Area
+   ============================================ */
+.content { flex: 1; height: 100%; display: flex; flex-direction: column; overflow: hidden; background: var(--cms-surface); }
+
+/* —— Top Bar —— */
+.content-topbar {
+  padding: 12px 28px; display: flex; align-items: center; min-height: 44px;
+  background: var(--cms-surface-lowest); border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.content-breadcrumb { font-size: 11px; font-weight: 500; color: var(--text-tertiary); letter-spacing: 0.02em; text-transform: uppercase; }
+.content-breadcrumb span { color: var(--text-secondary); }
+.content-breadcrumb-sep { margin: 0 6px; color: var(--text-tertiary); }
+
+/* —— Content Body —— */
+.content-body { flex: 1; overflow-y: auto; padding: 24px 28px; }
+.content-body::-webkit-scrollbar { width: 6px; }
+.content-body::-webkit-scrollbar-track { background: transparent; }
+.content-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.10); border-radius: 100px; }
+
+/* ============================================
+   Page Header
+   ============================================ */
+.page-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.page-header-left h1 { font-family: var(--font-stack); font-size: 20px; font-weight: 700; color: var(--cms-on-surface); margin-bottom: 4px; }
+.page-header-left p  { font-family: var(--font-stack); font-size: 12px; color: #94A3B8; }
+.page-header-actions { display: flex; gap: 8px; align-items: center; }
+
+/* Buttons */
+.cms-btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; font-family: var(--font-stack); font-size: 14px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; transition: background 0.2s ease, transform 0.1s ease; white-space: nowrap; }
+.cms-btn:active { transform: scale(0.98); }
+.cms-btn svg { flex-shrink: 0; }
+.cms-btn-secondary { color: var(--cms-on-surface); background: var(--cms-surface-high); }
+.cms-btn-secondary:hover { background: #DCDEE2; }
+.cms-btn-primary { color: #FFFFFF; background: var(--cms-gradient); }
+.cms-btn-primary:hover { background: #0018E0; }
+
+/* ============================================
+   Toolbar / Search
+   ============================================ */
+.toolbar { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.search-box { display: flex; align-items: center; gap: 10px; flex: 1; max-width: 640px; padding: 10px 16px; background: var(--cms-surface-lowest); border: 1px solid var(--cms-surface-high); border-radius: var(--cms-radius-md); transition: border-color 0.2s ease; }
+.search-box:focus-within { border-color: var(--cms-gradient); box-shadow: 0 0 0 3px rgba(0,17,255,0.06); }
+.search-box svg { color: #94A3B8; flex-shrink: 0; }
+.search-box textarea { flex: 1; border: none; outline: none; background: transparent; font-family: var(--font-stack); font-size: 14px; color: var(--cms-on-surface); resize: none; }
+.search-box textarea::placeholder { color: #94A3B8; }
+.toolbar-btn { padding: 10px 24px; font-family: var(--font-stack); font-size: 14px; font-weight: 600; color: var(--cms-primary); background: rgba(0,61,155,0.06); border: none; border-radius: 12px; cursor: pointer; white-space: nowrap; transition: background 0.2s ease; }
+.toolbar-btn:hover { background: rgba(0,61,155,0.12); }
+
+/* ============================================
+   Data Table
+   ============================================ */
+.table-container { background: var(--cms-surface-lowest); border-radius: var(--cms-radius-lg); box-shadow: 0 8px 40px rgba(25,28,30,0.06); overflow: hidden; }
+.table-scroll { overflow-x: auto; }
+.table-scroll::-webkit-scrollbar { height: 6px; }
+.table-scroll::-webkit-scrollbar-track { background: transparent; }
+.table-scroll::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.10); border-radius: 100px; }
+
+.table { width: 100%; min-width: 1950px; border-collapse: collapse; table-layout: fixed; font-family: var(--font-stack); }
+
+/* TH */
+.table th { padding: 6px 8px; font-size: 11px; font-weight: 900; color: var(--cms-secondary); background: var(--cms-surface-highest); border-bottom: none; text-align: left; white-space: nowrap; }
+.table th.select-col { width: 44px; text-align: center; }
+.th-filter { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.th-filter svg { opacity: 0.5; }
+
+/* TD */
+.table td { padding: 6px 14px; font-size: 13px; color: var(--cms-on-surface); border-bottom: 1px solid rgba(225,226,228,0.5); vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Checkbox */
+.checkbox { width: 18px; height: 18px; cursor: pointer; accent-color: var(--cms-gradient); }
+
+/* GUID cell */
+.guid-cell { display: flex; align-items: center; gap: 6px; }
+.guid-text { font-family: "JetBrains Mono", "SF Mono", monospace; color: var(--cms-outline); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 120px; }
+.copy-btn { display: flex; align-items: center; justify-content: center; width: 24px; height: 24px; border: none; background: none; cursor: pointer; color: #AEB4C2; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+.copy-btn:hover { color: var(--cms-secondary); background: rgba(0,0,0,0.04); }
+
+/* Title cell */
+.title-cell { color: var(--cms-on-surface); cursor: pointer; }
+.title-cell:hover { color: var(--cms-gradient); text-decoration: underline; }
+
+/* Center cells */
+.cell-center { text-align: center; }
+
+/* Sticky right columns */
+.sticky-preview { position: sticky; right: 220px; background: #FFF; z-index: 2; box-shadow: -2px 0 6px rgba(0,0,0,0.03); }
+.sticky-preview::before { content: ''; position: absolute; left: 0; top: -1px; bottom: -1px; width: 2px; background: #D1D5DB; }
+.sticky-preview-th { position: sticky; right: 220px; background: #E1E2E4; z-index: 3; }
+.sticky-preview-th::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #D1D5DB; }
+.sticky-actions { position: sticky; right: 0; background: #FFF; z-index: 2; box-shadow: -4px 0 10px rgba(0,0,0,0.05); }
+.cell-grade { font-weight: 700; color: var(--cms-on-surface); }
+.cell-meta { color: var(--cms-secondary); }
+.cell-dim { color: #CCC; }
+.cell-count { font-weight: 600; color: var(--cms-on-surface); }
+.cell-date { color: var(--cms-outline); }
+
+/* Truncated cell */
+.truncate-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Allow card/button columns to overflow naturally */
+.content-cards,
+.action-btns { white-space: normal; overflow: visible; text-overflow: clip; }
+
+/* ============================================
+   Status Tags
+   ============================================ */
+.status-tag { display: inline-block; padding: 3px 10px; font-size: 10px; font-weight: 600; border-radius: 6px; white-space: nowrap; }
+.tag-unreviewed { color: #92400E; background: #FEF3C7; }
+.tag-reviewed { color: #065F46; background: #D1FAE5; }
+.tag-online { color: #1D4ED8; background: #DBEAFE; }
+.tag-offline { color: #6B7280; background: #F3F4F6; display: inline-flex; align-items: center; gap: 4px; }
+.tag-offline .dot { width: 6px; height: 6px; border-radius: 50%; background: #9CA3AF; }
+.tag-online .dot { width: 6px; height: 6px; border-radius: 50%; background: #3B82F6; }
+.tag-gen-done { color: #065F46; background: #D1FAE5; }
+.tag-gen-fail { color: #991B1B; background: #FEE2E2; }
+
+/* ============================================
+   Content Object Cards (sticky column)
+   ============================================ */
+.content-cards { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 8px; overflow-x: auto; align-items: stretch; }
+.content-cards::-webkit-scrollbar { height: 3px; }
+.content-cards::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.10); border-radius: 100px; }
+.co-card { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; background: var(--cms-surface); border: 1px solid rgba(0,0,0,0.04); border-radius: 6px; padding: 4px 10px; cursor: pointer; transition: box-shadow 0.15s; flex-shrink: 0; width: 112px; overflow: hidden; }
+.co-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.co-card-num { font-size: 11px; font-weight: 700; color: var(--cms-secondary); flex-shrink: 0; }
+.co-card-audit { font-size: 10px; font-weight: 600; flex-shrink: 0; white-space: nowrap; color: #991B1B; }
+.co-card-audit.online { color: #16A34A; }
+.co-card-audit.offline { color: #1D1D1F; }
+.co-card-more { background: #EFF6FF; border: 1px dashed #93C5FD; cursor: default; justify-content: center; }
+.co-card-more:hover { background: #DBEAFE; }
+
+/* ============================================
+   Action Buttons (sticky column)
+   ============================================ */
+.action-btns { display: flex; gap: 12px; justify-content: center; }
+.btn-link { padding: 4px 0; font-family: var(--font-stack); font-size: 13px; font-weight: 500; border: none; background: none; cursor: pointer; color: var(--cms-gradient); transition: color 0.15s; text-decoration: none; }
+.btn-link:hover { color: #0018E0; text-decoration: underline; }
+.btn-link-primary { color: var(--cms-gradient); }
+.btn-link-primary:hover { color: #0018E0; text-decoration: underline; }
+.btn-link-danger { color: #EF4444; }
+.btn-link-danger:hover { color: #DC2626; text-decoration: underline; }
+
+/* ============================================
+   Pagination
+   ============================================ */
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 16px 0 0; }
+.page-info { font-size: 13px; color: var(--cms-secondary); }
+.page-info strong { font-weight: 600; color: var(--cms-on-surface); }
+.page-btns { display: flex; align-items: center; gap: 4px; }
+.page-size-trigger { padding: 8px 14px; font-family: var(--font-stack); font-size: 13px; font-weight: 500; color: var(--cms-secondary); background: var(--cms-surface-lowest); border: 1px solid var(--cms-surface-high); border-radius: var(--cms-radius-sm); cursor: pointer; }
+.page-btn { display: flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; padding: 0 8px; font-family: var(--font-stack); font-size: 13px; font-weight: 500; color: var(--cms-secondary); background: none; border: none; border-radius: var(--cms-radius-sm); cursor: pointer; transition: background 0.15s; }
+.page-btn:hover { background: rgba(0,0,0,0.04); }
+.page-btn.active { background: var(--cms-gradient); color: #FFF; font-weight: 600; }
+.page-btn:disabled { opacity: 0.4; cursor: default; }
+
+/* ============================================
+   Modal Overlay
+   ============================================ */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100; align-items: center; justify-content: center; }
+.modal-overlay.show { display: flex; }
+.modal { background: var(--cms-surface-lowest); border-radius: 16px; width: 520px; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.15); }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 0; }
+.modal-header h3 { display: flex; align-items: center; gap: 8px; font-family: var(--font-stack); font-size: 18px; font-weight: 700; color: var(--cms-on-surface); }
+.modal-close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: none; background: none; cursor: pointer; color: var(--cms-secondary); border-radius: 8px; }
+.modal-close:hover { background: rgba(0,0,0,0.06); }
+.modal-body { padding: 20px 24px; }
+.modal-footer { display: flex; gap: 12px; padding: 0 24px 20px; }
+.modal-footer .cms-btn { flex: 1; justify-content: center; }
+
+/* Form elements inside modal */
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-family: var(--font-stack); font-size: 12px; font-weight: 600; color: #64748B; margin-bottom: 6px; }
+.form-label .required { color: var(--cms-error); margin-right: 4px; }
+.form-input { display: block; width: 100%; padding: 10px 14px; font-family: var(--font-stack); font-size: 13px; line-height: 1.5; color: #1E293B; background: #F7F8FA; border: 1px solid #E5E7EB; border-radius: 10px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.form-input:focus { border-color: var(--cms-gradient); box-shadow: 0 0 0 3px rgba(0,17,255,0.08); }
+.form-input:disabled { opacity: 0.6; cursor: not-allowed; }
+select.form-input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px; cursor: pointer; }
+textarea.form-input { resize: vertical; min-height: 80px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.file-upload-area { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: #F7F8FA; border: 1px dashed #E5E7EB; border-radius: 10px; cursor: pointer; transition: border-color 0.2s; }
+.file-upload-area:hover { border-color: var(--cms-gradient); }
+.file-upload-btn { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; font-family: var(--font-stack); font-size: 13px; font-weight: 500; color: var(--cms-gradient); background: rgba(0,17,255,0.06); border: none; border-radius: 8px; cursor: pointer; }
+.file-upload-hint { font-size: 12px; color: #64748B; }
+
+/* ============================================
+   Empty state
+   ============================================ */
+.empty-state { display: flex; align-items: center; justify-content: center; min-height: 100%; color: var(--text-tertiary); font-size: 14px; }
+
+/* ============================================
+   Editor Drawer
+   ============================================ */
+.editor-drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+.editor-drawer-overlay.open { display: block; }
+.editor-drawer { display: none; position: fixed; top: 0; right: 0; bottom: 0; width: 90vw; max-width: 1200px; background: #F8F9FB; z-index: 201; flex-direction: column; overflow: hidden; box-shadow: -8px 0 40px rgba(0,0,0,0.12); }
+.editor-drawer.open { display: flex; }
+.editor-drawer-inner { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
+
+.ed-top-bar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #FFF; border-bottom: 1px solid #E5E7EB; flex-shrink: 0; }
+.ed-top-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ed-top-title { font-size: 15px; font-weight: 700; color: #191C1E; }
+.ed-id-link { font-size: 11px; font-family: "JetBrains Mono",monospace; color: #1D4ED8; background: #EFF6FF; padding: 2px 8px; border-radius: 4px; cursor: pointer; transition: background 0.15s; }
+.ed-id-link:hover { background: #DBEAFE; }
+.ed-top-right { display: flex; gap: 8px; align-items: center; }
+.ed-btn { padding: 8px 16px; font-size: 13px; font-weight: 600; border: 1px solid #E5E7EB; border-radius: 10px; background: #FFF; cursor: pointer; color: #191C1E; }
+.ed-btn:hover { background: #F3F4F6; }
+.ed-btn-close { padding: 8px 12px; }
+
+.ed-main { flex: 1; overflow: hidden; display: flex; }
+.ed-layout { display: flex; flex: 1; overflow: hidden; }
+
+/* Phone Preview */
+.ed-preview { flex: 0 0 340px; display: flex; align-items: flex-start; justify-content: center; padding: 16px; overflow-y: auto; border-right: 1px solid #E5E7EB; background: #EEF0F4; }
+.ed-phone { width: 300px; background: #FFF; border-radius: 28px; border: 3px solid #1A1A1A; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+.ed-phone-inner { display: flex; flex-direction: column; }
+.ed-phone-status { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px 4px; font-size: 12px; font-weight: 600; color: #1A1A1A; }
+.ed-phone-island { width: 80px; height: 22px; background: #1A1A1A; border-radius: 99px; }
+.ed-phone-body { padding: 8px 12px 20px; max-height: 620px; overflow-y: auto; font-size: 12px; }
+
+/* Editor Panel */
+.ed-panel { flex: 1; overflow-y: auto; padding: 20px; }
+.ed-panel-scroll { display: flex; flex-direction: column; gap: 16px; }
+.ed-hints { background: #FFF; border-radius: 12px; padding: 16px; border: 1px solid #E5E7EB; }
+.ed-hints-head { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #191C1E; margin-bottom: 10px; }
+.ed-hints-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.ed-hints-list li { font-size: 12px; color: #64748B; line-height: 1.5; }
+
+.ed-blocks { display: flex; flex-direction: column; gap: 10px; }
+.ed-block { background: #FFF; border-radius: 12px; border: 1px solid #E5E7EB; overflow: hidden; }
+.ed-block-bar { display: flex; align-items: center; gap: 8px; padding: 12px 16px; font-size: 13px; font-weight: 600; color: #191C1E; background: #FAFBFC; border-bottom: 1px solid #F0F1F3; cursor: grab; }
+.ed-block-fields { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+.ed-fld { display: flex; flex-direction: column; gap: 4px; }
+.ed-fld label { font-size: 11px; font-weight: 600; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.04em; }
+.ed-fld input, .ed-fld textarea { padding: 8px 12px; font-size: 13px; border: 1px solid #E5E7EB; border-radius: 8px; background: #F8FAFC; color: #1E293B; font-family: inherit; width: 100%; }
+.ed-fld textarea { resize: vertical; min-height: 48px; }
+
+/* Publish Panel (manual-delivery) */
+.ed-publish-panel { background: #FFF; border-radius: 12px; padding: 20px; border: 1px solid #E5E7EB; overflow: hidden; }
+.ed-publish-cover { margin-bottom: 8px; display: flex; flex-direction: column; gap: 10px; }
+.ed-publish-title { font-size: 14px; font-weight: 700; color: #191C1E; margin-bottom: 14px; }
+.ed-publish-options { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.ed-publish-opt { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #1E293B; cursor: pointer; padding: 6px 14px; border-radius: 8px; border: 1px solid #E5E7EB; transition: background 0.15s; white-space: nowrap; }
+.ed-publish-opt:hover { background: #F3F4F6; }
+.ed-publish-opt input[type="checkbox"] { width: 15px; height: 15px; accent-color: #0011FF; cursor: pointer; }
+.ed-publish-btn { padding: 10px 28px; font-size: 14px; font-weight: 600; color: #FFF; background: #0011FF; border: none; border-radius: 12px; cursor: pointer; transition: background 0.15s; float: right; }
+.ed-publish-btn:hover { background: #0018E0; }
+.ed-publish-btn:active { transform: scale(0.98); }
+
+/* Bottom Bar */
+.ed-bottom-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; background: #FFF; border-top: 1px solid #E5E7EB; flex-shrink: 0; }
+.ed-bottom-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ed-bottom-time { font-size: 12px; color: #94A3B8; white-space: nowrap; }
+.ed-bbar-btn { padding: 6px 14px; font-size: 12px; font-weight: 500; border: 1px solid #E5E7EB; border-radius: 8px; background: #FFF; cursor: pointer; color: #4F5F7B; white-space: nowrap; transition: background 0.15s; }
+.ed-bbar-btn:hover { background: #F3F4F6; }
+.ed-bottom-hint { font-size: 12px; color: #BBB; }
+.ed-bottom-right { display: flex; gap: 8px; align-items: center; }
+.ed-bbar-success { background: #16A34A; color: #FFF; border-color: #16A34A; }
+.ed-bbar-success:hover { background: #15803D; }
+.ed-bbar-save { background: #1D4ED8; color: #FFF; border-color: #1D4ED8; }
+.ed-bbar-save:hover { background: #1E40AF; }
+
+/* ============================================
+   Annotation Note
+   ============================================ */
+.annotation-note { position: absolute; left: 269px; top: 249px; width: 570px; max-height: 380px; overflow-y: auto; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 20px 22px; box-shadow: 0 4px 16px rgba(180,140,40,0.12); z-index: 5; cursor: default; }
+.connector-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
+.annotation-note-body { font-size: 12px; color: #78350F; line-height: 1.8; padding-top: 8px; }
+.annotation-note-body p { margin-bottom: 10px; }
+.annotation-note-body p:last-child { margin-bottom: 0; }
+.annotation-note::-webkit-scrollbar { width: 4px; }
+.annotation-note::-webkit-scrollbar-thumb { background: rgba(180,140,40,0.3); border-radius: 100px; }
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 500px) {
+  .sidebar { width: 240px; min-width: 240px; }
+  .content-body { padding: 16px 20px; }
+  .content-topbar { padding: 10px 20px; }
+  .form-row, .form-row-3 { grid-template-columns: 1fr; }
+  .page-header { flex-direction: column; gap: 12px; }
+}
+
+@media (max-width: 620px) {
+  .sidebar { width: 100%; min-width: unset; position: absolute; z-index: 20; transform: translateX(-100%); transition: transform var(--transition-normal); }
+  .sidebar.open { transform: translateX(0); }
+  .content-body { padding: 12px 16px; }
+  .content-topbar { padding: 10px 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- ============================================
+       Sidebar
+       ============================================ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 51 51" fill="none">
+            <rect width="51" height="51" rx="10" fill="#FFF"/>
+            <path d="M23.4166,39.5714L26.0038,35.0473L33.5055,21.929L39.1954,21.929C39.1954,21.929,44.1081,30.5232,44.1081,30.5232L38.9338,30.5232L36.3486,25.9991L26.0019,44.0955L23.4147,39.5714L23.4166,39.5714ZM10.48465,16.9508L15.65706,16.9508L18.2423,21.4749L25.7422,34.597L22.8992,39.5752L13.0718,39.5752C13.0718,39.5752,15.65894,35.0473,15.65894,35.0473L20.8314,35.0473C20.8314,35.0473,10.48465,16.9508,10.48465,16.9508ZM15.91483,16.49858L20.8295,7.904448L23.4166,12.42857L20.8295,16.9527L41.5229,16.9527L38.9376,21.4749L18.7616,21.4749L15.91483,16.49858ZM20.8295,7.00000289931C20.6695,7.00000289931,20.5152,7.0437057,20.3817,7.121609C20.2481,7.199513,20.1333,7.313519,20.0524,7.452225L15.65518,15.14381L15.13775,16.04635L10.48277,16.04635C10.32283,16.04635,10.16855,16.09005,10.03496,16.16796C9.90137,16.24586,9.78659,16.35987,9.70757,16.49858L7.12042,21.0227C7.0413946,21.1614,7,21.3191,7,21.4749C7,21.6307,7.0395126,21.7884,7.12042,21.9271L12.03506,30.5232L9.70757,34.5951C9.628540000000001,34.7357,9.58715,34.8915,9.58715,35.0473C9.58715,35.2031,9.628540000000001,35.3608,9.70757,35.4995L12.29471,40.0236C12.37374,40.1624,12.48851,40.2764,12.6221,40.3543C12.75757,40.4322,12.90998,40.4759,13.06991,40.4759L22.8973,40.4759L25.2248,44.5478C25.3847,44.8271,25.6801,45,26,45L31.1724,45C31.3323,45,31.4866,44.9563,31.6202,44.8784C31.7538,44.8005,31.8686,44.6865,31.9476,44.5478L36.8623,35.9517L41.5172,35.9517C41.6772,35.9517,41.8315,35.908,41.965,35.8301C42.0986,35.7522,42.2134,35.6382,42.2924,35.4995L44.8796,30.9754C44.9605,30.8367,45,30.679,45,30.5232C45,30.3674,44.9605,30.2097,44.8796,30.071L40.4843,22.3813L39.9668,21.4749L42.2943,17.4049C42.3733,17.2662,42.4147,17.1085,42.4147,16.9527C42.4147,16.79689,42.3752,16.63918,42.2943,16.50047L39.7072,11.97635C39.6281,11.83764,39.5134,11.72363,39.3798,11.64573C39.2462,11.56783,39.0919,11.52413,38.932,11.52413L29.1027,11.52413L26.7752,7.452222C26.6153,7.172908,26.3199,7,26,7L20.8276,7L20.8295,7.00000289931Z" fill="#625CF6"/>
+          </svg>
+        </div>
+        <div>
+          <div class="sidebar-title" style="font-size:11px;font-weight:700;color:#1D1D1F;white-space:nowrap;">千问小讲堂内容生产运营</div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section" data-section="manual">
+        <div class="nav-section-label"><span class="nav-section-dot manual"></span>教材知识人工生产链路<span class="nav-section-count">2</span></div>
+        <div class="nav-children">
+          <button class="nav-child" data-view="manual-editor" onclick="selectNav(this, 'manual', '内容生产编辑')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+            <span class="nav-child-label">内容生产编辑</span>
+          </button>
+          <button class="nav-child" data-view="manual-delivery" onclick="selectNav(this, 'manual', '发布到小讲堂频道页')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
+            <span class="nav-child-label">发布到小讲堂频道页</span>
+          </button>
+        </div>
+      </div>
+      <div style="height:1px;background:var(--divider);margin:6px 10px;"></div>
+      <div class="nav-section" data-section="auto">
+        <div class="nav-section-label"><span class="nav-section-dot auto"></span>Query聚簇自动化生产链路<span class="nav-section-count">3</span></div>
+        <div class="nav-children">
+          <button class="nav-child" data-view="auto-editor" onclick="selectNav(this, 'auto', '标题/内容生产编辑')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+            <span class="nav-child-label">标题/内容生产编辑</span>
+          </button>
+          <button class="nav-child" data-view="auto-delivery" onclick="selectNav(this, 'auto', '发布到小讲堂频道页')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
+            <span class="nav-child-label">发布到小讲堂频道页</span>
+          </button>
+          <button class="nav-child" data-view="auto-recover" onclick="selectNav(this, 'auto', '审核回捞已抛弃标题')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
+            <span class="nav-child-label">审核回捞已抛弃标题</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-meta">
+        <div class="sidebar-footer-text" style="font-size:12px;">D.J.F 原型demo</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ============================================
+       Content Area
+       ============================================ -->
+  <main class="content">
+    <div class="content-topbar">
+      <div class="content-breadcrumb" id="breadcrumb">
+        运营平台 <span class="content-breadcrumb-sep">/</span> <span>总览</span>
+      </div>
+    </div>
+
+    <div class="content-body" id="contentBody">
+      <!-- Default empty state -->
+      <div class="empty-state" id="emptyState">请从左侧导航选择功能模块</div>
+
+      <!-- ============================================
+           Content List Page (shown for manual-editor)
+           ============================================ -->
+      <div id="contentListPage" style="display:none;position:relative;">
+        <!-- Toolbar: search + actions in one row -->
+        <div class="toolbar">
+          <div class="search-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            <textarea rows="1" placeholder="搜索 GUID 或标题（支持粘贴多个）"></textarea>
+          </div>
+          <button class="toolbar-btn">搜索/刷新</button>
+          <button class="cms-btn cms-btn-secondary" onclick="openModal('create')" style="margin-left:auto;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 11v4h-2v-4H8l4-4 4 4h-3zm1-6V3.5L18.5 8H14z"/></svg>
+            <span>上传Excel创建任务</span>
+          </button>
+          <button class="cms-btn cms-btn-primary" onclick="openModal('create')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+            <span>创建单条任务</span>
+          </button>
+          <!-- Auto-online toggle (auto-editor only) -->
+          <button class="cms-btn cms-btn-secondary" id="autoOnlineToggle" style="display:none;margin-left:auto;" onclick="toggleAutoOnline()">
+            <span id="autoOnlineToggleLabel" style="color:#9CA3AF;">⚫ 自动上线已关闭</span>
+          </button>
+        </div>
+
+        <!-- Delivery Notice (manual-delivery only) -->
+        <div id="deliveryNotice" style="display:none;margin-bottom:16px;font-size:13px;color:#DC2626;line-height:1.8;">
+          1、本页面只展示处于"已上线"状态的内容；<br>
+          2、"已上线"状态的内容方可被chat挂载，chat挂载由算法策略控制，不存在"投放"动作；<br>
+          3、本页面可针对"已上线"状态的内容按需投放到小讲堂频道内的相关路径。
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-container" id="defaultTableContainer">
+          <div class="table-scroll">
+            <table class="table">
+              <thead><tr>
+                <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
+                <th style="width:7%;">GUID</th>
+                <th style="width:9%;">课文标题</th>
+                <th style="width:7%;"><span class="th-filter">附件 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg></span></th>
+                <th style="width:4%;text-align:center;"><span class="th-filter">学段<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:3.5%;text-align:center;"><span class="th-filter">学期<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:4.5%;text-align:center;"><span class="th-filter">章节<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:4%;text-align:center;">学科</th>
+                <th style="width:5%;text-align:center;">内容类型</th>
+                <th style="width:5%;text-align:center;">课文原文</th>
+                <th style="width:5%;text-align:center;">教案</th>
+                <th style="width:5%;text-align:center;">审核状态</th>
+                <th style="width:5.5%;text-align:center;">上线状态</th>
+                <th style="width:5%;text-align:center;">生成状态</th>
+                <th style="width:4%;text-align:center;">内容数量</th>
+                <th style="width:8%;text-align:center;">创建时间</th>
+                <th class="sticky-preview-th" id="previewColHeader" style="width:500px;min-width:500px;max-width:500px;text-align:center;">预览及上下线</th>
+                <th style="width:220px;min-width:220px;max-width:220px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
+              </tr></thead>
+              <tbody id="tableBody">
+                <!-- Data rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Pagination (default table) -->
+        <div class="pagination" id="paginationDefault">
+          <div class="page-info">显示 <strong>1-20</strong> 共 <strong>2451</strong> 条</div>
+          <div class="page-btns">
+            <button class="page-size-trigger">20 条/页</button>
+            <button class="page-btn" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <button class="page-btn" disabled style="cursor:default;opacity:0.5;">...</button>
+            <button class="page-btn">123</button>
+            <button class="page-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+          </div>
+        </div>
+
+        <!-- Kepu Table (auto-editor) -->
+        <div id="kepuTableWrap" style="display:none;">
+          <div class="table-container">
+            <div class="table-scroll">
+              <table class="table" style="min-width:2400px;">
+                <thead><tr>
+                  <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
+                  <th style="width:5%;">一级分类</th>
+                  <th style="width:5%;">二级分类</th>
+                  <th style="width:8%;">主题名称</th>
+                  <th style="width:10%;">主题描述</th>
+                  <th style="width:4%;text-align:center;">主题query数量</th>
+                  <th style="width:4%;text-align:center;">主题query占比</th>
+                  <th style="width:10%;">用户query示例</th>
+                  <th style="width:8%;">科普标题</th>
+                  <th style="width:10%;">科普钩子</th>
+                  <th style="width:10%;">对应query</th>
+                  <th style="width:4%;text-align:center;">query数量</th>
+                  <th style="width:4%;text-align:center;">query占比</th>
+                  <th class="sticky-preview-th" style="width:500px;min-width:500px;max-width:500px;text-align:center;">预览及上下线</th>
+                  <th style="width:220px;min-width:220px;max-width:220px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
+                </tr></thead>
+                <tbody id="kepuTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pagination">
+            <div class="page-info">显示 <strong>1-20</strong> 共 <strong>67</strong> 条</div>
+            <div class="page-btns">
+              <button class="page-size-trigger">20 条/页</button>
+              <button class="page-btn" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <button class="page-btn">4</button>
+              <button class="page-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector Lines SVG -->
+        <svg class="connector-svg" id="connectorSvg"><line id="cl1" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="5,3"/><line id="cl2" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="5,3"/><line id="cl3" stroke="#1D1D1F" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+
+        <!-- Recover Connector SVG -->
+        <svg class="connector-svg" id="recoverConnectorSvg" style="display:none;"><line id="rl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="rl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <!-- Recover Hint Note -->
+        <div class="annotation-note" id="recoverHintNote" style="display:none;left:120px;top:200px;width:240px;max-height:100px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:13px;font-weight:600;color:#92400E;padding-top:0;">
+            可更新原始标题数据<br>并回捞生产
+          </div>
+        </div>
+
+        <!-- Abandoned Table (auto-recover) -->
+        <div id="abandonedTableWrap" style="display:none;">
+          <div class="table-container">
+            <div class="table-scroll">
+              <table class="table" style="min-width:1800px;">
+                <thead><tr>
+                  <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
+                  <th style="width:6%;">一级分类</th>
+                  <th style="width:6%;">二级分类</th>
+                  <th style="width:8%;">主题名称</th>
+                  <th style="width:10%;">代表query</th>
+                  <th style="width:22%;">过滤原因</th>
+                  <th style="width:5%;text-align:center;">query数量</th>
+                  <th style="width:5%;text-align:center;">query占比</th>
+                  <th style="width:20%;">query示例(前30)</th>
+                  <th style="width:180px;min-width:180px;max-width:180px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
+                </tr></thead>
+                <tbody id="abandonedTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pagination">
+            <div class="page-info">显示 <strong>1-20</strong> 共 <strong>80</strong> 条</div>
+            <div class="page-btns">
+              <button class="page-size-trigger">20 条/页</button>
+              <button class="page-btn" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+              <button class="page-btn active">1</button><button class="page-btn">2</button><button class="page-btn">3</button><button class="page-btn">4</button>
+              <button class="page-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kepu Connector SVG -->
+        <svg class="connector-svg" id="kepuConnectorSvg" style="display:none;"><line id="kl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="kl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="kl3" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="kl4" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+
+        <!-- Kepu Hint Note (auto-editor only) -->
+        <div class="annotation-note" id="kepuHintNote" style="display:none;left:100px;top:160px;width:460px;max-height:420px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="padding-top:0;">
+            <p style="font-size:12px;color:#78350F;line-height:1.8;">通过算法侧完成【query聚簇标题 - 内容产生】的内容直接灌入本平台页面，运营侧可以进行以下操作：</p>
+            <p style="font-size:12px;color:#78350F;line-height:1.8;"><strong>1、</strong>预览并审核单条内容，对符合意向的内容进行"上线"操作。</p>
+            <p style="font-size:12px;color:#78350F;line-height:1.8;"><strong>2、</strong>如果对初始化生成的内容不满意，可删除原内容，并点击"编辑"修改标题或其他原始数据，再点击"生成新内容"自动调用已有算法模版再次生成新的内容，然后再针对新内容进行"上线"操作。</p>
+            <p style="font-size:12px;color:#78350F;line-height:1.8;"><strong>3、</strong>处于"已上线"状态的内容，即可被chat挂载，chat挂载由算法策略控制。</p>
+            <p style="font-size:12px;color:#78350F;line-height:1.8;"><strong>4、</strong>运营可对"已上线"状态的内容变更为"已下线"，此时需要消息告知挂载业务侧不再召回此connect id。</p>
+            <p style="font-size:12px;color:#78350F;line-height:1.8;"><strong>5、</strong>通过右上角开关按钮，可打开或关闭自动上线功能。</p>
+          </div>
+        </div>
+
+        <!-- Publish Hint Note (manual-delivery only) -->
+        <svg class="connector-svg" id="publishHintSvg" style="display:none;"><line id="ph1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="ph2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <div class="annotation-note" id="publishHintNote" style="display:none;left:120px;top:180px;width:200px;max-height:120px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:13px;font-weight:600;color:#92400E;">
+            点击这里执行发布
+          </div>
+        </div>
+
+        <!-- Annotation Note -->
+        <div class="annotation-note" id="annotationNote" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body">
+            <p><strong>一、服务端新增【内容状态】字段：</strong><br>
+            待审核、已上线、已下线<br>
+            当处于"已上线"状态时，同步实现手机前端加载展示内容</p>
+            <p><strong>二、点击内容卡片，进入二级面板的操作逻辑：</strong></p>
+            <p><strong>（一）对于"待审核"的：</strong><br>
+            1、面板底部栏按钮为"保存"和"上线"，顶部栏不展示"获取预览二维码"按钮；<br>
+            2、当点击"上线"按钮时，一是触发手机前端加载展示内容，二是触发内容状态变更为"已上线"。</p>
+            <p><strong>（二）对于"已上线"的：</strong><br>
+            1、面板底部栏按钮为"保存"和"下线"，顶部栏"获取预览二维码"按钮更名为"手机扫码预览"；<br>
+            2、当点击"下线"按钮时，触发内容状态变更为"已下线"。</p>
+            <p><strong>（三）对于"已下线"的：</strong><br>
+            1、二级界面底部栏按钮为"保存"和"上线"，顶部栏保留"获取预览二维码"按钮；<br>
+            2、当点击"上线"按钮时，触发内容状态变更为"已上线"。</p>
+          </div>
+        </div>
+    </div>
+  </main>
+</div>
+
+<!-- ============================================
+     Modal: Create / Edit form
+     ============================================ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        创建单条任务
+      </h3>
+      <button class="modal-close" onclick="closeModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">GUID 编号</label>
+        <input type="text" class="form-input" disabled value="系统自动生成" style="opacity:0.6;cursor:not-allowed;">
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">学段</label>
+          <select class="form-input"><option>一年级</option><option>二年级</option><option>三年级</option><option>四年级</option><option>五年级</option><option>六年级</option><option>初一</option><option>初二</option><option>初三</option><option>高一</option><option>高二</option><option>高三</option><option>全学段</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">册别</label>
+          <select class="form-input"><option>上册</option><option>下册</option></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">学科</label>
+          <select class="form-input"><option>语文</option><option>数学</option><option>英语</option></select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label"><span class="required">*</span>课文标题</label>
+          <input type="text" class="form-input" placeholder="请输入课文标题">
+        </div>
+        <div class="form-group">
+          <label class="form-label">章节（可选）</label>
+          <input type="text" class="form-input" placeholder="如：第三单元">
+        </div>
+      </div>
+      <div class="form-row-3">
+        <div class="form-group">
+          <label class="form-label">课文序号（可选）</label>
+          <input type="number" class="form-input" placeholder="在单元内的序号">
+        </div>
+        <div class="form-group">
+          <label class="form-label">作者（可选）</label>
+          <input type="text" class="form-input" placeholder="如：朱自清">
+        </div>
+        <div class="form-group">
+          <label class="form-label">年代（可选）</label>
+          <input type="text" class="form-input" placeholder="如：唐">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">内容类型（可选）</label>
+        <input type="text" class="form-input" placeholder="如：古诗文">
+      </div>
+      <div class="form-group">
+        <label class="form-label">讲解标准（可选）</label>
+        <textarea class="form-input" rows="3" placeholder="输入讲解标准，影响内容生成 prompt..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">课文原文</label>
+        <textarea class="form-input" rows="5" placeholder="课文原文内容" style="font-size:13px;line-height:1.6;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">教案</label>
+        <textarea class="form-input" rows="5" placeholder="教案内容" style="font-size:13px;line-height:1.6;"></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">附件上传（可选）</label>
+        <div class="file-upload-area" onclick="this.querySelector('input').click()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:#64748B;"><path d="M19.35 10.04A7.49 7.49 0 0012 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 000 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/></svg>
+          <span class="file-upload-btn">选择 Word 文件</span>
+          <span class="file-upload-hint">仅支持 .doc、.docx 格式</span>
+          <input type="file" accept=".doc,.docx" style="display:none;">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="cms-btn cms-btn-secondary" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        <span>取消</span>
+      </button>
+      <button class="cms-btn cms-btn-primary" onclick="closeModal()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <span>保存修改</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script src="科普数据.js"></script>
+<script src="被抛弃数据.js"></script>
+<script>
+/* ============================================
+   Mock Data — 20 rows spanning grades 1-12, multi-subject
+   ============================================ */
+function r() { return Math.random().toString(16).slice(2,10); }
+function genId(subj) { return `${subj}_${r()}${r()}`.slice(0,36); }
+function pad(n) { return n < 10 ? '0' + n : '' + n; }
+function d(h,m) { return `2026-06-17 ${pad(h)}:${pad(m)}:${pad(Math.floor(Math.random()*60))}`; }
+
+const SUBJECTS = {
+  MATH:   { subj:'数学', prefix:'SHUXUE', chapters:['第一单元 5以内数的认识和加、减法','第二单元 6~10的认识和加、减法','十三章 三角形','十四章 全等三角形','第二十一章 一元二次方程','第二十二章 二次函数','第三章 函数的概念与性质','第七章 复数'] },
+  CHINESE:{ subj:'语文', prefix:'YUWEN',  chapters:['第一单元 春天','第二单元 家国情怀','第三单元 自然之美','第五单元 人物描写','第六单元 文言文','第七单元 诗歌鉴赏'] },
+  ENGLISH:{ subj:'英语', prefix:'YINGYU', chapters:['Unit 1 My School','Unit 2 My Family','Unit 3 At the Zoo','Unit 5 My Day','Unit 6 How Do You Feel'] },
+};
+
+const GRADE_TERMS = [
+  { grade:'一年级', term:'上册' },{ grade:'一年级', term:'下册' },
+  { grade:'二年级', term:'上册' },{ grade:'三年级', term:'上册' },
+  { grade:'四年级', term:'上册' },{ grade:'五年级', term:'上册' },
+  { grade:'初一',   term:'上册' },{ grade:'初一',   term:'下册' },
+  { grade:'初二',   term:'上册' },{ grade:'初三',   term:'上册' },
+  { grade:'高一',   term:'上册' },{ grade:'高一',   term:'下册' },
+  { grade:'高二',   term:'上册' },{ grade:'高三',   term:'上册' },
+];
+
+const TITLES = {
+  MATH:   ['1~5的认识','认识>，<和=','1~5比大小','1~5第几的认识','三角形的定义与分类','三角形的三边关系','三角形的中线与角平分线','三角形的高','三角形的内角和定理','直角三角形两锐角互余','直角三角形的判定（按角）','三角形外角的性质','一元二次方程的相关概念','配方法解一元二次方程','公式法解一元二次方程','因式分解法解一元二次方程','根与系数的关系','黄金分割数','实际问题与一元二次方程','三角点阵中前n行的点数计算','二次函数的图像与性质','用函数观点看一元二次方程','正弦定理','余弦定理'],
+  CHINESE:['春','济南的冬天','雨的四季','观沧海','天净沙·秋思','从百草园到三味书屋','背影','白杨礼赞','藤野先生','回忆我的母亲','列夫·托尔斯泰','美丽的颜色','中国石拱桥','苏州园林','蝉','梦回繁华','桃花源记','小石潭记','核舟记','关雎'],
+  ENGLISH:['My School Day','My Family Members','At the Zoo','Let\'s Go Shopping','My Daily Routine','How Do You Feel Today','The Weather Report','My Favorite Food','A Trip to Beijing','What Are You Doing'],
+};
+
+function makeObjs(count, subj) {
+  const objs = [];
+  const statuses = ['已完成','已完成','已完成','生成失败'];
+  const audits  = ['待审核','待审核','已审核','已上线','已上线','已上线','已上线','已下线'];
+  for (let i = 1; i <= count; i++) {
+    const st = statuses[Math.floor(Math.random()*statuses.length)];
+    const ad = audits[Math.floor(Math.random()*audits.length)];
+    objs.push({ n:i, gen:st, id:genId(subj.prefix), date:d(9+Math.floor(Math.random()*5),Math.floor(Math.random()*60)), audit:ad });
+  }
+  return objs;
+}
+
+// Generate 20 diverse rows
+const MOCK_ROWS = [];
+const usedTitles = { MATH: new Set(), CHINESE: new Set(), ENGLISH: new Set() };
+
+for (let i = 0; i < 20; i++) {
+  // Pick subject with distribution: math 50%, chinese 30%, english 20%
+  const rnd = Math.random();
+  const subjKey = rnd < 0.50 ? 'MATH' : rnd < 0.80 ? 'CHINESE' : 'ENGLISH';
+  const subj = SUBJECTS[subjKey];
+  const gt   = GRADE_TERMS[i % GRADE_TERMS.length];
+
+  // Pick unused title
+  const titles = TITLES[subjKey];
+  let title = '';
+  for (let t = 0; t < titles.length; t++) {
+    const idx = Math.floor(Math.random() * titles.length);
+    if (!usedTitles[subjKey].has(titles[idx])) { title = titles[idx]; usedTitles[subjKey].add(title); break; }
+  }
+  if (!title) title = titles[Math.floor(Math.random()*titles.length)]; // fallback
+
+  var objCount = 1 + Math.floor(Math.random() * 6);
+  const genStatuses = ['已生成','已生成','已生成','生成失败'];
+  const genSt = genStatuses[Math.floor(Math.random()*genStatuses.length)];
+  const onlineStatuses = ['已上线','未上线','未上线','未上线','已下线','已下线'];
+  const online = onlineStatuses[Math.floor(Math.random() * onlineStatuses.length)];
+  const attach = Math.random() < 0.15 ? `${title}.docx` : '—';
+
+  MOCK_ROWS.push({
+    guid: `${r()}${r()}`.slice(0,32),
+    title,
+    attachment: attach,
+    grade: gt.grade,
+    term: gt.term,
+    chapter: subj.chapters[Math.floor(Math.random() * subj.chapters.length)],
+    subject: subj.subj,
+    contentType: subj.subj,
+    textRaw: '-',
+    plan: '-',
+    audit: Math.random() < 0.15 ? '已审核' : '未审核',
+    online,
+    genStatus: genSt,
+    count: String(objCount),
+    date: `2026-06-${pad(10+Math.floor(Math.random()*8))} 0${6+Math.floor(Math.random()*3)}:${pad(Math.floor(Math.random()*60))}:${pad(Math.floor(Math.random()*60))}`,
+    objects: makeObjs(objCount, subj),
+  });
+}
+
+/* ============================================
+   Render Table Rows
+   ============================================ */
+function renderTable() {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = MOCK_ROWS.map(row => `
+    <tr>
+      <td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>
+      <td>
+        <div class="guid-cell">
+          <span class="guid-text" title="${row.guid}">${row.guid}</span>
+          <button class="copy-btn" title="复制GUID" onclick="navigator.clipboard.writeText('${row.guid}')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          </button>
+        </div>
+      </td>
+      <td><span class="title-cell" title="单击编辑 | 双击修改标题" onclick="openModal('edit','${row.title}')">${row.title}</span></td>
+      <td><span class="cell-dim">${row.attachment}</span></td>
+      <td class="cell-center"><span class="cell-grade">${row.grade}</span></td>
+      <td class="cell-center"><span class="cell-meta">${row.term}</span></td>
+      <td class="cell-center"><span class="cell-meta">${row.chapter}</span></td>
+      <td class="cell-center"><span class="cell-meta">${row.subject}</span></td>
+      <td class="cell-center"><span class="cell-meta">${row.contentType}</span></td>
+      <td class="cell-center"><span class="truncate-cell" title="${row.textRaw}">${row.textRaw}</span></td>
+      <td class="cell-center"><span class="truncate-cell" title="${row.plan}">${row.plan}</span></td>
+      <td class="cell-center"><span class="status-tag ${row.audit==='已审核'?'tag-reviewed':'tag-unreviewed'}">${row.audit}</span></td>
+      <td class="cell-center">
+        ${row.online==='已上线'
+          ? '<span class="status-tag tag-online"><span class="dot" style="background:#3B82F6;"></span>已上线</span> <button class="btn-link" style="font-size:11px;">获取预览二维码</button>'
+          : '<span class="status-tag tag-offline"><span class="dot"></span>'+row.online+'</span>'}
+      </td>
+      <td class="cell-center">
+        <span class="status-tag ${row.genStatus==='生成失败'?'tag-gen-fail':row.genStatus==='已生成'?'tag-gen-done':'tag-gen-done'}">${row.genStatus}</span>
+      </td>
+      <td class="cell-center"><span class="cell-count">${row.count}</span></td>
+      <td class="cell-center"><span class="cell-date">${row.date}</span></td>
+      <td class="cell-center sticky-preview" style="width:500px;min-width:500px;max-width:500px;">
+        <div class="content-cards" id="cards-${row.guid}" data-objs='${JSON.stringify(row.objects.map(function(o){ return {n:o.n, id:o.id, audit:o.audit}; }))}' data-title='${row.title.replace(/'/g,"\\'")}'>
+          ${row.objects.length >= 4
+            ? row.objects.slice(0,3).map(function(o) {
+              return '<div class="co-card" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\''+(o.audit||'—')+'\')"><span class="co-card-num">#'+o.n+'</span><span class="co-card-audit '+((o.audit==='已上线'?'online':o.audit==='已下线'?'offline':''))+'">'+(o.audit||'—')+'</span></div>';
+            }).join('') + '<div class="co-card co-card-more" ><span style="font-size:11px;font-weight:600;color:#1D4ED8;">+'+ (10+Math.floor(Math.random()*90)) +' 查看更多</span></div>'
+            : row.objects.map(function(o) {
+              return '<div class="co-card" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\''+(o.audit||'—')+'\')"><span class="co-card-num">#'+o.n+'</span><span class="co-card-audit '+((o.audit==='已上线'?'online':o.audit==='已下线'?'offline':''))+'">'+(o.audit||'—')+'</span></div>';
+            }).join('')
+          }
+        </div>
+      </td>
+      <td class="sticky-actions" style="width:220px;min-width:220px;max-width:220px;">
+        <div class="action-btns">
+          <button class="btn-link" onclick="openModal('edit','${row.title}')">编辑</button>
+          <button class="btn-link btn-link-primary">生成新内容</button>
+          <button class="btn-link btn-link-danger">删除</button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+function selectNav(childBtn, pipeline, name) {
+  currentNavView = childBtn.dataset.view;
+  document.body.setAttribute('data-nav', childBtn.dataset.view);
+  localStorage.setItem('selectedNav', childBtn.dataset.view);
+  document.querySelectorAll('.nav-child').forEach(b => b.classList.remove('active'));
+  childBtn.classList.add('active');
+
+  const pipelineName = pipeline === 'manual' ? '教材知识人工生产链路' : 'Query聚簇自动化生产链路';
+  document.getElementById('breadcrumb').innerHTML =
+    `运营平台 <span class="content-breadcrumb-sep">/</span> <span>${pipelineName}</span> <span class="content-breadcrumb-sep">/</span> <span>${name}</span>`;
+
+  document.getElementById('emptyState').style.display = 'none';
+  const listPage = document.getElementById('contentListPage');
+  listPage.style.display = 'none';
+
+  if (childBtn.dataset.view === 'manual-editor' || childBtn.dataset.view === 'auto-editor' || childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery' || childBtn.dataset.view === 'auto-recover') {
+    listPage.style.display = 'block';
+    document.getElementById('deliveryNotice').style.display = (childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery') ? 'block' : 'none';
+    // Toggle between default table and kepu table
+    var isKepu = childBtn.dataset.view === 'auto-editor';
+    document.getElementById('kepuTableWrap').style.display = isKepu ? '' : 'none';
+    document.getElementById('defaultTableContainer').style.display = isKepu ? 'none' : '';
+    document.getElementById('paginationDefault').style.display = isKepu ? 'none' : '';
+    // Toggle header buttons for auto-editor
+    var isRecover = childBtn.dataset.view === 'auto-recover';
+    var headerBtns = document.querySelectorAll('#contentListPage .toolbar .cms-btn:not(#autoOnlineToggle)');
+    headerBtns.forEach(function(b) { b.style.display = (isKepu || isRecover) ? 'none' : ''; });
+    var isDelivery = childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery';
+    document.getElementById('annotationNote').style.display = (isDelivery || isKepu || isRecover) ? 'none' : '';
+    document.getElementById('connectorSvg').style.display = (isDelivery || isKepu || isRecover) ? 'none' : '';
+    document.getElementById('publishHintNote').style.display = (isDelivery && !isRecover) ? '' : 'none';
+    document.getElementById('publishHintSvg').style.display = (isDelivery && !isRecover) ? '' : 'none';
+    document.getElementById('kepuHintNote').style.display = (isKepu && !isRecover) ? '' : 'none';
+    document.getElementById('kepuConnectorSvg').style.display = (isKepu && !isRecover) ? '' : 'none';
+    document.getElementById('autoOnlineToggle').style.display = (isKepu && !isRecover) ? '' : 'none';
+    document.getElementById('recoverHintNote').style.display = isRecover ? '' : 'none';
+    document.getElementById('recoverConnectorSvg').style.display = isRecover ? '' : 'none';
+    // Abandoned table toggle
+    document.getElementById('abandonedTableWrap').style.display = isRecover ? '' : 'none';
+    if (isRecover) {
+      document.getElementById('defaultTableContainer').style.display = 'none';
+      document.getElementById('paginationDefault').style.display = 'none';
+      document.getElementById('kepuTableWrap').style.display = 'none';
+    }
+    setTimeout(drawConnectors, 300);
+    document.getElementById('previewColHeader').textContent = isDelivery ? '发布' : '预览及上下线';
+    // Filter cards: only show 已上线 for manual-delivery, hide empty rows
+    document.querySelectorAll('#tableBody tr').forEach(function(row) {
+      var cards = row.querySelectorAll('.co-card');
+      if (isDelivery) {
+        var hasVisible = false;
+        cards.forEach(function(card) {
+          var audit = card.querySelector('.co-card-audit');
+          var show = audit && audit.classList.contains('online');
+          card.style.display = show ? '' : 'none';
+          if (show) hasVisible = true;
+        });
+        row.style.display = hasVisible ? '' : 'none';
+      } else {
+        cards.forEach(function(card) { card.style.display = ''; });
+        row.style.display = '';
+      }
+    });
+    // Update action buttons for manual-delivery (default table only)
+    document.querySelectorAll('#defaultTableContainer .action-btns').forEach(function(btns) {
+      if (isDelivery) {
+        btns.innerHTML = '<button class="btn-link" onclick="openPublishModal()">批量发布</button><button class="btn-link btn-link-primary">标签管理</button>';
+      } else {
+        var row = btns.closest('tr');
+        var titleEl = row ? row.querySelector('.title-cell') : null;
+        var title = titleEl ? titleEl.textContent : '';
+        btns.innerHTML = '<button class="btn-link" onclick="openModal(\'edit\',\''+title.replace(/'/g,"\\'")+'\')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button>';
+      }
+    });
+  } else {
+    document.getElementById('emptyState').style.display = 'flex';
+  }
+
+  document.getElementById('contentBody').scrollTop = 0;
+}
+
+/* ============================================
+   Modal
+   ============================================ */
+function openModal(mode, title) {
+  const overlay = document.getElementById('modalOverlay');
+  const modalTitle = overlay.querySelector('.modal-header h3');
+  if (mode === 'edit') {
+    modalTitle.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>编辑`;
+    overlay.querySelector('.form-input[disabled]').value = '2a3639f3800146bfb46ce806f2d43dfe';
+  } else {
+    modalTitle.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>创建单条任务`;
+    overlay.querySelector('.form-input[disabled]').value = '系统自动生成';
+  }
+  overlay.classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Connector line drawing
+function drawConnectors() {
+  // Main annotation note
+  var svg = document.getElementById('connectorSvg');
+  if (svg && svg.offsetParent !== null) {
+    var note = document.getElementById('annotationNote');
+    if (note && note.offsetParent !== null && note.style.display !== 'none') {
+      var nr = note.getBoundingClientRect();
+      var sr = svg.parentElement.getBoundingClientRect();
+      var noteCX = nr.left - sr.left + nr.width/2;
+      var noteCY = nr.top - sr.top + 16;
+      var targets = [
+        { cls: ':not(.online):not(.offline)', color: '#F59E0B', lineId: 'cl1' },
+        { cls: '.online',  color: '#16A34A', lineId: 'cl2' },
+        { cls: '.offline', color: '#1D1D1F', lineId: 'cl3' },
+      ];
+      targets.forEach(function(t) {
+        var card = document.querySelector('.sticky-preview .co-card-audit' + t.cls);
+        if (!card) return;
+        var cr = card.getBoundingClientRect();
+        var cardCX = cr.left - sr.left + cr.width/2;
+        var cardCY = cr.top - sr.top + cr.height/2;
+        var line = document.getElementById(t.lineId);
+        line.setAttribute('x1', noteCX); line.setAttribute('y1', noteCY);
+        line.setAttribute('x2', cardCX); line.setAttribute('y2', cardCY);
+      });
+    }
+  }
+
+  // Kepu hint note connectors (auto-editor only)
+  var kSvg = document.getElementById('kepuConnectorSvg');
+  if (kSvg && kSvg.offsetParent !== null && kSvg.style.display !== 'none') {
+    var kNote = document.getElementById('kepuHintNote');
+    if (kNote && kNote.offsetParent !== null && kNote.style.display !== 'none') {
+      var knr = kNote.getBoundingClientRect();
+      var ksr = kSvg.parentElement.getBoundingClientRect();
+      var kCX = knr.left - ksr.left + knr.width/2;
+      var kCY = knr.top - ksr.top + knr.height/2;
+
+      // Line to 待审核 card
+      var pendingCard = document.querySelector('#kepuTableBody .co-card-audit:not(.online):not(.offline)');
+      if (pendingCard) {
+        var cr = pendingCard.getBoundingClientRect();
+        document.getElementById('kl1').setAttribute('x1', kCX); document.getElementById('kl1').setAttribute('y1', kCY);
+        document.getElementById('kl1').setAttribute('x2', cr.left - ksr.left + cr.width/2);
+        document.getElementById('kl1').setAttribute('y2', cr.top - ksr.top + cr.height/2);
+      }
+      // Line to 编辑 button
+      var editBtn = document.querySelector('#kepuTableBody .btn-link');
+      if (editBtn) {
+        var er = editBtn.getBoundingClientRect();
+        document.getElementById('kl2').setAttribute('x1', kCX); document.getElementById('kl2').setAttribute('y1', kCY);
+        document.getElementById('kl2').setAttribute('x2', er.left - ksr.left + er.width/2);
+        document.getElementById('kl2').setAttribute('y2', er.top - ksr.top + er.height/2);
+      }
+      // Line to 生成新内容 button
+      var genBtn = document.querySelector('#kepuTableBody .btn-link-primary');
+      if (genBtn) {
+        var gr = genBtn.getBoundingClientRect();
+        document.getElementById('kl3').setAttribute('x1', kCX); document.getElementById('kl3').setAttribute('y1', kCY);
+        document.getElementById('kl3').setAttribute('x2', gr.left - ksr.left + gr.width/2);
+        document.getElementById('kl3').setAttribute('y2', gr.top - ksr.top + gr.height/2);
+      }
+      // Line to auto-online toggle
+      var toggleBtn = document.getElementById('autoOnlineToggle');
+      if (toggleBtn && toggleBtn.style.display !== 'none') {
+        var tr = toggleBtn.getBoundingClientRect();
+        document.getElementById('kl4').setAttribute('x1', kCX); document.getElementById('kl4').setAttribute('y1', kCY);
+        document.getElementById('kl4').setAttribute('x2', tr.left - ksr.left + tr.width/2);
+        document.getElementById('kl4').setAttribute('y2', tr.top - ksr.top + tr.height/2);
+      }
+    }
+  }
+
+  // Recover hint note (auto-recover only)
+  var rSvg = document.getElementById('recoverConnectorSvg');
+  if (rSvg && rSvg.offsetParent !== null && rSvg.style.display !== 'none') {
+    var rNote = document.getElementById('recoverHintNote');
+    if (rNote && rNote.offsetParent !== null && rNote.style.display !== 'none') {
+      var rnr = rNote.getBoundingClientRect();
+      var rsr = rSvg.parentElement.getBoundingClientRect();
+      var rCX = rnr.left - rsr.left + rnr.width/2;
+      var rCY = rnr.top - rsr.top + rnr.height/2;
+      var aBtns = document.querySelectorAll('#abandonedTableBody .btn-link');
+      if (aBtns.length > 0) {
+        var er2 = aBtns[0].getBoundingClientRect(); // 编辑
+        document.getElementById('rl1').setAttribute('x1', rCX); document.getElementById('rl1').setAttribute('y1', rCY);
+        document.getElementById('rl1').setAttribute('x2', er2.left - rsr.left + er2.width/2);
+        document.getElementById('rl1').setAttribute('y2', er2.top - rsr.top + er2.height/2);
+      }
+      if (aBtns.length > 1) {
+        var rr2 = aBtns[1].getBoundingClientRect(); // 回捞到生产池
+        document.getElementById('rl2').setAttribute('x1', rCX); document.getElementById('rl2').setAttribute('y1', rCY);
+        document.getElementById('rl2').setAttribute('x2', rr2.left - rsr.left + rr2.width/2);
+        document.getElementById('rl2').setAttribute('y2', rr2.top - rsr.top + rr2.height/2);
+      }
+    }
+  }
+
+  // Publish hint note (manual-delivery only)
+  var phSvg = document.getElementById('publishHintSvg');
+  if (phSvg && phSvg.offsetParent !== null && phSvg.style.display !== 'none') {
+    var phNote = document.getElementById('publishHintNote');
+    if (phNote && phNote.offsetParent !== null && phNote.style.display !== 'none') {
+      var pnr = phNote.getBoundingClientRect();
+      var psr = phSvg.parentElement.getBoundingClientRect();
+      var pCX = pnr.left - psr.left + pnr.width/2;
+      var pCY = pnr.top - psr.top + pnr.height/2;
+
+      // Line to first 已上线 card
+      var onlineCard = document.querySelector('.sticky-preview .co-card-audit.online');
+      if (onlineCard) {
+        var cr = onlineCard.getBoundingClientRect();
+        var l1 = document.getElementById('ph1');
+        l1.setAttribute('x1', pCX); l1.setAttribute('y1', pCY);
+        l1.setAttribute('x2', cr.left - psr.left + cr.width/2);
+        l1.setAttribute('y2', cr.top - psr.top + cr.height/2);
+      }
+
+      // Line to first visible 批量发布 button
+      var allBtns = document.querySelectorAll('.sticky-actions .btn-link');
+      var batchBtn = null;
+      allBtns.forEach(function(b) {
+        if (!batchBtn && b.textContent.trim() === '批量发布' && b.closest('tr').style.display !== 'none') {
+          batchBtn = b;
+        }
+      });
+      if (batchBtn) {
+        var br = batchBtn.getBoundingClientRect();
+        var l2 = document.getElementById('ph2');
+        l2.setAttribute('x1', pCX); l2.setAttribute('y1', pCY);
+        l2.setAttribute('x2', br.left - psr.left + br.width/2);
+        l2.setAttribute('y2', br.top - psr.top + br.height/2);
+      }
+    }
+  }
+}
+
+// Drag
+var dragInfo = null;
+function startDragNote(e) {
+  if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
+  var note = e.currentTarget;
+  dragInfo = { el: note, sx: e.clientX, sy: e.clientY, ox: note.offsetLeft, oy: note.offsetTop };
+  note.style.left = note.offsetLeft + 'px'; note.style.top = note.offsetTop + 'px';
+  note.style.cursor = 'grabbing';
+  e.preventDefault();
+}
+document.addEventListener('mousemove', function(e) {
+  if (!dragInfo) return;
+  dragInfo.el.style.left = (dragInfo.ox + e.clientX - dragInfo.sx) + 'px';
+  dragInfo.el.style.top  = (dragInfo.oy + e.clientY - dragInfo.sy) + 'px';
+  drawConnectors();
+});
+document.addEventListener('mouseup', function() {
+  if (dragInfo) { dragInfo.el.style.cursor = ''; dragInfo = null; }
+});
+window.addEventListener('scroll', drawConnectors, {passive: true});
+window.addEventListener('resize', drawConnectors);
+
+// Draw connectors after table renders
+var origRender = renderTable;
+renderTable = function() { origRender(); setTimeout(drawConnectors, 200); };
+setTimeout(drawConnectors, 500);
+
+// Reset annotation notes to default position on load
+(function() {
+  var n1 = document.getElementById('annotationNote');
+  if (n1) { n1.style.left = ''; n1.style.top = ''; }
+  var n2 = document.getElementById('publishHintNote');
+  if (n2) { n2.style.left = ''; n2.style.top = ''; }
+  var n3 = document.getElementById('kepuHintNote');
+  if (n3) { n3.style.left = ''; n3.style.top = ''; }
+  var n4 = document.getElementById('recoverHintNote');
+  if (n4) { n4.style.left = ''; n4.style.top = ''; }
+})();
+
+// Kepu table rendering
+function renderKepuTable() {
+  var tbody = document.getElementById('kepuTableBody');
+  if (!tbody) return;
+  var html = '';
+  var audits = ['待审核','待审核','已审核','已上线','已下线'];
+  var onlineArr = ['未上线','已上线','已下线'];
+  for (var i = 0; i < Math.min(KEPU_DATA.length, 67); i++) {
+    var d = KEPU_DATA[i];
+    var objCount = 1 + Math.floor(Math.random() * 4);
+    var objsHTML = '';
+    for (var j = 1; j <= objCount; j++) {
+      var ad = audits[Math.floor(Math.random() * audits.length)];
+      var oid = 'KEPU_' + Math.random().toString(16).slice(2,14);
+      objsHTML += '<div class="co-card" title="'+oid+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid+'\',\''+ad+'\')"><span class="co-card-num">#'+j+'</span><span class="co-card-audit '+(ad==='已上线'?'online':ad==='已下线'?'offline':'')+'">'+ad+'</span></div>';
+    }
+    if (objCount >= 4) {
+      objsHTML = '';
+      for (var k = 1; k <= 3; k++) {
+        var ad2 = audits[Math.floor(Math.random() * audits.length)];
+        var oid2 = 'KEPU_' + Math.random().toString(16).slice(2,14);
+        objsHTML += '<div class="co-card" title="'+oid2+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid2+'\',\''+ad2+'\')"><span class="co-card-num">#'+k+'</span><span class="co-card-audit '+(ad2==='已上线'?'online':ad2==='已下线'?'offline':'')+'">'+ad2+'</span></div>';
+      }
+      objsHTML += '<div class="co-card co-card-more"><span style="font-size:11px;font-weight:600;color:#1D4ED8;">+'+ (10+Math.floor(Math.random()*90)) +' 查看更多</span></div>';
+    }
+    html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
+      '<td>'+d[0]+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td style="white-space:normal;font-size:12px;">'+d[3].slice(0,60)+'</td>'+
+      '<td class="cell-center">'+d[4]+'</td><td class="cell-center">'+d[5]+'</td><td style="white-space:normal;font-size:12px;">'+d[6].slice(0,80)+'</td>'+
+      '<td>'+d[7]+'</td><td style="white-space:normal;font-size:12px;">'+d[8].slice(0,60)+'</td>'+
+      '<td style="white-space:normal;font-size:11px;">'+d[9].slice(0,60)+'</td>'+
+      '<td class="cell-center">'+d[10]+'</td><td class="cell-center">'+d[11]+'</td>'+
+      '<td class="cell-center sticky-preview" style="width:500px;min-width:500px;max-width:500px;"><div class="content-cards">'+objsHTML+'</div></td>'+
+      '<td class="sticky-actions" style="width:220px;min-width:220px;max-width:220px;"><div class="action-btns"><button class="btn-link" onclick="openKepuModal('+i+')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button></div></td></tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+// Kepu edit modal
+function openKepuModal(idx) {
+  var d = KEPU_DATA[idx];
+  var overlay = document.getElementById('kepuModal');
+  overlay.querySelector('#km1').value = d[0]; // 一级分类
+  overlay.querySelector('#km2').value = d[1]; // 二级分类
+  overlay.querySelector('#km3').value = d[2]; // 主题名称
+  overlay.querySelector('#km4').value = d[3]; // 主题描述
+  overlay.querySelector('#km5').value = d[4]; // 主题query数量
+  overlay.querySelector('#km6').value = d[5]; // 主题query占比
+  overlay.querySelector('#km7').value = d[6]; // 用户query示例
+  overlay.querySelector('#km8').value = d[7]; // 科普标题
+  overlay.querySelector('#km9').value = d[8]; // 科普钩子
+  overlay.querySelector('#km10').value = d[9]; // 对应query
+  overlay.querySelector('#km11').value = d[10]; // query数量
+  overlay.querySelector('#km12').value = d[11]; // query占比
+  overlay.classList.add('show');
+}
+function closeKepuModal() {
+  document.getElementById('kepuModal').classList.remove('show');
+}
+
+// Edit abandoned row in kepu modal
+function openAbandonedEdit(idx) {
+  var d = ABANDONED_DATA[idx];
+  var overlay = document.getElementById('kepuModal');
+  overlay.querySelector('#km1').value = d[0];
+  overlay.querySelector('#km2').value = d[1];
+  overlay.querySelector('#km3').value = d[2];
+  overlay.querySelector('#km4').value = '';
+  overlay.querySelector('#km5').value = d[5];
+  overlay.querySelector('#km6').value = d[6];
+  overlay.querySelector('#km7').value = '';
+  overlay.querySelector('#km8').value = d[3];
+  overlay.querySelector('#km9').value = '';
+  overlay.querySelector('#km10').value = d[3];
+  overlay.querySelector('#km11').value = d[5];
+  overlay.querySelector('#km12').value = d[6];
+  overlay.classList.add('show');
+}
+
+// Recover confirmation modal
+var recoverIdx = -1;
+function openRecoverConfirm(idx) {
+  recoverIdx = idx;
+  document.getElementById('recoverModal').classList.add('show');
+}
+function confirmRecover() {
+  if (recoverIdx >= 0) {
+    var title = ABANDONED_DATA[recoverIdx][2];
+    // Add back to kepu data
+    var d = ABANDONED_DATA[recoverIdx];
+    KEPU_DATA.push([d[0],d[1],d[2],'',d[5],d[6],'',d[3],'',d[3],d[5],d[6]]);
+    ABANDONED_DATA.splice(recoverIdx, 1);
+    renderAbandonedTable();
+    renderKepuTable();
+    recoverIdx = -1;
+  }
+  document.getElementById('recoverModal').classList.remove('show');
+}
+function closeRecoverModal() {
+  document.getElementById('recoverModal').classList.remove('show');
+}
+
+// Abandoned table rendering
+function renderAbandonedTable() {
+  var tbody = document.getElementById('abandonedTableBody');
+  if (!tbody) return;
+  var html = '';
+  for (var i = 0; i < ABANDONED_DATA.length; i++) {
+    var d = ABANDONED_DATA[i];
+    html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
+      '<td>'+d[0]+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td>'+
+      '<td style="white-space:normal;font-size:12px;">'+d[3].slice(0,80)+'</td>'+
+      '<td style="white-space:normal;font-size:11px;color:#991B1B;">'+d[4].slice(0,120)+'</td>'+
+      '<td class="cell-center">'+d[5]+'</td><td class="cell-center">'+d[6]+'</td>'+
+      '<td style="white-space:normal;font-size:11px;">'+d[7].slice(0,100)+'</td>'+
+      '<td class="sticky-actions" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openAbandonedEdit('+i+')">编辑</button><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+// Auto-online toggle
+var autoOnlineOn = false;
+function toggleAutoOnline() {
+  autoOnlineOn = !autoOnlineOn;
+  var label = document.getElementById('autoOnlineToggleLabel');
+  label.textContent = autoOnlineOn ? '🟢 自动上线已开启' : '⚫ 自动上线已关闭';
+  label.style.color = autoOnlineOn ? '' : '#9CA3AF';
+}
+
+// Initialize
+renderTable();
+renderKepuTable();
+renderAbandonedTable();
+// Restore last selected nav, or default to first item
+var saved = localStorage.getItem('selectedNav') || 'manual-editor';
+currentNavView = saved;
+document.body.setAttribute('data-nav', saved);
+var btn = document.querySelector('.nav-child[data-view="' + saved + '"]');
+if (btn) { btn.click(); }
+
+/* ============================================
+   Editor Drawer
+   ============================================ */
+function copyId(type, el) {
+  var text = el.textContent.split(': ')[1];
+  navigator.clipboard.writeText(text);
+  var orig = el.textContent;
+  el.textContent = '已复制 ' + type;
+  el.style.color = '#16A34A';
+  setTimeout(function() { el.textContent = orig; el.style.color = ''; }, 1500);
+}
+
+var currentNavView = '';
+function openEditorDrawer(title, contentId, audit) {
+  var d = document.getElementById('editorDrawer');
+  var isDelivery = document.body.getAttribute('data-nav') === 'manual-delivery' || document.body.getAttribute('data-nav') === 'auto-delivery';
+  d.querySelector('.ed-title-text').textContent = title;
+  var idLinks = d.querySelectorAll('.ed-id-link');
+  idLinks[0].textContent = 'content_id: ' + contentId;
+  idLinks[1].textContent = 'session_id: ' + contentId.replace(/SHUXUE|YUWEN|YINGYU/, 'SESSION');
+  d.querySelector('.ed-audit').textContent = audit;
+  d.querySelector('.ed-audit').className = 'status-tag ed-audit ' + (audit === '已审核' ? 'tag-reviewed' : audit === '已上线' ? 'tag-online' : audit === '已下线' ? 'tag-offline' : 'tag-unreviewed');
+  var now = new Date(); var ts = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0')+' '+String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')+':'+String(now.getSeconds()).padStart(2,'0');
+  d.querySelector('.ed-bottom-time').textContent = '🕐 ' + ts;
+
+  // Dynamic buttons based on audit status
+  var qrBtn = document.getElementById('edQrBtn');
+  var onlineBtn = document.getElementById('edOnlineBtn');
+  if (audit === '已上线' || audit === '已下线') {
+    qrBtn.style.display = ''; qrBtn.textContent = '📱 手机扫码预览';
+    onlineBtn.textContent = audit === '已上线' ? '下线' : '上线';
+    onlineBtn.className = audit === '已上线' ? 'ed-bbar-btn ed-bbar-save' : 'ed-bbar-btn ed-bbar-success';
+  } else {
+    qrBtn.style.display = 'none';
+    onlineBtn.textContent = '上线'; onlineBtn.className = 'ed-bbar-btn ed-bbar-success';
+  }
+
+  // Show publish panel for manual-delivery, hide editor blocks
+  var hints = d.querySelector('.ed-hints');
+  var blocks = d.querySelector('.ed-blocks');
+  var pubPanel = d.querySelector('.ed-publish-panel');
+  if (hints) hints.style.display = isDelivery ? 'none' : '';
+  if (blocks) blocks.style.display = isDelivery ? 'none' : '';
+  if (pubPanel) pubPanel.style.display = isDelivery ? '' : 'none';
+  var bottomBar = d.querySelector('.ed-bottom-bar');
+  if (bottomBar) bottomBar.style.display = isDelivery ? 'none' : '';
+  d.classList.add('open');
+  document.getElementById('editorDrawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEditorDrawer() {
+  document.getElementById('editorDrawer').classList.remove('open');
+  document.getElementById('editorDrawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('editorDrawerOverlay').addEventListener('click', closeEditorDrawer);
+});
+function openPublishModal() {
+  document.getElementById('publishModal').classList.add('show');
+}
+function closePublishModal() {
+  document.getElementById('publishModal').classList.remove('show');
+}
+</script>
+
+<!-- Publish Modal (批量发布) -->
+<div class="modal-overlay" id="publishModal" onclick="closePublishModal()">
+  <div class="modal" style="width:560px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>将本 session_id 内的全部 connect_id 批量发布到</h3>
+      <button class="modal-close" onclick="closePublishModal()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+        <label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 教材精讲</label>
+        <label class="ed-publish-opt"><input type="checkbox" checked> 同步学语文</label>
+        <label class="ed-publish-opt"><input type="checkbox" checked> 同步学数学</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 妙题高招</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 神奇的世界</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 逛逛高校</label>
+        <label class="ed-publish-opt"><input type="checkbox"> XXXX</label>
+        <label class="ed-publish-opt"><input type="checkbox"> YYYY</label>
+        <label class="ed-publish-opt"><input type="checkbox"> ZZZZ</label>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;">
+        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 吸色</label>、<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 加渐变蒙层</label></div>
+        </div>
+        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#D1FAE5,#DBEAFE);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 扩画布</label></div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <button class="ed-publish-btn" onclick="closePublishModal()">确认发布</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Editor Drawer -->
+<div class="editor-drawer-overlay" id="editorDrawerOverlay" onclick="closeEditorDrawer()"></div>
+<div class="editor-drawer" id="editorDrawer">
+  <div class="editor-drawer-inner">
+    <!-- Top Bar -->
+    <div class="ed-top-bar">
+      <div class="ed-top-left">
+        <span class="ed-top-title">✏️ <span class="ed-title-text">—</span></span>
+        <span class="ed-id-link" onclick="copyId('content_id',this)" title="点击复制 content_id">content_id: —</span>
+        <span class="ed-id-link" onclick="copyId('session_id',this)" title="点击复制 session_id">session_id: —</span>
+        <span class="status-tag ed-audit">—</span>
+      </div>
+      <div class="ed-top-right">
+        <button class="ed-btn" id="edQrBtn">📱 获取预览二维码</button>
+        <button class="ed-btn ed-btn-close" onclick="closeEditorDrawer()">✕</button>
+      </div>
+    </div>
+    <!-- Main -->
+    <div class="ed-main">
+      <div class="ed-layout">
+        <!-- Left: Phone Preview -->
+        <div class="ed-preview">
+          <div class="ed-phone">
+            <div class="ed-phone-inner">
+              <div class="ed-phone-status">
+                <span>9:41</span>
+                <div class="ed-phone-island"></div>
+                <svg width="16" height="11" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="5" width="3" height="7" rx="0.5" opacity="0.3"/><rect x="4" y="3.5" width="3" height="8.5" rx="0.5" opacity="0.5"/><rect x="8" y="1.5" width="3" height="10.5" rx="0.5" opacity="0.7"/><rect x="12" y="0" width="3" height="12" rx="0.5"/></svg>
+              </div>
+              <div class="ed-phone-body">
+                <div class="ed-cover" style="background:linear-gradient(135deg,#1a56db,#4f46e5);color:#fff;padding:20px 16px 16px;border-radius:10px;position:relative;overflow:hidden;">
+                  <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.15),transparent 60%);"></div>
+                  <div style="position:relative;">
+                    <h2 style="font-size:16px;font-weight:700;margin-bottom:4px;">三角形的定义与分类</h2>
+                    <p style="font-size:12px;opacity:0.85;">认识三角形的基本要素</p>
+                  </div>
+                </div>
+                <div style="padding:8px 0;">
+                  <div style="padding:8px 0;font-size:12px;color:#475569;"><strong style="color:#1a56db;">生活中的三角形</strong><br>自行车车架、屋顶桁架、桥梁支撑……三角形是最简单、最稳定的多边形。</div>
+                  <svg viewBox="0 0 400 240" style="width:100%;border-radius:8px;background:#f8fbff;border:1px solid #d6e4f5;margin:6px 0;">
+                    <text x="200" y="24" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1a56db" font-weight="700">三角形的定义</text>
+                    <line x1="130" y1="32" x2="270" y2="32" stroke="#1a56db" stroke-width="1" opacity="0.3" stroke-dasharray="4,3"/>
+                    <text x="200" y="50" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1e293b">由不在同一条直线上的三条线段</text>
+                    <text x="200" y="64" font-family="sans-serif" font-size="11" text-anchor="middle" fill="#1e293b">首尾顺次相接所组成的图形。</text>
+                    <polygon points="200,90 100,210 300,210" fill="rgba(26,86,219,0.06)" stroke="#1a56db" stroke-width="2"/>
+                    <text x="200" y="82" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="700">A</text>
+                    <text x="84" y="224" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="700">B</text>
+                    <text x="316" y="224" font-family="sans-serif" font-size="12" text-anchor="middle" fill="#dc2626" font-weight="700">C</text>
+                    <rect x="50" y="225" width="300" height="16" rx="6" fill="#fff8e1" stroke="#ffa726" stroke-width="0.8"/>
+                    <text x="200" y="237" font-family="sans-serif" font-size="9" text-anchor="middle" fill="#e65100" font-weight="600">⚠ 三个点不能在同一条直线上</text>
+                  </svg>
+                  <svg viewBox="0 0 400 240" style="width:100%;border-radius:8px;background:#f8fbff;border:1px solid #d6e4f5;margin:6px 0;">
+                    <text x="200" y="24" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1a56db" font-weight="700">三角形的基本要素</text>
+                    <line x1="100" y1="32" x2="300" y2="32" stroke="#1a56db" stroke-width="1" opacity="0.3" stroke-dasharray="4,3"/>
+                    <polygon points="200,60 80,200 320,200" fill="rgba(26,86,219,0.06)" stroke="#1a56db" stroke-width="2"/>
+                    <text x="200" y="50" font-family="sans-serif" font-size="12" fill="#dc2626" font-weight="700">A</text>
+                    <text x="64" y="214" font-family="sans-serif" font-size="12" fill="#dc2626" font-weight="700">B</text>
+                    <text x="338" y="214" font-family="sans-serif" font-size="12" fill="#dc2626" font-weight="700">C</text>
+                    <text x="128" y="124" font-family="sans-serif" font-size="10" fill="#16a34a" font-weight="600">AB</text>
+                    <text x="200" y="218" font-family="sans-serif" font-size="10" fill="#16a34a" font-weight="600">BC</text>
+                    <text x="272" y="124" font-family="sans-serif" font-size="10" fill="#16a34a" font-weight="600">CA</text>
+                    <rect x="90" y="222" width="220" height="16" rx="6" fill="#e8f5e9" stroke="#43a047" stroke-width="0.8"/>
+                    <text x="200" y="234" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#2e7d32" font-weight="600">边：AB、BC、CA  |  角：∠A、∠B、∠C</text>
+                  </svg>
+                  <svg viewBox="0 0 400 220" style="width:100%;border-radius:8px;background:#f8fbff;border:1px solid #d6e4f5;margin:6px 0;">
+                    <text x="200" y="24" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1a56db" font-weight="700">按角分类</text>
+                    <polygon points="70,50 30,160 130,160" fill="rgba(22,163,74,0.08)" stroke="#16a34a" stroke-width="2"/>
+                    <text x="80" y="186" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#2e7d32" font-weight="600">锐角△</text>
+                    <polygon points="200,50 170,160 270,160" fill="rgba(26,86,219,0.08)" stroke="#1a56db" stroke-width="2"/>
+                    <text x="215" y="186" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1565c0" font-weight="600">直角△</text>
+                    <polygon points="360,90 270,160 370,160" fill="rgba(234,88,12,0.08)" stroke="#ea580c" stroke-width="2"/>
+                    <text x="320" y="186" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#e65100" font-weight="600">钝角△</text>
+                    <text x="80" y="202" font-family="sans-serif" font-size="9" text-anchor="middle" fill="#757575">三个角都&lt;90°</text>
+                    <text x="215" y="202" font-family="sans-serif" font-size="9" text-anchor="middle" fill="#757575">一个角=90°</text>
+                    <text x="320" y="202" font-family="sans-serif" font-size="9" text-anchor="middle" fill="#757575">一个角&gt;90°</text>
+                  </svg>
+                  <svg viewBox="0 0 400 210" style="width:100%;border-radius:8px;background:#f8fbff;border:1px solid #d6e4f5;margin:6px 0;">
+                    <text x="200" y="24" font-family="sans-serif" font-size="13" text-anchor="middle" fill="#1a56db" font-weight="700">按边分类</text>
+                    <polygon points="80,50 30,160 120,160" fill="rgba(148,163,184,0.08)" stroke="#64748b" stroke-width="2"/>
+                    <text x="70" y="184" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#475569" font-weight="600">不等边</text>
+                    <polygon points="205,70 175,160 245,160" fill="rgba(26,86,219,0.08)" stroke="#1a56db" stroke-width="2"/>
+                    <text x="210" y="184" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#1565c0" font-weight="600">等腰</text>
+                    <polygon points="340,65 290,160 380,160" fill="rgba(22,163,74,0.08)" stroke="#16a34a" stroke-width="2"/>
+                    <text x="335" y="184" font-family="sans-serif" font-size="10" text-anchor="middle" fill="#2e7d32" font-weight="600">等边</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Editor Panel -->
+        <div class="ed-panel">
+          <div class="ed-panel-scroll">
+            <!-- Publish panel (manual-delivery only) -->
+            <div class="ed-publish-panel" id="edPublishPanel" style="display:none;">
+              <div class="ed-publish-title" style="margin-bottom:6px;">生成封面图</div>
+              <div class="ed-publish-cover">
+                <div class="ed-fld"><label>生图指令</label><input placeholder="输入生图指令"></div>
+                <div class="ed-fld"><label>图片风格（非必填）</label><input placeholder="如：水墨画、卡通风格"></div>
+                <div class="ed-fld"><label>参考这个url的图片进行生成（非必填）</label><input placeholder="输入参考图片URL"></div>
+              </div>
+              <div class="ed-publish-title" style="margin-top:20px;">发布到</div>
+              <div class="ed-publish-options" id="edPublishOptions">
+                <label class="ed-publish-opt"><input type="checkbox" value="必背古诗"> 必背古诗</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="教材精讲"> 教材精讲</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="同步学语文" checked> 同步学语文</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="同步学数学" checked> 同步学数学</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="妙题高招"> 妙题高招</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="神奇的世界"> 神奇的世界</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="逛逛高校"> 逛逛高校</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="XXXX"> XXXX</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="YYYY"> YYYY</label>
+                <label class="ed-publish-opt"><input type="checkbox" value="ZZZZ"> ZZZZ</label>
+              </div>
+              <div style="display:flex;gap:12px;margin-bottom:16px;">
+                <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+                  <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:100px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+                  <div style="padding:8px 10px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;cursor:pointer;"><input type="checkbox" checked style="accent-color:#16A34A;"> 吸色</label>、<label style="color:#16A34A;cursor:pointer;"><input type="checkbox" checked style="accent-color:#16A34A;"> 加渐变蒙层</label></div>
+                </div>
+                <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+                  <div style="background:linear-gradient(135deg,#D1FAE5,#DBEAFE);height:100px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+                  <div style="padding:8px 10px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;cursor:pointer;"><input type="checkbox" checked style="accent-color:#16A34A;"> 扩画布</label></div>
+                </div>
+              </div>
+              <button class="ed-publish-btn">确认发布</button>
+            </div>
+            <div class="ed-hints">
+              <div class="ed-hints-head">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>编辑器使用提示</span>
+              </div>
+              <ul class="ed-hints-list">
+                <li>↕ 拖动排序 — 通过卡片左上角手柄拖动调整模块顺序</li>
+                <li>➕ 添加模块 — 点击底部按钮选择并添加新的内容模块</li>
+                <li>👁 实时预览 — 编辑内容时左侧手机预览会实时更新</li>
+              </ul>
+            </div>
+            <div class="ed-blocks">
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ 封面卡片</div><div class="ed-block-fields"><div class="ed-fld"><label>标题</label><input value="三角形的定义与分类" readonly></div><div class="ed-fld"><label>副标题</label><input value="认识三角形的基本要素" readonly></div></div></div>
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ 图文模块 · 生活中的三角形</div><div class="ed-block-fields"><div class="ed-fld"><label>标题</label><input value="生活中的三角形" readonly></div><div class="ed-fld"><label>正文</label><textarea rows="2" readonly>自行车车架、屋顶桁架、桥梁支撑……三角形是最简单、最稳定的多边形。</textarea></div></div></div>
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ SVG知识卡片 · 三角形的定义</div></div>
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ SVG知识卡片 · 基本要素</div></div>
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ SVG知识卡片 · 按角分类</div></div>
+              <div class="ed-block"><div class="ed-block-bar">⋮⋮ SVG知识卡片 · 按边分类</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bottom Bar -->
+    <div class="ed-bottom-bar">
+      <div class="ed-bottom-left">
+        <span class="ed-bottom-time" id="edBottomTime">🕐 —</span>
+        <button class="ed-bbar-btn">🗑️ 删除内容</button>
+        <button class="ed-bbar-btn">🧾 编辑 JSON 数据</button>
+        <button class="ed-bbar-btn">📋 复制数据</button>
+        <button class="ed-bbar-btn">← 上一个</button>
+        <button class="ed-bbar-btn">下一个 →</button>
+        <span class="ed-bottom-hint">未使用附件生成</span>
+      </div>
+      <div class="ed-bottom-right">
+        <button class="ed-bbar-btn ed-bbar-success" id="edOnlineBtn">上线</button>
+        <button class="ed-bbar-btn ed-bbar-save">保存</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Kepu Edit Modal -->
+<div class="modal-overlay" id="kepuModal" onclick="closeKepuModal()">
+  <div class="modal" style="width:600px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>编辑科普内容</h3>
+      <button class="modal-close" onclick="closeKepuModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">一级分类</label><input type="text" class="form-input" id="km1"></div>
+      <div class="form-group"><label class="form-label">二级分类</label><input type="text" class="form-input" id="km2"></div>
+      <div class="form-group"><label class="form-label">主题名称</label><input type="text" class="form-input" id="km3"></div>
+      <div class="form-group"><label class="form-label">主题描述</label><textarea class="form-input" rows="2" id="km4"></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">主题query数量</label><input type="text" class="form-input" id="km5"></div><div class="form-group"><label class="form-label">主题query占比</label><input type="text" class="form-input" id="km6"></div></div>
+      <div class="form-group"><label class="form-label">用户query示例</label><textarea class="form-input" rows="2" id="km7"></textarea></div>
+      <div class="form-group"><label class="form-label">科普标题</label><input type="text" class="form-input" id="km8"></div>
+      <div class="form-group"><label class="form-label">科普钩子</label><textarea class="form-input" rows="2" id="km9"></textarea></div>
+      <div class="form-group"><label class="form-label">对应query</label><textarea class="form-input" rows="2" id="km10"></textarea></div>
+      <div class="form-row"><div class="form-group"><label class="form-label">query数量</label><input type="text" class="form-input" id="km11"></div><div class="form-group"><label class="form-label">query占比</label><input type="text" class="form-input" id="km12"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="cms-btn cms-btn-secondary" onclick="closeKepuModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg><span>取消</span></button>
+      <button class="cms-btn cms-btn-primary" onclick="closeKepuModal()"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg><span>保存修改</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Recover Confirm Modal -->
+<div class="modal-overlay" id="recoverModal" onclick="closeRecoverModal()">
+  <div class="modal" style="width:480px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>确认回捞</h3>
+      <button class="modal-close" onclick="closeRecoverModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:#1E293B;line-height:1.8;">确认对本标题重新执行内容生产？<br><span style="font-size:12px;color:#64748B;">（初始化生产数据将输出到"标题/内容生产编辑"模块）</span></p>
+    </div>
+    <div class="modal-footer">
+      <button class="cms-btn cms-btn-secondary" onclick="closeRecoverModal()"><span>取消</span></button>
+      <button class="cms-btn cms-btn-primary" onclick="confirmRecover()"><span>确认回捞到生产池</span></button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -193,6 +193,10 @@ html, body {
 #coverTableWrap .co-card { height: 36px; line-height: 36px; padding: 2px 8px; }
 #coverTableWrap .content-cards { align-items: center; }
 #coverTableWrap .hidden-col { display: none !important; }
+/* Publish-data frozen columns: force opaque */
+#coverTableWrap td[style*="position: sticky"] { background-color: #FFF !important; background: #FFF !important; }
+#coverTableWrap td[style*="position: sticky"] .cell-wrap { background-color: #FFF !important; }
+#coverTableWrap td[style*="position: sticky"]::after { content: ''; position: absolute; inset: 0; background: #FFF; z-index: -1; }
 .table-scroll { overflow-x: auto; }
 .table-scroll::-webkit-scrollbar { height: 6px; }
 .table-scroll::-webkit-scrollbar-track { background: transparent; }

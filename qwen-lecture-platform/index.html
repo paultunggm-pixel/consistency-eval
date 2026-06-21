@@ -1209,6 +1209,8 @@ function selectNav(childBtn, pipeline, name) {
           var opTD_sample = testTDs[testTDs.length - 1];
           var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
           // Apply to all rows
+          // Clear sticky from all TDs
+          rows.forEach(function(r) { var tds=r.querySelectorAll('td'); tds.forEach(function(d){d.style.position='';d.style.right='';d.style.zIndex='';d.style.boxShadow='';d.style.marginRight='';d.style.borderBottomColor='';}); });
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var visTDs = [];
@@ -1250,6 +1252,8 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
           var opTD_sample = testTDs[testTDs.length - 1];
           var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
           // Apply to all rows
+          // Clear sticky from all TDs
+          rows.forEach(function(r) { var tds=r.querySelectorAll('td'); tds.forEach(function(d){d.style.position='';d.style.right='';d.style.zIndex='';d.style.boxShadow='';d.style.marginRight='';d.style.borderBottomColor='';}); });
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var visTDs = [];

@@ -161,9 +161,38 @@ html, body {
 .toolbar-btn:hover { background: rgba(0,61,155,0.12); }
 
 /* ============================================
+   Batch Action Bar
+   ============================================ */
+.batch-bar { display: inline-flex; align-items: center; gap: 16px; padding: 10px 16px; background: #FFF; border: 1px solid #E5E7EB; border-radius: 12px; margin-bottom: 12px; }
+.batch-count { font-size: 13px; font-weight: 600; color: #1D4ED8; }
+.batch-actions { display: flex; gap: 8px; }
+.batch-btn { padding: 6px 16px; font-size: 12px; font-weight: 600; border: 1px solid #E5E7EB; border-radius: 8px; background: #FFF; color: #4F5F7B; cursor: pointer; transition: background 0.15s; }
+.batch-btn:hover { background: #F3F4F6; }
+.batch-btn-danger { color: #DC2626; border-color: #FECACA; }
+.batch-btn-danger:hover { background: #FEF2F2; }
+.batch-btn-cancel { color: #6B7280; }
+.batch-btn-primary { background: #1D4ED8; color: #FFF; border-color: #1D4ED8; font-weight: 700; }
+.batch-btn-primary:hover { background: #1E40AF; }
+
+/* ============================================
    Data Table
    ============================================ */
 .table-container { background: var(--cms-surface-lowest); border-radius: var(--cms-radius-lg); box-shadow: 0 8px 40px rgba(25,28,30,0.06); overflow: hidden; }
+#coverTableWrap .table td { padding: 0 14px; height: 30px; }
+#coverTableWrap .cell-wrap { max-height: 30px; overflow: hidden; display: block; }
+#coverTableWrap .co-card { height: 22px; line-height: 22px; padding: 2px 8px; min-width: 80px; width: auto; }
+#coverTableWrap .content-cards { align-items: center; }
+#kepuTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
+#kepuTableWrap .co-card { height: 36px; line-height: 36px; padding: 2px 8px; }
+#kepuTableWrap .content-cards { align-items: center; }
+#kepuTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
+#abandonedTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
+#abandonedTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
+#coverTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
+#coverTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
+#coverTableWrap .co-card { height: 36px; line-height: 36px; padding: 2px 8px; }
+#coverTableWrap .content-cards { align-items: center; }
+#coverTableWrap .hidden-col { display: none !important; }
 .table-scroll { overflow-x: auto; }
 .table-scroll::-webkit-scrollbar { height: 6px; }
 .table-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -173,9 +202,15 @@ html, body {
 
 /* TH */
 .table th { padding: 6px 8px; font-size: 11px; font-weight: 900; color: var(--cms-secondary); background: var(--cms-surface-highest); border-bottom: none; text-align: left; white-space: nowrap; }
-.table th.select-col { width: 44px; text-align: center; }
-.th-filter { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
-.th-filter svg { opacity: 0.5; }
+.table th.select-col { width: 44px; min-width: 44px; max-width: 44px; text-align: center; }
+.th-filter { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; color: #3B5998; position: relative; }
+.th-filter svg { opacity: 0.6; }
+.th-filter:hover svg { opacity: 1; }
+.filter-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #FFF; border: 1px solid #E5E7EB; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); z-index: 10; min-width: 120px; padding: 6px 0; }
+.filter-dropdown.show { display: block; }
+.filter-dropdown label { display: flex; align-items: center; gap: 6px; padding: 6px 14px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+.filter-dropdown label:hover { background: #F3F4F6; }
+.filter-dropdown input[type="checkbox"] { width: 14px; height: 14px; accent-color: #1D4ED8; }
 
 /* TD */
 .table td { padding: 6px 14px; font-size: 13px; color: var(--cms-on-surface); border-bottom: 1px solid rgba(225,226,228,0.5); vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -201,6 +236,21 @@ html, body {
 .sticky-preview::before { content: ''; position: absolute; left: 0; top: -1px; bottom: -1px; width: 2px; background: #D1D5DB; }
 .sticky-preview-th { position: sticky; right: 220px; background: #E1E2E4; z-index: 3; }
 .sticky-preview-th::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #D1D5DB; }
+#kepuTableWrap .sticky-preview { right: 180px; }
+#kepuTableWrap .sticky-preview-th { right: 180px; }
+/* Frozen columns left border for cover table */
+.cover-sticky-th { position: sticky; background: #E1E2E4; z-index: 3; }
+.cover-sticky-th::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #D1D5DB; z-index: 4; }
+.tag-sticky-th { position: sticky; right: 0; background: #E1E2E4; z-index: 3; box-shadow: -4px 0 10px rgba(0,0,0,0.06); }
+.cover-sticky-td { position: sticky; background: #FFF; z-index: 2; box-shadow: -2px 0 6px rgba(0,0,0,0.04); }
+.cover-sticky-td::before { content: ''; position: absolute; left: 0; top: -1px; bottom: -1px; width: 2px; background: #D1D5DB; z-index: 4; }
+.tag-sticky-td { position: sticky; right: 0; background: #FFF; z-index: 2; box-shadow: -4px 0 10px rgba(0,0,0,0.05); }
+.tag-sticky-th { position: sticky; right: 0; background: #E1E2E4; z-index: 3; box-shadow: -4px 0 10px rgba(0,0,0,0.06); }
+/* Abandoned table frozen column line */
+#abandonedTableWrap th:last-child::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #D1D5DB; z-index: 10; pointer-events: none; }
+#abandonedTableWrap th:last-child { isolation: isolate; }
+.abandoned-action-td::before { content: ''; position: absolute; left: 0; top: -1px; bottom: -1px; width: 2px; background: #D1D5DB; z-index: 10; pointer-events: none; }
+.abandoned-action-td { isolation: isolate; }
 .sticky-actions { position: sticky; right: 0; background: #FFF; z-index: 2; box-shadow: -4px 0 10px rgba(0,0,0,0.05); }
 .cell-grade { font-weight: 700; color: var(--cms-on-surface); }
 .cell-meta { color: var(--cms-secondary); }
@@ -377,7 +427,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 /* ============================================
    Annotation Note
    ============================================ */
-.annotation-note { position: absolute; left: 269px; top: 249px; width: 570px; max-height: 380px; overflow-y: auto; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 20px 22px; box-shadow: 0 4px 16px rgba(180,140,40,0.12); z-index: 5; cursor: default; }
+.annotation-note { position: absolute; top: 249px; width: 570px; max-height: 380px; overflow-y: auto; background: #FFFBEB; border: 1px solid #FDE68A; border-radius: 12px; padding: 20px 22px; box-shadow: 0 4px 16px rgba(180,140,40,0.12); z-index: 5; cursor: default; }
 .connector-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
 .annotation-note-body { font-size: 12px; color: #78350F; line-height: 1.8; padding-top: 8px; }
 .annotation-note-body p { margin-bottom: 10px; }
@@ -427,33 +477,41 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
     <nav class="sidebar-nav">
       <div class="nav-section" data-section="manual">
-        <div class="nav-section-label"><span class="nav-section-dot manual"></span>教材知识人工生产链路<span class="nav-section-count">2</span></div>
+        <div class="nav-section-label"><span class="nav-section-dot manual"></span>教材知识人工生产链路<span class="nav-section-count">3</span></div>
         <div class="nav-children">
           <button class="nav-child" data-view="manual-editor" onclick="selectNav(this, 'manual', '内容生产编辑')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
             <span class="nav-child-label">内容生产编辑</span>
           </button>
-          <button class="nav-child" data-view="manual-delivery" onclick="selectNav(this, 'manual', '发布到小讲堂频道页')">
+          <button class="nav-child" data-view="manual-cover" onclick="selectNav(this, 'manual', '生成原始封面图')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+            <span class="nav-child-label">生成原始封面图</span>
+          </button>
+          <button class="nav-child" data-view="manual-publish-data" onclick="selectNav(this, 'manual', '发布到前端消费')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
-            <span class="nav-child-label">发布到小讲堂频道页</span>
+            <span class="nav-child-label">发布到前端消费</span>
           </button>
         </div>
       </div>
       <div style="height:1px;background:var(--divider);margin:6px 10px;"></div>
       <div class="nav-section" data-section="auto">
-        <div class="nav-section-label"><span class="nav-section-dot auto"></span>Query聚簇自动化生产链路<span class="nav-section-count">3</span></div>
+        <div class="nav-section-label"><span class="nav-section-dot auto"></span>Query聚簇自动生产链路<span class="nav-section-count">4</span></div>
         <div class="nav-children">
-          <button class="nav-child" data-view="auto-editor" onclick="selectNav(this, 'auto', '标题/内容生产编辑')">
+          <button class="nav-child" data-view="auto-editor" onclick="selectNav(this, 'auto', '内容生产编辑')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
-            <span class="nav-child-label">标题/内容生产编辑</span>
+            <span class="nav-child-label">内容生产编辑</span>
           </button>
-          <button class="nav-child" data-view="auto-delivery" onclick="selectNav(this, 'auto', '发布到小讲堂频道页')">
+          <button class="nav-child" data-view="auto-cover" onclick="selectNav(this, 'auto', '生成原始封面图')">
+            <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+            <span class="nav-child-label">生成原始封面图</span>
+          </button>
+          <button class="nav-child" data-view="auto-publish-data" onclick="selectNav(this, 'auto', '发布到前端消费')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
-            <span class="nav-child-label">发布到小讲堂频道页</span>
+            <span class="nav-child-label">发布到前端消费</span>
           </button>
-          <button class="nav-child" data-view="auto-recover" onclick="selectNav(this, 'auto', '审核回捞已抛弃标题')">
+          <button class="nav-child" data-view="auto-recover" onclick="selectNav(this, 'auto', '审核已抛弃标题')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
-            <span class="nav-child-label">审核回捞已抛弃标题</span>
+            <span class="nav-child-label">审核已抛弃标题</span>
           </button>
         </div>
       </div>
@@ -491,6 +549,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <textarea rows="1" placeholder="搜索 GUID 或标题（支持粘贴多个）"></textarea>
           </div>
           <button class="toolbar-btn">搜索/刷新</button>
+          <span id="coverHint" style="display:none;font-size:12px;color:#6B7280;margin-left:8px;white-space:normal;line-height:1.5;flex:1;min-width:0;"></span>
           <button class="cms-btn cms-btn-secondary" onclick="openModal('create')" style="margin-left:auto;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 11v4h-2v-4H8l4-4 4 4h-3zm1-6V3.5L18.5 8H14z"/></svg>
             <span>上传Excel创建任务</span>
@@ -512,6 +571,17 @@ textarea.form-input { resize: vertical; min-height: 80px; }
           3、本页面可针对"已上线"状态的内容按需投放到小讲堂频道内的相关路径。
         </div>
 
+        <!-- Batch Action Bar -->
+        <div class="batch-bar" id="batchBar">
+          <span class="batch-count" id="batchCount">已选0条</span>
+          <div class="batch-actions">
+            <button class="batch-btn">批量生成内容</button>
+            <button class="batch-btn">批量导出</button>
+            <button class="batch-btn batch-btn-danger">批量删除</button>
+            <button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>
+          </div>
+        </div>
+
         <!-- Data Table -->
         <div class="table-container" id="defaultTableContainer">
           <div class="table-scroll">
@@ -520,17 +590,18 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                 <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
                 <th style="width:7%;">GUID</th>
                 <th style="width:9%;">课文标题</th>
-                <th style="width:7%;"><span class="th-filter">附件 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg></span></th>
-                <th style="width:4%;text-align:center;"><span class="th-filter">学段<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                <th style="width:3.5%;text-align:center;"><span class="th-filter">学期<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                <th style="width:4.5%;text-align:center;"><span class="th-filter">章节<svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                <th style="width:4%;text-align:center;">学科</th>
-                <th style="width:5%;text-align:center;">内容类型</th>
+                <th style="width:8%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:7%;"><span class="th-filter" onclick="toggleFilter(event)">附件<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学段<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:3.5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学期<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:4.5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">章节<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学科<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">内容类型<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                 <th style="width:5%;text-align:center;">课文原文</th>
                 <th style="width:5%;text-align:center;">教案</th>
-                <th style="width:5%;text-align:center;">审核状态</th>
-                <th style="width:5.5%;text-align:center;">上线状态</th>
-                <th style="width:5%;text-align:center;">生成状态</th>
+                <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">审核状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:5.5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">上线状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">生成状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                 <th style="width:4%;text-align:center;">内容数量</th>
                 <th style="width:8%;text-align:center;">创建时间</th>
                 <th class="sticky-preview-th" id="previewColHeader" style="width:500px;min-width:500px;max-width:500px;text-align:center;">预览及上下线</th>
@@ -562,23 +633,18 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <div id="kepuTableWrap" style="display:none;">
           <div class="table-container">
             <div class="table-scroll">
-              <table class="table" style="min-width:2400px;">
+              <table class="table" style="min-width:1600px;">
                 <thead><tr>
                   <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
-                  <th style="width:5%;">一级分类</th>
-                  <th style="width:5%;">二级分类</th>
-                  <th style="width:8%;">主题名称</th>
-                  <th style="width:10%;">主题描述</th>
-                  <th style="width:4%;text-align:center;">主题query数量</th>
-                  <th style="width:4%;text-align:center;">主题query占比</th>
-                  <th style="width:10%;">用户query示例</th>
+                  <th style="width:7%;">GUID</th>
+                  <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;">意图分类</th>
                   <th style="width:8%;">科普标题</th>
-                  <th style="width:10%;">科普钩子</th>
-                  <th style="width:10%;">对应query</th>
+                  <th style="width:10%;">query采样展示</th>
                   <th style="width:4%;text-align:center;">query数量</th>
                   <th style="width:4%;text-align:center;">query占比</th>
-                  <th class="sticky-preview-th" style="width:500px;min-width:500px;max-width:500px;text-align:center;">预览及上下线</th>
-                  <th style="width:220px;min-width:220px;max-width:220px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
+                                    <th class="sticky-preview-th" style="width:400px;min-width:400px;max-width:400px;text-align:center;">预览及上下线</th>
+                  <th style="width:180px;min-width:180px;max-width:180px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
                 </tr></thead>
                 <tbody id="kepuTableBody"></tbody>
               </table>
@@ -603,10 +669,82 @@ textarea.form-input { resize: vertical; min-height: 80px; }
 
         <!-- Recover Connector SVG -->
         <svg class="connector-svg" id="recoverConnectorSvg" style="display:none;"><line id="rl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="rl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <!-- Cover ConnectID Note -->
+        <div class="annotation-note" id="coverConnectNote" style="display:none;left:300px;top:400px;width:380px;max-height:220px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="font-size:12px;color:#78350F;line-height:1.8;padding-top:0;">
+            本页面的数据颗粒度细拆到connect_id，仅对上一环节"内容生产编辑"中内容状态为"已上线"的connect_id抓入本页面（待审核、已下线的不出现），按connect_id进行批量选择（对于一个guid生成了多个connect_id的情况，guid等字段会出现几行相同的情况）
+          </div>
+        </div>
+
+        <!-- Cover Batch Hint -->
+        <svg class="connector-svg" id="coverBatchSvg" style="display:none;"><line id="cbl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="cbl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <div class="annotation-note" id="coverBatchNote" style="display:none;left:280px;top:210px;width:140px;max-height:60px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:12px;font-weight:600;color:#92400E;padding-top:0;">点击这里</div>
+        </div>
+
+        <!-- Default Table Update Time Hint (manual-editor) -->
+        <svg class="connector-svg" id="defaultTimeSvg" style="display:none;"><line id="dtl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <div class="annotation-note" id="defaultTimeNote" style="display:none;left:300px;top:170px;width:200px;max-height:80px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:12px;font-weight:600;color:#92400E;padding-top:0;">
+            新增"更新时间"字段<br>且可筛选
+          </div>
+        </div>
+
+        <!-- Cover Update Time Hint -->
+        <svg class="connector-svg" id="coverTimeSvg" style="display:none;"><line id="ctl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <div class="annotation-note" id="coverTimeNote" style="display:none;left:380px;top:175px;width:200px;max-height:80px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:12px;font-weight:600;color:#92400E;padding-top:0;">
+            新增"更新时间"字段<br>且可筛选
+          </div>
+        </div>
+
         <!-- Recover Hint Note -->
-        <div class="annotation-note" id="recoverHintNote" style="display:none;left:120px;top:200px;width:240px;max-height:100px;" onmousedown="startDragNote(event)">
+        <div class="annotation-note" id="recoverHintNote" style="display:none;left:120px;top:200px;width:180px;max-height:90px;" onmousedown="startDragNote(event)">
           <div class="annotation-note-body" style="text-align:center;font-size:13px;font-weight:600;color:#92400E;padding-top:0;">
             可更新原始标题数据<br>并回捞生产
+          </div>
+        </div>
+
+        <!-- Cover Table (manual-cover) -->
+        <div id="coverTableWrap" style="display:none;">
+          <div class="table-container">
+            <div class="table-scroll">
+              <table class="table" style="min-width:1800px;table-layout:auto;">
+                <thead><tr>
+                  <th class="select-col" style="width:44px;"><input type="checkbox" class="checkbox" title="全选当前页"></th>
+                  <th style="width:8%;">GUID</th>
+                  <th style="width:7%;">connect_id</th>
+                  <th style="width:9%;" id="coverTitleTH">课文标题</th>
+                  <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;"><span class="th-filter" onclick="toggleFilter(event)">附件<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学段<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学期<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">章节<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学科<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">内容类型<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;">课文原文</th>
+                  <th style="width:5%;text-align:center;">教案</th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">审核状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">上线状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">生成状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:4%;text-align:center;">内容数量</th>
+                  <th style="width:8%;text-align:center;">创建时间</th>
+                  <th style="width:6%;text-align:center;position:sticky;right:110px;background:#E1E2E4;z-index:3;box-shadow:-2px 0 6px rgba(0,0,0,0.04);"><span class="th-filter" onclick="toggleFilter(event)">原始封面图<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);"><span class="th-filter" onclick="toggleFilter(event)">标签<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  </tr></thead>
+                <tbody id="coverTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="pagination">
+            <div class="page-info" id="coverPageInfo">显示 <strong>1-20</strong> 共 <strong>0</strong> 条</div>
+            <div class="page-btns">
+              <button class="page-size-trigger">20 条/页</button>
+              <button class="page-btn" disabled><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg></button>
+              <button class="page-btn active">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg></button>
+            </div>
           </div>
         </div>
 
@@ -614,17 +752,17 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <div id="abandonedTableWrap" style="display:none;">
           <div class="table-container">
             <div class="table-scroll">
-              <table class="table" style="min-width:1800px;">
+              <table class="table" style="min-width:1200px;table-layout:auto;">
                 <thead><tr>
                   <th class="select-col"><input type="checkbox" class="checkbox" title="全选当前页"></th>
-                  <th style="width:6%;">一级分类</th>
-                  <th style="width:6%;">二级分类</th>
-                  <th style="width:8%;">主题名称</th>
-                  <th style="width:10%;">代表query</th>
-                  <th style="width:22%;">过滤原因</th>
-                  <th style="width:5%;text-align:center;">query数量</th>
-                  <th style="width:5%;text-align:center;">query占比</th>
-                  <th style="width:20%;">query示例(前30)</th>
+                  <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">日期<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:6%;"><span class="th-filter" onclick="toggleFilter(event)">意图分类<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:8%;"><span class="th-filter" onclick="toggleFilter(event)">科普标题<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:10%;"><span class="th-filter" onclick="toggleFilter(event)">query采样展示<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:22%;"><span class="th-filter" onclick="toggleFilter(event)">过滤原因<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">query数量<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">query占比<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:6%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:180px;min-width:180px;max-width:180px;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
                 </tr></thead>
                 <tbody id="abandonedTableBody"></tbody>
@@ -892,6 +1030,7 @@ function renderTable() {
         </div>
       </td>
       <td><span class="title-cell" title="单击编辑 | 双击修改标题" onclick="openModal('edit','${row.title}')">${row.title}</span></td>
+      <td class="cell-center"><span class="cell-date">${getUpdateTime(row.date)}</span></td>
       <td><span class="cell-dim">${row.attachment}</span></td>
       <td class="cell-center"><span class="cell-grade">${row.grade}</span></td>
       <td class="cell-center"><span class="cell-meta">${row.term}</span></td>
@@ -944,7 +1083,7 @@ function selectNav(childBtn, pipeline, name) {
   document.querySelectorAll('.nav-child').forEach(b => b.classList.remove('active'));
   childBtn.classList.add('active');
 
-  const pipelineName = pipeline === 'manual' ? '教材知识人工生产链路' : 'Query聚簇自动化生产链路';
+  const pipelineName = pipeline === 'manual' ? '教材知识人工生产链路' : 'Query聚簇自动生产链路';
   document.getElementById('breadcrumb').innerHTML =
     `运营平台 <span class="content-breadcrumb-sep">/</span> <span>${pipelineName}</span> <span class="content-breadcrumb-sep">/</span> <span>${name}</span>`;
 
@@ -952,9 +1091,8 @@ function selectNav(childBtn, pipeline, name) {
   const listPage = document.getElementById('contentListPage');
   listPage.style.display = 'none';
 
-  if (childBtn.dataset.view === 'manual-editor' || childBtn.dataset.view === 'auto-editor' || childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery' || childBtn.dataset.view === 'auto-recover') {
+  if (childBtn.dataset.view === 'manual-editor' || childBtn.dataset.view === 'auto-editor' || childBtn.dataset.view === 'auto-recover' || childBtn.dataset.view === 'manual-cover' || childBtn.dataset.view === 'auto-cover' || childBtn.dataset.view === 'manual-publish-data' || childBtn.dataset.view === 'auto-publish-data') {
     listPage.style.display = 'block';
-    document.getElementById('deliveryNotice').style.display = (childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery') ? 'block' : 'none';
     // Toggle between default table and kepu table
     var isKepu = childBtn.dataset.view === 'auto-editor';
     document.getElementById('kepuTableWrap').style.display = isKepu ? '' : 'none';
@@ -962,18 +1100,203 @@ function selectNav(childBtn, pipeline, name) {
     document.getElementById('paginationDefault').style.display = isKepu ? 'none' : '';
     // Toggle header buttons for auto-editor
     var isRecover = childBtn.dataset.view === 'auto-recover';
+    var isCover = childBtn.dataset.view === 'manual-cover' || childBtn.dataset.view === 'auto-cover' || childBtn.dataset.view === 'manual-publish-data' || childBtn.dataset.view === 'auto-publish-data';
     var headerBtns = document.querySelectorAll('#contentListPage .toolbar .cms-btn:not(#autoOnlineToggle)');
-    headerBtns.forEach(function(b) { b.style.display = (isKepu || isRecover) ? 'none' : ''; });
-    var isDelivery = childBtn.dataset.view === 'manual-delivery' || childBtn.dataset.view === 'auto-delivery';
-    document.getElementById('annotationNote').style.display = (isDelivery || isKepu || isRecover) ? 'none' : '';
-    document.getElementById('connectorSvg').style.display = (isDelivery || isKepu || isRecover) ? 'none' : '';
-    document.getElementById('publishHintNote').style.display = (isDelivery && !isRecover) ? '' : 'none';
-    document.getElementById('publishHintSvg').style.display = (isDelivery && !isRecover) ? '' : 'none';
+    headerBtns.forEach(function(b) { b.style.display = (isKepu || isRecover || isCover) ? 'none' : ''; });
+    document.getElementById('annotationNote').style.display = (isKepu || isRecover || isCover) ? 'none' : '';
+    document.getElementById('connectorSvg').style.display = (isKepu || isRecover || isCover) ? 'none' : '';
     document.getElementById('kepuHintNote').style.display = (isKepu && !isRecover) ? '' : 'none';
     document.getElementById('kepuConnectorSvg').style.display = (isKepu && !isRecover) ? '' : 'none';
+    if (isKepu) {
+      var kepuStickyTH = document.querySelector('#kepuTableWrap .sticky-preview-th');
+      var kepuNote = document.getElementById('kepuHintNote');
+      if (kepuStickyTH && kepuNote) {
+        var ktr = kepuStickyTH.getBoundingClientRect();
+        var kpr = kepuNote.parentElement.getBoundingClientRect();
+        kepuNote.style.left = (ktr.left - kpr.left) + 'px';
+      }
+    }
     document.getElementById('autoOnlineToggle').style.display = (isKepu && !isRecover) ? '' : 'none';
+    if (isCover) {
+      document.getElementById('coverHint').style.display = '';
+      document.getElementById('coverHint').textContent = '请按需筛选字段后，在表单最左侧勾选相应行数据进行"批量生成原始封面图"操作';
+    } else if (isRecover) {
+      document.getElementById('coverHint').style.display = '';
+      document.getElementById('coverHint').textContent = '请按需筛选字段后，在表单最左侧勾选相应行数据进行"批量编辑"或"批量回捞到生产池"操作';
+    } else {
+      document.getElementById('coverHint').style.display = 'none';
+    }
+    // Use defaultTimeNote instead of coverTimeNote for auto-cover (KEPU table)
+    if (childBtn.dataset.view === 'auto-cover' || childBtn.dataset.view === 'auto-publish-data') {
+      document.getElementById('coverTimeNote').style.display = 'none';
+      document.getElementById('coverTimeSvg').style.display = 'none';
+    } else {
+      document.getElementById('coverTimeNote').style.display = isCover ? '' : 'none';
+      document.getElementById('coverTimeSvg').style.display = isCover ? '' : 'none';
+      if (isCover) { document.getElementById('coverTimeNote').style.visibility = ''; document.getElementById('coverTimeSvg').style.visibility = ''; }
+    }
+    document.getElementById('coverBatchNote').style.display = isCover ? '' : 'none';
+    document.getElementById('coverBatchSvg').style.display = isCover ? '' : 'none';
+    document.getElementById('coverConnectNote').style.display = isCover ? '' : 'none';
+    if (isCover) {
+      setTimeout(function() {
+        var allThFilters = document.querySelectorAll('#coverTableWrap .th-filter');
+        var th = null;
+        allThFilters.forEach(function(f) { if (!th && f.textContent.includes('更新时间')) th = f; });
+        var note = document.getElementById('coverTimeNote');
+        if (th && note) {
+          var tr = th.getBoundingClientRect();
+          var pr = note.parentElement.getBoundingClientRect();
+          note.style.left = (tr.left - pr.left) + 'px';
+          note.style.top = (tr.top - pr.top + 40) + 'px';
+        }
+        var row6card = document.querySelector('#coverTableBody tr:nth-child(6) .co-card');
+        var cnNote = document.getElementById('coverConnectNote');
+        if (row6card && cnNote) {
+          var cr = row6card.getBoundingClientRect();
+          var cpr = cnNote.parentElement.getBoundingClientRect();
+          cnNote.style.left = (cr.left - cpr.left + cr.width/2 - cnNote.offsetWidth/2) + 'px';
+          cnNote.style.top = (cr.top - cpr.top) + 'px';
+        }
+        // Align coverBatchNote to connect_id column left edge
+        var connectTH = document.querySelectorAll('#coverTableWrap th')[2]; // 3rd TH = connect_id
+        var cbNote2 = document.getElementById('coverBatchNote');
+        if (connectTH && cbNote2) {
+          var ctr2 = connectTH.getBoundingClientRect();
+          var cbpr2 = cbNote2.parentElement.getBoundingClientRect();
+          cbNote2.style.left = (ctr2.left - cbpr2.left) + 'px';
+        }
+        drawConnectors();
+      }, 400);
+    }
     document.getElementById('recoverHintNote').style.display = isRecover ? '' : 'none';
     document.getElementById('recoverConnectorSvg').style.display = isRecover ? '' : 'none';
+    if (isRecover) {
+      document.querySelectorAll('#abandonedTableBody .sticky-actions').forEach(function(td) { td.classList.add('abandoned-action-td'); });
+      setTimeout(function() {
+        document.querySelectorAll('#abandonedTableBody .checkbox').forEach(function(cb) { cb.checked = true; });
+        var ahcb = document.querySelector('#abandonedTableWrap .select-col .checkbox');
+        if (ahcb) ahcb.checked = true;
+        updateBatchCount();
+        // Align recover note to batch "批量编辑" button
+        var editBatchBtn = document.querySelector('.batch-actions .batch-btn');
+        var rNote = document.getElementById('recoverHintNote');
+        if (editBatchBtn && rNote && rNote.style.display !== 'none') {
+          var ebr = editBatchBtn.getBoundingClientRect();
+          var rpr = rNote.offsetParent.getBoundingClientRect();
+          rNote.style.left = (ebr.left - rpr.left) + 'px';
+        }
+      }, 200);
+    }
+    // Cover table toggle
+    document.getElementById('coverTableWrap').style.display = isCover ? '' : 'none';
+    if (childBtn.dataset.view === 'auto-cover' || childBtn.dataset.view === 'auto-publish-data') {
+      renderAutoCoverTable();
+      if (childBtn.dataset.view === 'auto-publish-data') {
+        setTimeout(function() {
+          var ths = document.querySelectorAll('#coverTableWrap th');
+          var visTHs = [];
+          ths.forEach(function(th) { if (th.style.display !== 'none' && th.offsetParent !== null) visTHs.push(th); });
+          var coverTH = visTHs[visTHs.length - 2];
+          var opTH = visTHs[visTHs.length - 1];
+          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>'; coverTH.style.position = 'sticky'; coverTH.style.right = '64px'; coverTH.style.background = '#E1E2E4'; coverTH.style.zIndex = '3'; }
+          if (opTH) { opTH.textContent = '操作'; opTH.style.right = '0'; opTH.style.position = 'sticky'; opTH.style.background = '#E1E2E4'; opTH.style.zIndex = '3'; opTH.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.06)'; }
+          var rows = document.querySelectorAll('#coverTableBody tr');
+          // Measure from first row AFTER opTD is rendered
+          var testRow = rows[0];
+          var testTDs = [];
+          testRow.querySelectorAll('td').forEach(function(td) { if (td.style.display !== 'none') testTDs.push(td); });
+          var opTD_sample = testTDs[testTDs.length - 1];
+          var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
+          // Apply to all rows
+          rows.forEach(function(row, rowIdx) {
+            var tds = row.querySelectorAll('td');
+            var visTDs = [];
+            tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
+            var coverTD = visTDs[visTDs.length - 2];
+            var opTD = visTDs[visTDs.length - 1];
+            if (coverTD) {
+              var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
+              coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
+              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.background = '#FFF'; coverTD.style.zIndex = '2'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px';
+            }
+            if (opTD) {
+              opTD.innerHTML = '<div class="cell-wrap"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
+              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.background = '#FFF'; opTD.style.zIndex = '2'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)';
+            }
+          });
+        }, 800);
+      }
+    } else if (childBtn.dataset.view === 'manual-cover' || childBtn.dataset.view === 'manual-publish-data') {
+      renderCoverTable();
+      if (childBtn.dataset.view === 'manual-publish-data') {
+        setTimeout(function() {
+var fr2 = document.querySelectorAll('#coverTableBody tr')[0];
+var allTDs2 = [];
+if (fr2) fr2.querySelectorAll('td').forEach(function(td) { if (td.style.display !== 'none') allTDs2.push(td); });
+var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
+          // Find last two visible THs: 原始封面图 (2nd last) and 标签→操作 (last)
+          var ths = document.querySelectorAll('#coverTableWrap th');
+          var visTHs = [];
+          ths.forEach(function(th) { if (th.style.display !== 'none' && th.offsetParent !== null) visTHs.push(th); });
+          var coverTH = visTHs[visTHs.length - 2];
+          var opTH = visTHs[visTHs.length - 1];
+          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>'; coverTH.style.position = 'sticky'; coverTH.style.right = '64px'; coverTH.style.background = '#E1E2E4'; coverTH.style.zIndex = '3'; }
+          if (opTH) { opTH.textContent = '操作'; opTH.style.right = '0'; opTH.style.position = 'sticky'; opTH.style.background = '#E1E2E4'; opTH.style.zIndex = '3'; opTH.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.06)'; }
+          // Update rows
+          var rows = document.querySelectorAll('#coverTableBody tr');
+          // Measure from first row AFTER opTD is rendered
+          var testRow = rows[0];
+          var testTDs = [];
+          testRow.querySelectorAll('td').forEach(function(td) { if (td.style.display !== 'none') testTDs.push(td); });
+          var opTD_sample = testTDs[testTDs.length - 1];
+          var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
+          // Apply to all rows
+          rows.forEach(function(row, rowIdx) {
+            var tds = row.querySelectorAll('td');
+            var visTDs = [];
+            tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
+            var coverTD = visTDs[visTDs.length - 2];
+            var opTD = visTDs[visTDs.length - 1];
+            if (coverTD) {
+              var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
+              coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
+              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.background = '#FFF'; coverTD.style.zIndex = '2'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px';
+            }
+            if (opTD) {
+              opTD.innerHTML = '<div class="cell-wrap"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
+              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.background = '#FFF'; opTD.style.zIndex = '2'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)';
+            }
+          });
+        }, 200);
+      }
+    }
+    if (isCover) {
+      document.getElementById('defaultTableContainer').style.display = 'none';
+      document.getElementById('paginationDefault').style.display = 'none';
+      document.getElementById('kepuTableWrap').style.display = 'none';
+      document.getElementById('abandonedTableWrap').style.display = 'none';
+      var isPublishData = childBtn.dataset.view === 'manual-publish-data' || childBtn.dataset.view === 'auto-publish-data';
+      if (isPublishData) {
+        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openPublishDataModal()">批量发布</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+        document.getElementById('coverConnectNote').querySelector('.annotation-note-body').innerHTML = '本页面的数据颗粒度细拆到connect_id，仅对上一环节"生成原始封面图"中已完成原始封面图生成输出的connect_id抓入本页面';
+      } else {
+        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">批量生成原始封面图</button><button class="batch-btn" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">批量编辑标签</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+        document.getElementById('coverConnectNote').querySelector('.annotation-note-body').innerHTML = '本页面的数据颗粒度细拆到connect_id，仅对上一环节"内容生产编辑"中内容状态为"已上线"的connect_id抓入本页面（待审核、已下线的不出现），按connect_id进行批量选择（对于一个guid生成了多个connect_id的情况，guid等字段会出现几行相同的情况）';
+      }
+    } else if (isKepu && !isRecover) {
+      document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openBatchOnlineConfirm()">对connect_id批量上线</button><button class="batch-btn">批量生成内容</button><button class="batch-btn">批量导出</button><button class="batch-btn batch-btn-danger">批量删除</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+      setTimeout(function() {
+        document.querySelectorAll('#kepuTableBody .checkbox').forEach(function(cb) { cb.checked = true; });
+        var khcb = document.querySelector('#kepuTableWrap .select-col .checkbox');
+        if (khcb) khcb.checked = true;
+        updateBatchCount();
+      }, 200);
+    } else if (isRecover) {
+      document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn" onclick="openAbandonedEdit(0)">批量编辑</button><button class="batch-btn batch-btn-primary" onclick="openRecoverConfirm(0)">批量回捞到生产池</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+    } else {
+      document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn">批量生成内容</button><button class="batch-btn">批量导出</button><button class="batch-btn batch-btn-danger">批量删除</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+    }
     // Abandoned table toggle
     document.getElementById('abandonedTableWrap').style.display = isRecover ? '' : 'none';
     if (isRecover) {
@@ -982,35 +1305,60 @@ function selectNav(childBtn, pipeline, name) {
       document.getElementById('kepuTableWrap').style.display = 'none';
     }
     setTimeout(drawConnectors, 300);
-    document.getElementById('previewColHeader').textContent = isDelivery ? '发布' : '预览及上下线';
-    // Filter cards: only show 已上线 for manual-delivery, hide empty rows
-    document.querySelectorAll('#tableBody tr').forEach(function(row) {
-      var cards = row.querySelectorAll('.co-card');
-      if (isDelivery) {
-        var hasVisible = false;
-        cards.forEach(function(card) {
-          var audit = card.querySelector('.co-card-audit');
-          var show = audit && audit.classList.contains('online');
-          card.style.display = show ? '' : 'none';
-          if (show) hasVisible = true;
-        });
-        row.style.display = hasVisible ? '' : 'none';
-      } else {
-        cards.forEach(function(card) { card.style.display = ''; });
-        row.style.display = '';
+    // Align annotation note to frozen area left edge for manual-editor
+    if (childBtn.dataset.view === 'manual-editor') {
+      var stickyTH = document.querySelector('#defaultTableContainer .sticky-preview-th');
+      var note = document.getElementById('annotationNote');
+      if (stickyTH && note && note.style.display !== 'none') {
+        var tr = stickyTH.getBoundingClientRect();
+        var pr = note.parentElement.getBoundingClientRect();
+        note.style.left = (tr.left - pr.left) + 'px';
       }
-    });
-    // Update action buttons for manual-delivery (default table only)
-    document.querySelectorAll('#defaultTableContainer .action-btns').forEach(function(btns) {
-      if (isDelivery) {
-        btns.innerHTML = '<button class="btn-link" onclick="openPublishModal()">批量发布</button><button class="btn-link btn-link-primary">标签管理</button>';
-      } else {
-        var row = btns.closest('tr');
-        var titleEl = row ? row.querySelector('.title-cell') : null;
-        var title = titleEl ? titleEl.textContent : '';
-        btns.innerHTML = '<button class="btn-link" onclick="openModal(\'edit\',\''+title.replace(/'/g,"\\'")+'\')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button>';
-      }
-    });
+      // Show update time hint for default table
+      document.getElementById('defaultTimeNote').style.display = '';
+      document.getElementById('defaultTimeSvg').style.display = '';
+      setTimeout(function() {
+        var uth = document.querySelector('#defaultTableContainer .th-filter');
+        if (!uth) return;
+        var allThFilters = document.querySelectorAll('#defaultTableContainer .th-filter');
+        allThFilters.forEach(function(f) { if (f.textContent.includes('更新时间')) uth = f; });
+        var utn = document.getElementById('defaultTimeNote');
+        if (uth && utn) {
+          var utr = uth.getBoundingClientRect();
+          var upr = utn.offsetParent.getBoundingClientRect();
+          utn.style.left = (utr.left - upr.left) + 'px';
+          utn.style.top = (utr.top - upr.top + 40) + 'px';
+          // Draw connector
+          var dsvg = document.getElementById('defaultTimeSvg');
+          if (dsvg) {
+            var dsr = dsvg.parentElement.getBoundingClientRect();
+            document.getElementById('dtl1').setAttribute('x1', (utr.left - dsr.left + utr.width/2));
+            document.getElementById('dtl1').setAttribute('y1', (utn.offsetTop + utn.offsetHeight/2));
+            document.getElementById('dtl1').setAttribute('x2', (utr.left - dsr.left + utr.width/2));
+            document.getElementById('dtl1').setAttribute('y2', (utr.top - dsr.top + utr.height/2));
+          }
+        }
+      }, 400);
+    } else if (isKepu) {
+      document.getElementById('defaultTimeNote').style.display = '';
+      document.getElementById('defaultTimeSvg').style.display = '';
+      setTimeout(function() {
+        var uth = null;
+        document.querySelectorAll('#kepuTableWrap .th-filter').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+        var utn = document.getElementById('defaultTimeNote');
+        if (uth && utn) {
+          var utr = uth.getBoundingClientRect();
+          var upr = utn.offsetParent.getBoundingClientRect();
+          utn.style.left = (utr.left - upr.left) + 'px';
+          utn.style.top = (utr.top - upr.top + 40) + 'px';
+          drawConnectors();
+        }
+      }, 400);
+    } else {
+      document.getElementById('defaultTimeNote').style.display = 'none';
+      document.getElementById('defaultTimeSvg').style.display = 'none';
+    }
+    document.getElementById('previewColHeader').textContent = '预览及上下线';
   } else {
     document.getElementById('emptyState').style.display = 'flex';
   }
@@ -1041,6 +1389,24 @@ function closeModal() {
 document.getElementById('modalOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// Helper: position defaultTimeNote for any table
+function updateDefaultTimeNoteForTable(containerSelector) {
+  var uth = null;
+  var cont = document.querySelector(containerSelector);
+  if (!cont || cont.style.display === 'none') return false;
+  cont.querySelectorAll('.th-filter').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+  if (!uth) cont.querySelectorAll('th').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+  var utn = document.getElementById('defaultTimeNote');
+  if (uth && utn && utn.style.display !== 'none') {
+    var utr = uth.getBoundingClientRect();
+    var upr = utn.offsetParent.getBoundingClientRect();
+    utn.style.left = (utr.left - upr.left) + 'px';
+    drawConnectors();
+    return true;
+  }
+  return false;
+}
 
 // Connector line drawing
 function drawConnectors() {
@@ -1125,18 +1491,88 @@ function drawConnectors() {
       var rsr = rSvg.parentElement.getBoundingClientRect();
       var rCX = rnr.left - rsr.left + rnr.width/2;
       var rCY = rnr.top - rsr.top + rnr.height/2;
-      var aBtns = document.querySelectorAll('#abandonedTableBody .btn-link');
-      if (aBtns.length > 0) {
-        var er2 = aBtns[0].getBoundingClientRect(); // 编辑
+      var batchBtns = document.querySelectorAll('.batch-actions .batch-btn');
+      if (batchBtns.length > 0) {
+        var br1 = batchBtns[0].getBoundingClientRect(); // 批量编辑
         document.getElementById('rl1').setAttribute('x1', rCX); document.getElementById('rl1').setAttribute('y1', rCY);
-        document.getElementById('rl1').setAttribute('x2', er2.left - rsr.left + er2.width/2);
-        document.getElementById('rl1').setAttribute('y2', er2.top - rsr.top + er2.height/2);
+        document.getElementById('rl1').setAttribute('x2', br1.left - rsr.left + br1.width/2);
+        document.getElementById('rl1').setAttribute('y2', br1.top - rsr.top + br1.height/2);
       }
-      if (aBtns.length > 1) {
-        var rr2 = aBtns[1].getBoundingClientRect(); // 回捞到生产池
+      if (batchBtns.length > 1) {
+        var br2 = batchBtns[1].getBoundingClientRect(); // 批量回捞到生产池
         document.getElementById('rl2').setAttribute('x1', rCX); document.getElementById('rl2').setAttribute('y1', rCY);
-        document.getElementById('rl2').setAttribute('x2', rr2.left - rsr.left + rr2.width/2);
-        document.getElementById('rl2').setAttribute('y2', rr2.top - rsr.top + rr2.height/2);
+        document.getElementById('rl2').setAttribute('x2', br2.left - rsr.left + br2.width/2);
+        document.getElementById('rl2').setAttribute('y2', br2.top - rsr.top + br2.height/2);
+      }
+    }
+  }
+
+  // Cover update time hint
+  var ctSvg = document.getElementById('coverTimeSvg');
+  if (ctSvg && ctSvg.offsetParent !== null && ctSvg.style.display !== 'none') {
+    var ctNote = document.getElementById('coverTimeNote');
+    if (ctNote && ctNote.offsetParent !== null && ctNote.style.display !== 'none') {
+      var ctnr = ctNote.getBoundingClientRect();
+      var ctsr = ctSvg.parentElement.getBoundingClientRect();
+      var ctCX = ctnr.left - ctsr.left + ctnr.width/2;
+      var ctCY = ctnr.top - ctsr.top + ctnr.height;
+      var allThFilters2 = document.querySelectorAll('#coverTableWrap .th-filter');
+        var timeTh = null;
+        allThFilters2.forEach(function(f) { if (!timeTh && f.textContent.includes('更新时间')) timeTh = f; });
+      if (timeTh) {
+        var tr2 = timeTh.getBoundingClientRect();
+        document.getElementById('ctl1').setAttribute('x1', ctCX); document.getElementById('ctl1').setAttribute('y1', ctCY);
+        document.getElementById('ctl1').setAttribute('x2', tr2.left - ctsr.left + tr2.width/2);
+        document.getElementById('ctl1').setAttribute('y2', tr2.top - ctsr.top + tr2.height/2);
+      }
+    }
+  }
+
+  // Cover batch hint
+  var cbSvg = document.getElementById('coverBatchSvg');
+  if (cbSvg && cbSvg.offsetParent !== null && cbSvg.style.display !== 'none') {
+    var cbNote = document.getElementById('coverBatchNote');
+    if (cbNote && cbNote.offsetParent !== null && cbNote.style.display !== 'none') {
+      var cbnr = cbNote.getBoundingClientRect();
+      var cbsr = cbSvg.parentElement.getBoundingClientRect();
+      var cbCX = cbnr.left - cbsr.left + cbnr.width/2;
+      var cbCY = cbnr.top - cbsr.top + cbnr.height;
+      var batchBtns = document.querySelectorAll('#contentListPage .batch-btn');
+      if (batchBtns.length > 0) {
+        for (var bi = 0; bi < 1; bi++) {
+          var bbr = batchBtns[bi].getBoundingClientRect();
+          var line = document.getElementById('cbl'+(bi+1));
+          line.setAttribute('x1', cbCX); line.setAttribute('y1', cbCY);
+          line.setAttribute('x2', bbr.left - cbsr.left + bbr.width/2);
+          line.setAttribute('y2', bbr.top - cbsr.top + bbr.height/2);
+        }
+      }
+    }
+  }
+
+  // Default table update time hint (all tables with 更新时间)
+  var dtSvg = document.getElementById('defaultTimeSvg');
+  if (dtSvg && dtSvg.offsetParent !== null && dtSvg.style.display !== 'none') {
+    var dtNote = document.getElementById('defaultTimeNote');
+    if (dtNote && dtNote.offsetParent !== null && dtNote.style.display !== 'none') {
+      var uth = null;
+      var containers = ['#defaultTableContainer', '#kepuTableWrap', '#coverTableWrap'];
+      for (var ci = 0; ci < containers.length && !uth; ci++) {
+        var cont = document.querySelector(containers[ci]);
+        if (cont && cont.style.display !== 'none') {
+          cont.querySelectorAll('.th-filter').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+          if (!uth) cont.querySelectorAll('th').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+        }
+      }
+      if (uth) {
+        var dnr = dtNote.getBoundingClientRect();
+        var dsr = dtSvg.parentElement.getBoundingClientRect();
+        var utr = uth.getBoundingClientRect();
+        var dCX = dnr.left - dsr.left + dnr.width/2;
+        var dCY = dnr.top - dsr.top + dnr.height;
+        document.getElementById('dtl1').setAttribute('x1', dCX); document.getElementById('dtl1').setAttribute('y1', dCY);
+        document.getElementById('dtl1').setAttribute('x2', utr.left - dsr.left + utr.width/2);
+        document.getElementById('dtl1').setAttribute('y2', utr.top - dsr.top + utr.height/2);
       }
     }
   }
@@ -1199,8 +1635,76 @@ document.addEventListener('mousemove', function(e) {
 document.addEventListener('mouseup', function() {
   if (dragInfo) { dragInfo.el.style.cursor = ''; dragInfo = null; }
 });
-window.addEventListener('scroll', drawConnectors, {passive: true});
-window.addEventListener('resize', drawConnectors);
+var coverScrollRAF = 0;
+function updateCoverTimeNotePos() {
+  if (coverScrollRAF) return;
+  coverScrollRAF = requestAnimationFrame(function() {
+    coverScrollRAF = 0;
+    var th = null;
+    var allThFilters = document.querySelectorAll('#coverTableWrap .th-filter');
+    allThFilters.forEach(function(f) { if (!th && f.textContent.includes('更新时间')) th = f; });
+    var note = document.getElementById('coverTimeNote');
+    var svg = document.getElementById('coverTimeSvg');
+    var tableWrap = document.getElementById('coverTableWrap');
+    if (th && note && tableWrap && note.style.display !== 'none') {
+      var tr = th.getBoundingClientRect();
+      var twr = tableWrap.getBoundingClientRect();
+      var pr = note.parentElement.getBoundingClientRect();
+      if (tr.right < twr.left || tr.left > twr.right) {
+        note.style.visibility = 'hidden';
+        if (svg) svg.style.visibility = 'hidden';
+      } else {
+        note.style.visibility = '';
+        if (svg) svg.style.visibility = '';
+        note.style.left = (tr.left - pr.left) + 'px';
+      }
+    }
+    drawConnectors();
+  });
+}
+window.addEventListener('scroll', function() { drawConnectors(); updateCoverTimeNotePos(); }, {passive: true});
+window.addEventListener('resize', function() { drawConnectors(); updateCoverTimeNotePos(); });
+
+// Also listen to table scroll
+setTimeout(function() {
+  // Default table scroll for update time note
+  var defScroll = document.querySelector('#defaultTableContainer .table-scroll');
+  if (defScroll) {
+    defScroll.addEventListener('scroll', function() {
+      var uth = null;
+      document.querySelectorAll('#defaultTableContainer .th-filter').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+      var utn = document.getElementById('defaultTimeNote');
+      if (uth && utn && utn.style.display !== 'none') {
+        var utr = uth.getBoundingClientRect();
+        var upr = utn.offsetParent.getBoundingClientRect();
+        utn.style.left = (utr.left - upr.left) + 'px';
+        drawConnectors();
+      }
+    });
+  }
+  var tableScroll = document.querySelector('#coverTableWrap .table-scroll');
+  if (tableScroll) {
+    tableScroll.addEventListener('scroll', function() {
+      updateCoverTimeNotePos();
+      var uth = updateDefaultTimeNoteForTable('#coverTableWrap');
+    });
+  }
+  // Kepu table scroll for defaultTimeNote
+  var kepuScroll = document.querySelector('#kepuTableWrap .table-scroll');
+  if (kepuScroll) {
+    kepuScroll.addEventListener('scroll', function() {
+      var uth = null;
+      document.querySelectorAll('#kepuTableWrap .th-filter').forEach(function(f) { if (!uth && f.textContent.includes('更新时间')) uth = f; });
+      var utn = document.getElementById('defaultTimeNote');
+      if (uth && utn && utn.style.display !== 'none') {
+        var utr = uth.getBoundingClientRect();
+        var upr = utn.offsetParent.getBoundingClientRect();
+        utn.style.left = (utr.left - upr.left) + 'px';
+        drawConnectors();
+      }
+    });
+  }
+}, 500);
 
 // Draw connectors after table renders
 var origRender = renderTable;
@@ -1217,6 +1721,14 @@ setTimeout(drawConnectors, 500);
   if (n3) { n3.style.left = ''; n3.style.top = ''; }
   var n4 = document.getElementById('recoverHintNote');
   if (n4) { n4.style.left = ''; n4.style.top = ''; }
+  var n5 = document.getElementById('coverTimeNote');
+  if (n5) { n5.style.left = ''; n5.style.top = ''; }
+  var n6 = document.getElementById('coverBatchNote');
+  if (n6) { n6.style.left = ''; n6.style.top = ''; }
+  var n7 = document.getElementById('coverConnectNote');
+  if (n7) { n7.style.left = ''; n7.style.top = ''; }
+  var n8 = document.getElementById('defaultTimeNote');
+  if (n8) { n8.style.left = ''; n8.style.top = ''; }
 })();
 
 // Kepu table rendering
@@ -1245,13 +1757,13 @@ function renderKepuTable() {
       objsHTML += '<div class="co-card co-card-more"><span style="font-size:11px;font-weight:600;color:#1D4ED8;">+'+ (10+Math.floor(Math.random()*90)) +' 查看更多</span></div>';
     }
     html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
-      '<td>'+d[0]+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td><td style="white-space:normal;font-size:12px;">'+d[3].slice(0,60)+'</td>'+
-      '<td class="cell-center">'+d[4]+'</td><td class="cell-center">'+d[5]+'</td><td style="white-space:normal;font-size:12px;">'+d[6].slice(0,80)+'</td>'+
-      '<td>'+d[7]+'</td><td style="white-space:normal;font-size:12px;">'+d[8].slice(0,60)+'</td>'+
-      '<td style="white-space:normal;font-size:11px;">'+d[9].slice(0,60)+'</td>'+
-      '<td class="cell-center">'+d[10]+'</td><td class="cell-center">'+d[11]+'</td>'+
-      '<td class="cell-center sticky-preview" style="width:500px;min-width:500px;max-width:500px;"><div class="content-cards">'+objsHTML+'</div></td>'+
-      '<td class="sticky-actions" style="width:220px;min-width:220px;max-width:220px;"><div class="action-btns"><button class="btn-link" onclick="openKepuModal('+i+')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button></div></td></tr>';
+      '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
+      '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
+      '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[7]+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:11px;">'+d[9].slice(0,60)+'</div></td>'+
+      '<td class="cell-center"><div class="cell-wrap">'+d[10]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[11]+'</div></td>'+
+            '<td class="cell-center sticky-preview" style="width:400px;min-width:400px;max-width:400px;"><div class="content-cards">'+objsHTML+'</div></td>'+
+      '<td class="sticky-actions" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openKepuModal('+i+')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button></div></td></tr>';
   }
   tbody.innerHTML = html;
 }
@@ -1297,6 +1809,22 @@ function openAbandonedEdit(idx) {
   overlay.classList.add('show');
 }
 
+// Publish Data modal
+function openPublishDataModal() {
+  document.getElementById('publishDataModal').classList.add('show');
+}
+function closePublishDataModal() {
+  document.getElementById('publishDataModal').classList.remove('show');
+}
+
+// Batch online confirm modal
+function openBatchOnlineConfirm() {
+  document.getElementById('batchOnlineModal').classList.add('show');
+}
+function closeBatchOnlineModal() {
+  document.getElementById('batchOnlineModal').classList.remove('show');
+}
+
 // Recover confirmation modal
 var recoverIdx = -1;
 function openRecoverConfirm(idx) {
@@ -1320,6 +1848,115 @@ function closeRecoverModal() {
   document.getElementById('recoverModal').classList.remove('show');
 }
 
+// Auto-Cover table (auto-cover): KEPU_DATA with cover structure
+function renderAutoCoverTable() {
+  var tbody = document.getElementById('coverTableBody');
+  if (!tbody) return;
+  // Update THs — only set textContent for plain THs, preserve th-filter spans
+  var ths = document.querySelectorAll('#coverTableWrap th');
+  var labels = ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','标签','-','-','-'];
+  for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
+    if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
+    else if (!labels[ti]) continue;
+    else {
+      ths[ti].style.display = '';
+      if (labels[ti] === '原始封面图') ths[ti].classList.add('cover-sticky-th');
+      if (labels[ti] === '标签') { ths[ti].classList.add('tag-sticky-th'); ths[ti].style.right = '0'; }
+      var filterSpan = ths[ti].querySelector('.th-filter');
+      if (filterSpan) {
+        filterSpan.childNodes[0].textContent = labels[ti];
+      } else {
+        ths[ti].textContent = labels[ti];
+      }
+    }
+  }
+  // Generate rows from KEPU_DATA
+  var html = '';
+  var audits = ['待审核','待审核','已审核','已上线','已下线'];
+  var totalRows = 0;
+  for (var i = 0; i < KEPU_DATA.length; i++) {
+    var d = KEPU_DATA[i];
+    var objCount = 1 + Math.floor(Math.random() * 4);
+    for (var j = 0; j < objCount; j++) {
+      var ad = audits[Math.floor(Math.random() * audits.length)];
+      var oid = 'KEPU_' + Math.random().toString(16).slice(2,14);
+      html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
+        '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
+        '<td><div class="cell-wrap"><div class="co-card" style="width:auto;min-width:100px;" title="'+oid+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid+'\',\'已上线\')"><span class="co-card-audit online">已上线</span></div></div></td>'+
+        '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">'+getUpdateTime('2026-06-17 09:00:00')+'</span></div></td>'+
+        '<td><div class="cell-wrap">'+d[0]+'</div></td>'+
+        '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
+        '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
+        '<td class="cell-center"><div class="cell-wrap">'+d[4]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td>'+
+        '<td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td>'+
+        '<td class="cell-center cover-sticky-td" style="position:sticky;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j%3!==0)?'<span style="color:#9CA3AF;font-size:12px;">待生成</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td>'+
+        '<td class="cell-center tag-sticky-td">'+((j%2===0)?'<span style="color:#9CA3AF;font-size:12px;">待生成</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">编辑</a>')+'</td></tr>';
+      totalRows++;
+    }
+  }
+  tbody.innerHTML = html;
+  document.getElementById('coverPageInfo').innerHTML = '显示 <strong>1-'+Math.min(totalRows,20)+'</strong> 共 <strong>'+totalRows+'</strong> 条';
+  // Update right offset for frozen columns
+  setTimeout(function() {
+    var tagTH = document.querySelector('#coverTableWrap .tag-sticky-th');
+    var coverTH = document.querySelector('#coverTableWrap .cover-sticky-th');
+    if (!tagTH || !coverTH) return;
+    var tagW = tagTH.offsetWidth;
+    coverTH.style.right = tagW + 'px';
+    var coverTDs = document.querySelectorAll('.cover-sticky-td');
+    coverTDs.forEach(function(td) { td.style.right = tagW + 'px'; });
+  }, 200);
+}
+
+// Cover table rendering (manual-cover): explode cards into rows
+function renderCoverTable() {
+  var tbody = document.getElementById('coverTableBody');
+  if (!tbody) return;
+  var html = '';
+  var totalRows = 0;
+  for (var i = 0; i < MOCK_ROWS.length; i++) {
+    var row = MOCK_ROWS[i];
+    var objs = row.objects;
+    for (var j = 0; j < objs.length; j++) {
+      var o = objs[j];
+      html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
+        '<td><div class="guid-cell"><span class="guid-text" title="'+row.guid+'">'+row.guid+'</span><button class="copy-btn" title="复制GUID" onclick="navigator.clipboard.writeText(\''+row.guid+'\')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div></td>'+
+        '<td><div class="co-card" style="width:auto;min-width:100px;" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\'已上线\')"><span class="co-card-audit online">已上线</span></div></td>'+
+        '<td><span class="title-cell">'+row.title+'</span></td>'+
+        '<td class="cell-center"><span class="cell-date">'+getUpdateTime(row.date)+'</span></td>'+
+        '<td><span class="cell-dim">'+row.attachment+'</span></td>'+
+        '<td class="cell-center"><span class="cell-grade">'+row.grade+'</span></td>'+
+        '<td class="cell-center"><span class="cell-meta">'+row.term+'</span></td>'+
+        '<td class="cell-center"><span class="cell-meta">'+row.chapter+'</span></td>'+
+        '<td class="cell-center"><span class="cell-meta">'+row.subject+'</span></td>'+
+        '<td class="cell-center"><span class="cell-meta">'+row.contentType+'</span></td>'+
+        '<td class="cell-center"><span class="truncate-cell">'+row.textRaw+'</span></td>'+
+        '<td class="cell-center"><span class="truncate-cell">'+row.plan+'</span></td>'+
+        '<td class="cell-center"><span class="status-tag tag-unreviewed">'+row.audit+'</span></td>'+
+        '<td class="cell-center">'+(row.online==='已上线'?'<span class="status-tag tag-online">已上线</span>':'<span class="status-tag tag-offline">'+row.online+'</span>')+'</td>'+
+        '<td class="cell-center"><span class="status-tag '+(row.genStatus==='生成失败'?'tag-gen-fail':'tag-gen-done')+'">'+row.genStatus+'</span></td>'+
+        '<td class="cell-center"><span class="cell-count">1</span></td>'+
+        '<td class="cell-center"><span class="cell-date">'+row.date+'</span></td>'+
+        '<td class="cell-center cover-sticky-td" style="position:sticky;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j % 3 !== 0) ? '<span style="color:#9CA3AF;font-size:12px;">待生成</span>' : '<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td>'+
+        '<td class="cell-center" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j % 2 === 0) ? '<span style="color:#9CA3AF;font-size:12px;">待生成</span>' : '<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">编辑</a>')+'</td></tr>';
+      totalRows++;
+    }
+  }
+  tbody.innerHTML = html;
+  document.getElementById('coverPageInfo').innerHTML = '显示 <strong>1-'+Math.min(totalRows,20)+'</strong> 共 <strong>'+totalRows+'</strong> 条';
+  // Dynamically set right offset for 原始封面图 based on 标签 column width
+  setTimeout(function() {
+    var tagTH = document.querySelector('#coverTableWrap th:nth-last-child(1)');
+    var coverTH = document.querySelector('#coverTableWrap th:nth-last-child(2)');
+    if (tagTH && coverTH) {
+      var tagW = tagTH.offsetWidth;
+      coverTH.style.right = tagW + 'px';
+      var coverTDs = document.querySelectorAll('#coverTableBody td.cover-sticky-td');
+      coverTDs.forEach(function(td) { td.style.right = tagW + 'px'; });
+    }
+  }, 200);
+}
+
 // Abandoned table rendering
 function renderAbandonedTable() {
   var tbody = document.getElementById('abandonedTableBody');
@@ -1328,12 +1965,13 @@ function renderAbandonedTable() {
   for (var i = 0; i < ABANDONED_DATA.length; i++) {
     var d = ABANDONED_DATA[i];
     html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
-      '<td>'+d[0]+'</td><td>'+d[1]+'</td><td>'+d[2]+'</td>'+
-      '<td style="white-space:normal;font-size:12px;">'+d[3].slice(0,80)+'</td>'+
-      '<td style="white-space:normal;font-size:11px;color:#991B1B;">'+d[4].slice(0,120)+'</td>'+
-      '<td class="cell-center">'+d[5]+'</td><td class="cell-center">'+d[6]+'</td>'+
-      '<td style="white-space:normal;font-size:11px;">'+d[7].slice(0,100)+'</td>'+
-      '<td class="sticky-actions" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openAbandonedEdit('+i+')">编辑</button><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
+      '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
+      '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[2]+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:12px;">'+d[3].slice(0,80)+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:11px;color:#991B1B;">'+d[4].slice(0,120)+'</div></td>'+
+      '<td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[6]+'</div></td>'+
+      '<td class="cell-center"><div class="cell-wrap"><span class="status-tag tag-offline">待抛弃</span></div></td>'+
+      '<td class="sticky-actions abandoned-action-td" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openAbandonedEdit('+i+')">编辑</button><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
   }
   tbody.innerHTML = html;
 }
@@ -1347,10 +1985,79 @@ function toggleAutoOnline() {
   label.style.color = autoOnlineOn ? '' : '#9CA3AF';
 }
 
+// Helper: generate update time slightly later than create time
+function getUpdateTime(dateStr) {
+  var parts = dateStr.split(' ');
+  if (parts.length < 2) return dateStr;
+  var d = parts[0];
+  var t = parts[1].split(':');
+  var h = parseInt(t[0]) + 1 + Math.floor(Math.random() * 5);
+  var m = parseInt(t[1]) + Math.floor(Math.random() * 50);
+  if (m >= 60) { h++; m -= 60; }
+  if (h >= 24) h -= 24;
+  return d + ' ' + String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + t[2];
+}
+
+// Filter dropdown toggle
+function toggleFilter(e) {
+  e.stopPropagation();
+  var existing = document.querySelector('.filter-dropdown.show');
+  if (existing && existing !== e.currentTarget.querySelector('.filter-dropdown')) {
+    existing.classList.remove('show');
+  }
+  var dd = e.currentTarget.querySelector('.filter-dropdown');
+  if (!dd) {
+    dd = document.createElement('div');
+    dd.className = 'filter-dropdown';
+    dd.innerHTML = '<label><input type="checkbox" checked> 全选</label><label><input type="checkbox"> 选项1</label><label><input type="checkbox"> 选项2</label>';
+    dd.addEventListener('click', function(ev) { ev.stopPropagation(); });
+    e.currentTarget.appendChild(dd);
+  }
+  dd.classList.toggle('show');
+}
+document.addEventListener('click', function() {
+  var dd = document.querySelector('.filter-dropdown.show');
+  if (dd) dd.classList.remove('show');
+});
+
+// Batch action bar logic
+function updateBatchCount() {
+  var checked = document.querySelectorAll('#tableBody .checkbox:checked, #kepuTableBody .checkbox:checked, #abandonedTableBody .checkbox:checked, #coverTableBody .checkbox:checked');
+  document.getElementById('batchCount').textContent = '已选'+checked.length+'条';
+}
+function uncheckAll() {
+  document.querySelectorAll('.checkbox').forEach(function(cb) { cb.checked = false; });
+  updateBatchCount();
+}
+document.addEventListener('change', function(e) {
+  if (e.target.classList.contains('checkbox')) updateBatchCount();
+});
+
+// Check all checkboxes by default after table renders
+var origRenderTable = renderTable;
+renderTable = function() {
+  origRenderTable();
+  setTimeout(function() {
+    document.querySelectorAll('#tableBody .checkbox, #coverTableBody .checkbox').forEach(function(cb) { cb.checked = true; });
+    var headerCb = document.querySelector('#defaultTableContainer .select-col .checkbox');
+    if (headerCb) headerCb.checked = true;
+    var coverHeaderCb = document.querySelector('#coverTableWrap .select-col .checkbox');
+    if (coverHeaderCb) coverHeaderCb.checked = true;
+    updateBatchCount();
+  }, 100);
+};
+
+// Save original editor panel HTML
+setTimeout(function() {
+  var ps = document.querySelector('.ed-panel-scroll');
+  if (ps) savedPanelHTML = ps.innerHTML;
+}, 100);
+
 // Initialize
 renderTable();
 renderKepuTable();
 renderAbandonedTable();
+renderCoverTable();
 // Restore last selected nav, or default to first item
 var saved = localStorage.getItem('selectedNav') || 'manual-editor';
 currentNavView = saved;
@@ -1371,9 +2078,10 @@ function copyId(type, el) {
 }
 
 var currentNavView = '';
+var savedPanelHTML = '';
 function openEditorDrawer(title, contentId, audit) {
   var d = document.getElementById('editorDrawer');
-  var isDelivery = document.body.getAttribute('data-nav') === 'manual-delivery' || document.body.getAttribute('data-nav') === 'auto-delivery';
+  var isCover = document.body.getAttribute('data-nav') === 'manual-cover' || document.body.getAttribute('data-nav') === 'auto-cover' || document.body.getAttribute('data-nav') === 'manual-publish-data' || document.body.getAttribute('data-nav') === 'auto-publish-data';
   d.querySelector('.ed-title-text').textContent = title;
   var idLinks = d.querySelectorAll('.ed-id-link');
   idLinks[0].textContent = 'content_id: ' + contentId;
@@ -1399,11 +2107,69 @@ function openEditorDrawer(title, contentId, audit) {
   var hints = d.querySelector('.ed-hints');
   var blocks = d.querySelector('.ed-blocks');
   var pubPanel = d.querySelector('.ed-publish-panel');
-  if (hints) hints.style.display = isDelivery ? 'none' : '';
-  if (blocks) blocks.style.display = isDelivery ? 'none' : '';
-  if (pubPanel) pubPanel.style.display = isDelivery ? '' : 'none';
+  if (hints) hints.style.display = '';
+  if (blocks) blocks.style.display = '';
+  if (pubPanel) pubPanel.style.display = 'none';
   var bottomBar = d.querySelector('.ed-bottom-bar');
-  if (bottomBar) bottomBar.style.display = isDelivery ? 'none' : '';
+  if (bottomBar) bottomBar.style.display = isCover ? 'none' : '';
+  // Clear drawer content for batch mode
+  var isBatch = contentId && contentId.indexOf('batch-') === 0;
+  var preview = d.querySelector('.ed-preview');
+  var panel = d.querySelector('.ed-panel');
+  var topBar = d.querySelector('.ed-top-bar');
+  if (isBatch) {
+    if (preview) preview.style.display = 'none';
+    if (panel) { panel.style.display = ''; var ps = panel.querySelector('.ed-panel-scroll');
+      if (ps) {
+        // Save original HTML before overwriting
+        if (!savedPanelHTML) savedPanelHTML = ps.innerHTML;
+        if (contentId === 'batch-gen') {
+          ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
+            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">输入生成生图指令的prompt</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成生图指令 <span style="font-size:14px;">🔄</span></button></div>'+
+            '<textarea class="form-input" rows="4" placeholder="请输入生图指令prompt..." style="width:100%;margin-bottom:20px;"></textarea>'+
+            '<div style="font-size:12px;font-weight:500;color:#9CA3AF;margin-bottom:12px;">按需选择下方字段，结合字段内容生成生图指令</div>'+
+            '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 课文标题</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 学段</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 学期</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 章节</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 学科</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 内容类型</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 课文原文</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 教案</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> content_id的标题</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> content_id的正文</label>'+
+            '</div>'+
+            '<div style="clear:both;padding-top:16px;">'+
+              '<div style="border-top:1px solid #E5E7EB;margin-bottom:16px;"></div>'+
+              '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><div style="font-size:13px;font-weight:600;color:#191C1E;">预览生图指令</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
+              '<div style="display:flex;gap:12px;">'+
+                '<textarea class="form-input" rows="8" style="flex:3;background:#F8FAFC;color:#1E293B;font-size:12px;">生成一张教学封面图，主题为"三角形的定义与分类"，风格简洁现代，适合八年级数学教材使用。画面中央展示一个清晰的三角形ABC示意图，标注顶点A、B、C及三边AB、BC、CA，背景采用浅蓝色渐变，右下角放置"八年级数学·上册"文字标签。</textarea>'+
+                '<div style="flex:1;border:2px dashed #D1D5DB;border-radius:12px;min-height:180px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;">原始封面图预览</div>'+
+              '</div>'+
+              '<div style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#64748B;"><span>原始封面图URL</span><input class="form-input" value="https://cdn.example.com/cover/triangle_abc_v2.png" readonly style="flex:1;font-size:11px;background:#F8FAFC;"><button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'},1500);">复制</button></div>'+
+            '</div>'+
+          '</div>';
+        } else if (contentId === 'batch-edit') {
+          ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
+            '<div style="font-size:14px;font-weight:700;color:#191C1E;margin-bottom:16px;">创建标签</div>'+
+            '<div class="ed-fld" style="margin-bottom:12px;"><label>标签1</label><input class="form-input" placeholder="请输入标签1"></div>'+
+            '<div class="ed-fld" style="margin-bottom:12px;"><label>标签2</label><input class="form-input" placeholder="请输入标签2"></div>'+
+            '<div class="ed-fld" style="margin-bottom:16px;"><label>标签3</label><input class="form-input" placeholder="请输入标签3"></div>'+
+            '<button class="ed-publish-btn" style="float:right;">保存</button>'+
+          '</div>';
+        } else {
+          ps.innerHTML = '';
+        }
+      }
+    }
+    if (topBar) topBar.style.display = 'none';
+    d.querySelector('.ed-bottom-bar').style.display = 'none';
+  } else {
+    if (preview) preview.style.display = '';
+    if (panel) { panel.style.display = ''; var ps2 = panel.querySelector('.ed-panel-scroll'); if (ps2 && savedPanelHTML) ps2.innerHTML = savedPanelHTML; }
+    if (topBar) topBar.style.display = '';
+  }
   d.classList.add('open');
   document.getElementById('editorDrawerOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1667,11 +2433,69 @@ function closePublishModal() {
       <button class="modal-close" onclick="closeRecoverModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
     </div>
     <div class="modal-body">
-      <p style="font-size:14px;color:#1E293B;line-height:1.8;">确认对本标题重新执行内容生产？<br><span style="font-size:12px;color:#64748B;">（初始化生产数据将输出到"标题/内容生产编辑"模块）</span></p>
+      <p style="font-size:14px;color:#1E293B;line-height:1.8;">确认对本标题重新执行内容生产？<br><span style="font-size:12px;color:#64748B;">（初始化生产数据将输出到"内容生产编辑"模块）</span></p>
     </div>
     <div class="modal-footer">
       <button class="cms-btn cms-btn-secondary" onclick="closeRecoverModal()"><span>取消</span></button>
       <button class="cms-btn cms-btn-primary" onclick="confirmRecover()"><span>确认回捞到生产池</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Batch Online Confirm Modal -->
+<div class="modal-overlay" id="batchOnlineModal" onclick="closeBatchOnlineModal()">
+  <div class="modal" style="width:440px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>批量上线操作确认</h3>
+      <button class="modal-close" onclick="closeBatchOnlineModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:#1E293B;line-height:1.8;">确认对选中的数据进行批量上线？</p>
+    </div>
+    <div class="modal-footer">
+      <button class="cms-btn cms-btn-secondary" onclick="closeBatchOnlineModal()"><span>取消</span></button>
+      <button class="cms-btn cms-btn-primary" onclick="closeBatchOnlineModal()"><span>确认</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- Publish Data Modal -->
+<div class="modal-overlay" id="publishDataModal" onclick="closePublishDataModal()">
+  <div class="modal" style="width:560px;" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>发布到</h3>
+      <button class="modal-close" onclick="closePublishDataModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
+        <label class="ed-publish-opt"><input type="checkbox"> chat挂载</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 教材精讲</label>
+        <label class="ed-publish-opt"><input type="checkbox" checked> 同步学语文</label>
+        <label class="ed-publish-opt"><input type="checkbox" checked> 同步学数学</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 妙题高招</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 神奇的世界</label>
+        <label class="ed-publish-opt"><input type="checkbox"> 逛逛高校</label>
+        <label class="ed-publish-opt"><input type="checkbox"> XXXX</label>
+        <label class="ed-publish-opt"><input type="checkbox"> YYYY</label>
+        <label class="ed-publish-opt"><input type="checkbox"> ZZZZ</label>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:16px;">
+        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">chat挂载封面图预览</div>
+        </div>
+        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 吸色</label>、<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 加渐变蒙层</label></div>
+        </div>
+        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
+          <div style="background:linear-gradient(135deg,#D1FAE5,#DBEAFE);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 扩画布</label></div>
+        </div>
+      </div>
+      <div style="text-align:right;">
+        <button class="ed-publish-btn" onclick="closePublishDataModal()">确认发布</button>
+      </div>
     </div>
   </div>
 </div>

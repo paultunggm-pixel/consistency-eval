@@ -1218,11 +1218,11 @@ function selectNav(childBtn, pipeline, name) {
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px';
+              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px'; coverTD.style.borderBottomColor = '#D1D5DB';
             }
             if (opTD) {
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)';
+              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)'; opTD.style.borderBottomColor = '#D1D5DB';
             }
           });
         }, 800);
@@ -1261,11 +1261,11 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px';
+              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px'; coverTD.style.borderBottomColor = '#D1D5DB';
             }
             if (opTD) {
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)';
+              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)'; opTD.style.borderBottomColor = '#D1D5DB';
             }
           });
         }, 200);

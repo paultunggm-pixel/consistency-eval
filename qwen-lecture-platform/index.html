@@ -193,10 +193,6 @@ html, body {
 #coverTableWrap .co-card { height: 36px; line-height: 36px; padding: 2px 8px; }
 #coverTableWrap .content-cards { align-items: center; }
 #coverTableWrap .hidden-col { display: none !important; }
-/* Publish-data frozen columns: force opaque */
-#coverTableWrap td[style*="position: sticky"] { background-color: #FFF !important; background: #FFF !important; }
-#coverTableWrap td[style*="position: sticky"] .cell-wrap { background-color: #FFF !important; }
-#coverTableWrap td[style*="position: sticky"]::after { content: ''; position: absolute; inset: 0; background: #FFF; z-index: -1; }
 .table-scroll { overflow-x: auto; }
 .table-scroll::-webkit-scrollbar { height: 6px; }
 .table-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -1203,8 +1199,8 @@ function selectNav(childBtn, pipeline, name) {
           ths.forEach(function(th) { if (th.style.display !== 'none' && th.offsetParent !== null) visTHs.push(th); });
           var coverTH = visTHs[visTHs.length - 2];
           var opTH = visTHs[visTHs.length - 1];
-          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>'; coverTH.style.position = 'sticky'; coverTH.style.right = '64px'; coverTH.style.background = '#E1E2E4'; coverTH.style.zIndex = '3'; }
-          if (opTH) { opTH.textContent = '操作'; opTH.style.right = '0'; opTH.style.position = 'sticky'; opTH.style.background = '#E1E2E4'; opTH.style.zIndex = '3'; opTH.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.06)'; }
+          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>';  }
+          if (opTH) { opTH.textContent = '操作'; }
           var rows = document.querySelectorAll('#coverTableBody tr');
           // Measure from first row AFTER opTD is rendered
           var testRow = rows[0];
@@ -1222,12 +1218,10 @@ function selectNav(childBtn, pipeline, name) {
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px'; coverTD.style.borderBottomColor = '#D1D5DB';
-            }
+                          }
             if (opTD) {
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)'; opTD.style.borderBottomColor = '#D1D5DB';
-            }
+                          }
           });
         }, 800);
       }
@@ -1245,8 +1239,8 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
           ths.forEach(function(th) { if (th.style.display !== 'none' && th.offsetParent !== null) visTHs.push(th); });
           var coverTH = visTHs[visTHs.length - 2];
           var opTH = visTHs[visTHs.length - 1];
-          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>'; coverTH.style.position = 'sticky'; coverTH.style.right = '64px'; coverTH.style.background = '#E1E2E4'; coverTH.style.zIndex = '3'; }
-          if (opTH) { opTH.textContent = '操作'; opTH.style.right = '0'; opTH.style.position = 'sticky'; opTH.style.background = '#E1E2E4'; opTH.style.zIndex = '3'; opTH.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.06)'; }
+          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>';  }
+          if (opTH) { opTH.textContent = '操作'; }
           // Update rows
           var rows = document.querySelectorAll('#coverTableBody tr');
           // Measure from first row AFTER opTD is rendered
@@ -1265,12 +1259,10 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-              coverTD.style.position = 'sticky'; coverTD.style.right = '64px'; coverTD.style.setProperty('background','#FFF','important'); coverTD.style.zIndex = '3'; coverTD.style.boxShadow = '-2px 0 6px rgba(0,0,0,0.04)'; coverTD.style.marginRight = '-2px'; coverTD.style.borderBottomColor = '#D1D5DB';
-            }
+                          }
             if (opTD) {
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-              opTD.style.position = 'sticky'; opTD.style.right = '0'; opTD.style.setProperty('background','#FFF','important'); opTD.style.zIndex = '3'; opTD.style.boxShadow = '-4px 0 10px rgba(0,0,0,0.05)'; opTD.style.borderBottomColor = '#D1D5DB';
-            }
+                          }
           });
         }, 200);
       }

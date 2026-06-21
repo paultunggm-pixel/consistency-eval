@@ -99,8 +99,9 @@ html, body {
 
 .nav-child { display: flex; align-items: center; gap: 8px; width: 100%; padding: 7px 10px 7px 34px; border: none; background: none; border-radius: var(--radius-sm); cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 400; color: var(--text-primary); text-align: left; position: relative; transition: background var(--transition-fast), color var(--transition-fast); }
 .nav-child::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 0; border-radius: 0 2px 2px 0; background: var(--accent); transition: height var(--transition-normal); }
-.nav-child:hover { background: var(--hover); }
-.nav-child.active { background: var(--accent-subtle); color: var(--accent); font-weight: 500; }
+.nav-child:hover { background: rgba(0, 122, 255, 0.08); color: var(--accent); }
+.nav-child:active { background: rgba(0, 122, 255, 0.14); }
+.nav-child.active { background: rgba(0, 122, 255, 0.14); color: var(--accent); font-weight: 600; }
 .nav-child.active::before { height: 18px; }
 .nav-child-icon { width: 16px; height: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--text-tertiary); transition: color var(--transition-fast); }
 .nav-child.active .nav-child-icon { color: var(--accent); }
@@ -1076,11 +1077,21 @@ function renderTable() {
 /* ============================================
    Navigation
    ============================================ */
-function selectNav(childBtn, pipeline, name) {
+function selectNav(childBtn, pipeline, name, silent) {
+  if (!silent) {
+    // Force page reload on every manual click for clean state
+    sessionStorage.setItem('_navReload', '1');
+    sessionStorage.setItem('_navPipeline', pipeline);
+    sessionStorage.setItem('_navName', name);
+    localStorage.setItem('selectedNav', childBtn.dataset.view);
+    location.reload();
+    return;
+  }
+  // Silent mode / normal: set state and continue
   currentNavView = childBtn.dataset.view;
   document.body.setAttribute('data-nav', childBtn.dataset.view);
   localStorage.setItem('selectedNav', childBtn.dataset.view);
-  document.querySelectorAll('.nav-child').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.nav-child').forEach(function(b) { b.classList.remove('active'); });
   childBtn.classList.add('active');
 
   const pipelineName = pipeline === 'manual' ? '教材知识人工生产链路' : 'Query聚簇自动生产链路';
@@ -1178,13 +1189,13 @@ function selectNav(childBtn, pipeline, name) {
         var ahcb = document.querySelector('#abandonedTableWrap .select-col .checkbox');
         if (ahcb) ahcb.checked = true;
         updateBatchCount();
-        // Align recover note to batch "批量编辑" button
-        var editBatchBtn = document.querySelector('.batch-actions .batch-btn');
+        // Align recover note to "日期" column header
+        var dateTH = document.querySelectorAll('#abandonedTableWrap th')[1];
         var rNote = document.getElementById('recoverHintNote');
-        if (editBatchBtn && rNote && rNote.style.display !== 'none') {
-          var ebr = editBatchBtn.getBoundingClientRect();
+        if (dateTH && rNote && rNote.style.display !== 'none') {
+          var dr = dateTH.getBoundingClientRect();
           var rpr = rNote.offsetParent.getBoundingClientRect();
-          rNote.style.left = (ebr.left - rpr.left) + 'px';
+          rNote.style.left = (dr.left - rpr.left) + 'px';
         }
       }, 200);
     }
@@ -1194,23 +1205,7 @@ function selectNav(childBtn, pipeline, name) {
       renderAutoCoverTable();
       if (childBtn.dataset.view === 'auto-publish-data') {
         setTimeout(function() {
-          var ths = document.querySelectorAll('#coverTableWrap th');
-          var visTHs = [];
-          ths.forEach(function(th) { if (th.style.display !== 'none' && th.offsetParent !== null) visTHs.push(th); });
-          var coverTH = visTHs[visTHs.length - 2];
-          var opTH = visTHs[visTHs.length - 1];
-          if (coverTH) { coverTH.innerHTML = '<span class="th-filter" onclick="toggleFilter(event)" style="color:#3B5998;">发布状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span>';  }
-          if (opTH) { opTH.textContent = '操作'; }
           var rows = document.querySelectorAll('#coverTableBody tr');
-          // Measure from first row AFTER opTD is rendered
-          var testRow = rows[0];
-          var testTDs = [];
-          testRow.querySelectorAll('td').forEach(function(td) { if (td.style.display !== 'none') testTDs.push(td); });
-          var opTD_sample = testTDs[testTDs.length - 1];
-          var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
-          // Apply to all rows
-          // Clear sticky from all TDs
-          rows.forEach(function(r) { var tds=r.querySelectorAll('td'); tds.forEach(function(d){d.style.position='';d.style.right='';d.style.zIndex='';d.style.boxShadow='';d.style.marginRight='';d.style.borderBottomColor='';}); });
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var visTDs = [];
@@ -1220,10 +1215,10 @@ function selectNav(childBtn, pipeline, name) {
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-                          }
+            }
             if (opTD) {
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-                          }
+            }
           });
         }, 800);
       }
@@ -1251,9 +1246,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
           testRow.querySelectorAll('td').forEach(function(td) { if (td.style.display !== 'none') testTDs.push(td); });
           var opTD_sample = testTDs[testTDs.length - 1];
           var opW = opTD_sample ? Math.max(opTD_sample.offsetWidth, opTD_sample.getBoundingClientRect().width) : 80;
-          // Apply to all rows
-          // Clear sticky from all TDs
-          rows.forEach(function(r) { var tds=r.querySelectorAll('td'); tds.forEach(function(d){d.style.position='';d.style.right='';d.style.zIndex='';d.style.boxShadow='';d.style.marginRight='';d.style.borderBottomColor='';}); });
+          // Apply content updates (keep frozen columns intact)
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var visTDs = [];
@@ -1304,7 +1297,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
       document.getElementById('paginationDefault').style.display = 'none';
       document.getElementById('kepuTableWrap').style.display = 'none';
     }
-    setTimeout(drawConnectors, 300);
+    positionAllNotes();
     // Align annotation note to frozen area left edge for manual-editor
     if (childBtn.dataset.view === 'manual-editor') {
       var stickyTH = document.querySelector('#defaultTableContainer .sticky-preview-th');
@@ -1391,7 +1384,7 @@ document.getElementById('modalOverlay').addEventListener('click', function(e) {
 });
 
 // Helper: position defaultTimeNote for any table
-function updateDefaultTimeNoteForTable(containerSelector) {
+function updateDefaultTimeNoteForTable(containerSelector, setTop) {
   var uth = null;
   var cont = document.querySelector(containerSelector);
   if (!cont || cont.style.display === 'none') return false;
@@ -1402,6 +1395,7 @@ function updateDefaultTimeNoteForTable(containerSelector) {
     var utr = uth.getBoundingClientRect();
     var upr = utn.offsetParent.getBoundingClientRect();
     utn.style.left = (utr.left - upr.left) + 'px';
+    if (setTop) utn.style.top = (utr.top - upr.top + 40) + 'px';
     drawConnectors();
     return true;
   }
@@ -1686,7 +1680,7 @@ setTimeout(function() {
   if (tableScroll) {
     tableScroll.addEventListener('scroll', function() {
       updateCoverTimeNotePos();
-      var uth = updateDefaultTimeNoteForTable('#coverTableWrap');
+      var uth = updateDefaultTimeNoteForTable('#coverTableWrap', true);
     });
   }
   // Kepu table scroll for defaultTimeNote
@@ -1706,10 +1700,52 @@ setTimeout(function() {
   }
 }, 500);
 
+
+// Centralized note positioning
+var positionNotesRAF = 0;
+function positionAllNotes() {
+  if (positionNotesRAF) cancelAnimationFrame(positionNotesRAF);
+  positionNotesRAF = requestAnimationFrame(function() {
+    positionNotesRAF = 0;
+    var allNotes = ['annotationNote','coverTimeNote','coverBatchNote','coverConnectNote','kepuHintNote','recoverHintNote','defaultTimeNote','publishHintNote'];
+    var nav = document.body.getAttribute('data-nav');
+    allNotes.forEach(function(id) {
+      var n = document.getElementById(id);
+      if (n && n.style.display !== 'none') { n.style.left = ''; n.style.top = ''; }
+    });
+    requestAnimationFrame(function() {
+      if (nav === 'manual-editor') {
+        var stickyTH = document.querySelector('#defaultTableContainer .sticky-preview-th');
+        if (stickyTH) { var tr = stickyTH.getBoundingClientRect(); var note = document.getElementById('annotationNote'); if (note && note.style.display !== 'none') { var pr = note.offsetParent.getBoundingClientRect(); note.style.left = (tr.left - pr.left) + 'px'; } }
+      }
+      if (nav === 'auto-editor') {
+        var kth = document.querySelector('#kepuTableWrap .sticky-preview-th');
+        if (kth) { var kr = kth.getBoundingClientRect(); var kn = document.getElementById('kepuHintNote'); if (kn && kn.style.display !== 'none') { var kpr = kn.offsetParent.getBoundingClientRect(); kn.style.left = (kr.left - kpr.left) + 'px'; } }
+      }
+      if (nav === 'auto-recover') {
+        var dateTH = document.querySelectorAll('#abandonedTableWrap th')[1]; // 2nd TH = 日期
+        if (dateTH) { var dr = dateTH.getBoundingClientRect(); var rn = document.getElementById('recoverHintNote'); if (rn && rn.style.display !== 'none') { var rpr = rn.offsetParent.getBoundingClientRect(); rn.style.left = (dr.left - rpr.left) + 'px'; } }
+      }
+      if (nav === 'manual-cover' || nav === 'auto-cover') {
+        var connectTH = document.querySelectorAll('#coverTableWrap th')[2];
+        if (connectTH) { var cr2 = connectTH.getBoundingClientRect(); var cb = document.getElementById('coverBatchNote'); if (cb && cb.style.display !== 'none') { var cpr2 = cb.offsetParent.getBoundingClientRect(); cb.style.left = (cr2.left - cpr2.left) + 'px'; } }
+        var row6card = document.querySelector('#coverTableBody tr:nth-child(6) .co-card');
+        if (row6card) { var cr3 = row6card.getBoundingClientRect(); var cn = document.getElementById('coverConnectNote'); if (cn && cn.style.display !== 'none') { var cpr3 = cn.offsetParent.getBoundingClientRect(); cn.style.left = (cr3.left - cpr3.left + cr3.width/2 - cn.offsetWidth/2) + 'px'; cn.style.top = (cr3.top - cpr3.top) + 'px'; } }
+      }
+      updateDefaultTimeNoteForTable('#defaultTableContainer', true);
+      updateDefaultTimeNoteForTable('#kepuTableWrap', true);
+      updateDefaultTimeNoteForTable('#coverTableWrap', true);
+      updateCoverTimeNotePos();
+      drawConnectors();
+    });
+  });
+}
+
 // Draw connectors after table renders
 var origRender = renderTable;
 renderTable = function() { origRender(); setTimeout(drawConnectors, 200); };
 setTimeout(drawConnectors, 500);
+setTimeout(positionAllNotes, 300);
 
 // Reset annotation notes to default position on load
 (function() {
@@ -1854,14 +1890,17 @@ function renderAutoCoverTable() {
   if (!tbody) return;
   // Update THs — only set textContent for plain THs, preserve th-filter spans
   var ths = document.querySelectorAll('#coverTableWrap th');
-  var labels = ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','标签','-','-','-'];
+  var isPubData = (document.body.getAttribute('data-nav') || '').indexOf('publish-data') > -1;
+  var labels = isPubData
+    ? ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','发布状态','操作','-','-','-']
+    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','标签','-','-','-'];
   for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
     if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
     else if (!labels[ti]) continue;
     else {
       ths[ti].style.display = '';
-      if (labels[ti] === '原始封面图') ths[ti].classList.add('cover-sticky-th');
-      if (labels[ti] === '标签') { ths[ti].classList.add('tag-sticky-th'); ths[ti].style.right = '0'; }
+      if (labels[ti] === '原始封面图' || labels[ti] === '发布状态') ths[ti].classList.add('cover-sticky-th');
+      if (labels[ti] === '标签' || labels[ti] === '操作') { ths[ti].classList.add('tag-sticky-th'); ths[ti].style.right = '0'; }
       var filterSpan = ths[ti].querySelector('.th-filter');
       if (filterSpan) {
         filterSpan.childNodes[0].textContent = labels[ti];
@@ -1896,6 +1935,12 @@ function renderAutoCoverTable() {
   }
   tbody.innerHTML = html;
   document.getElementById('coverPageInfo').innerHTML = '显示 <strong>1-'+Math.min(totalRows,20)+'</strong> 共 <strong>'+totalRows+'</strong> 条';
+  // Unfreeze all columns for publish-data pages
+  var nav = document.body.getAttribute('data-nav');
+  if (nav === '__never__') {
+    document.querySelectorAll('#coverTableWrap th').forEach(function(th) { th.style.position=''; th.style.right=''; th.style.zIndex=''; th.style.boxShadow=''; th.classList.remove('cover-sticky-th'); th.classList.remove('tag-sticky-th'); });
+    document.querySelectorAll('#coverTableBody td').forEach(function(d) { d.style.position=''; d.style.right=''; d.style.zIndex=''; d.style.boxShadow=''; d.style.marginRight=''; d.style.borderBottomColor=''; d.classList.remove('cover-sticky-td'); d.classList.remove('tag-sticky-td'); });
+  }
   // Update right offset for frozen columns
   setTimeout(function() {
     var tagTH = document.querySelector('#coverTableWrap .tag-sticky-th');
@@ -1944,6 +1989,12 @@ function renderCoverTable() {
   }
   tbody.innerHTML = html;
   document.getElementById('coverPageInfo').innerHTML = '显示 <strong>1-'+Math.min(totalRows,20)+'</strong> 共 <strong>'+totalRows+'</strong> 条';
+  // Unfreeze all columns for publish-data pages
+  var nav2 = document.body.getAttribute('data-nav');
+  if (nav2 === '__never__') {
+    document.querySelectorAll('#coverTableWrap th').forEach(function(th) { th.style.position=''; th.style.right=''; th.style.zIndex=''; th.style.boxShadow=''; th.classList.remove('cover-sticky-th'); th.classList.remove('tag-sticky-th'); });
+    document.querySelectorAll('#coverTableBody td').forEach(function(d) { d.style.position=''; d.style.right=''; d.style.zIndex=''; d.style.boxShadow=''; d.style.marginRight=''; d.style.borderBottomColor=''; d.classList.remove('cover-sticky-td'); d.classList.remove('tag-sticky-td'); });
+  }
   // Dynamically set right offset for 原始封面图 based on 标签 column width
   setTimeout(function() {
     var tagTH = document.querySelector('#coverTableWrap th:nth-last-child(1)');
@@ -2062,8 +2113,20 @@ renderCoverTable();
 var saved = localStorage.getItem('selectedNav') || 'manual-editor';
 currentNavView = saved;
 document.body.setAttribute('data-nav', saved);
-var btn = document.querySelector('.nav-child[data-view="' + saved + '"]');
-if (btn) { btn.click(); }
+// Only auto-click if NOT just reloaded by selectNav
+if (sessionStorage.getItem('_navReload')) {
+  var savedPipeline = sessionStorage.getItem('_navPipeline') || 'manual';
+  var savedName = sessionStorage.getItem('_navName') || '';
+  sessionStorage.removeItem('_navReload');
+  sessionStorage.removeItem('_navPipeline');
+  sessionStorage.removeItem('_navName');
+  // Call selectNav silently to restore content
+  var btn = document.querySelector('.nav-child[data-view="' + saved + '"]');
+  if (btn && savedName) { selectNav(btn, savedPipeline, savedName, true); }
+} else {
+  var btn = document.querySelector('.nav-child[data-view="' + saved + '"]');
+  if (btn) { btn.click(); }
+}
 
 /* ============================================
    Editor Drawer

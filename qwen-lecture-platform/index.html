@@ -183,11 +183,11 @@ html, body {
 #coverTableWrap .cell-wrap { max-height: 30px; overflow: hidden; display: block; }
 #coverTableWrap .co-card { height: 22px; line-height: 22px; padding: 2px 8px; min-width: 80px; width: auto; }
 #coverTableWrap .content-cards { align-items: center; }
-#kepuTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
+#kepuTableWrap .table td { min-height: 50px; height: auto; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
 #kepuTableWrap .co-card { height: 36px; line-height: 36px; padding: 2px 8px; }
 #kepuTableWrap .content-cards { align-items: center; }
 #kepuTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
-#abandonedTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
+#abandonedTableWrap .table td { min-height: 50px; height: auto; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
 #abandonedTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
 #coverTableWrap .table td { height: 50px; line-height: 50px; padding-top: 0; padding-bottom: 0; vertical-align: middle; }
 #coverTableWrap .cell-wrap { max-height: 50px; overflow: hidden; }
@@ -1802,7 +1802,7 @@ function renderKepuTable() {
       '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
       '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[7]+'</div></td>'+
-      '<td><div class="cell-wrap" style="font-size:11px;">'+d[9].slice(0,60)+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:11px;line-height:1.5;white-space:normal;max-height:none;overflow:visible;">'+expandQueries(d[9], 3)+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap">'+d[10]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[11]+'</div></td>'+
             '<td class="cell-center sticky-preview" style="width:400px;min-width:400px;max-width:400px;"><div class="content-cards">'+objsHTML+'</div></td>'+
       '<td class="sticky-actions" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openKepuModal('+i+')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button></div></td></tr>';
@@ -2024,13 +2024,40 @@ function renderAbandonedTable() {
     html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
       '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[2]+'</div></td>'+
-      '<td><div class="cell-wrap" style="font-size:12px;">'+d[3].slice(0,80)+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:12px;line-height:1.5;white-space:normal;max-height:none;overflow:visible;">'+expandQueries(d[3], 3)+'</div></td>'+
       '<td><div class="cell-wrap" style="font-size:11px;color:#991B1B;">'+d[4].slice(0,120)+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[6]+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="status-tag tag-offline">待抛弃</span></div></td>'+
       '<td class="sticky-actions abandoned-action-td" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
   }
   tbody.innerHTML = html;
+}
+
+// Helper: expand query string to N lines for query cluster display
+function expandQueries(str, n) {
+  if (!str) return '';
+  var lines = str.split('\n').filter(function(l) { return l.trim().length > 0; });
+  var result = [];
+  for (var i = 0; i < n; i++) {
+    if (i < lines.length) {
+      result.push(lines[i].replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+    } else {
+      var base = lines[i % lines.length] || lines[0];
+      var v;
+      var mods = [
+        function(s) { return s.replace(/？$/,'') + '呢？'; },
+        function(s) { return '请问' + s; },
+        function(s) { return s.replace(/什么/g,'啥').replace(/吗/g,'嘛'); },
+        function(s) { return s + '（求解）'; },
+        function(s) { return s.replace(/如何/g,'怎么').replace(/怎样/g,'怎么'); },
+        function(s) { return s.replace(/^请问/,'').replace(/呢[？?]?$/,'') + '？'; },
+      ];
+      v = mods[(i - lines.length) % mods.length](base);
+      if (v === base) v = base + '？';
+      result.push(v.replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+    }
+  }
+  return result.join('<br>');
 }
 
 // Auto-online toggle

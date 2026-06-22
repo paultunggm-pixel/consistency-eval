@@ -1921,7 +1921,7 @@ function renderAutoCoverTable() {
       var oid = 'KEPU_' + Math.random().toString(16).slice(2,14);
       html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
         '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
-        '<td><div class="cell-wrap"><div class="co-card" style="width:auto;min-width:100px;" title="'+oid+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid+'\',\'已上线\')"><span class="co-card-audit online">已上线</span></div></div></td>'+
+        '<td><div class="cell-wrap"><div class="co-card" style="width:auto;min-width:100px;" title="'+oid+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid+'\',\'已上线\')"><span class="co-card-audit online" style="font-size:11px;">'+oid+'</span></div></div></td>'+
         '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">'+getUpdateTime('2026-06-17 09:00:00')+'</span></div></td>'+
         '<td><div class="cell-wrap">'+d[0]+'</div></td>'+
         '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
@@ -1966,7 +1966,7 @@ function renderCoverTable() {
       var o = objs[j];
       html += '<tr><td class="select-col" style="text-align:center;"><input type="checkbox" class="checkbox"></td>'+
         '<td><div class="guid-cell"><span class="guid-text" title="'+row.guid+'">'+row.guid+'</span><button class="copy-btn" title="复制GUID" onclick="navigator.clipboard.writeText(\''+row.guid+'\')"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg></button></div></td>'+
-        '<td><div class="co-card" style="width:auto;min-width:100px;" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\'已上线\')"><span class="co-card-audit online">已上线</span></div></td>'+
+        '<td><div class="co-card" style="width:auto;min-width:100px;" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\'已上线\')"><span class="co-card-audit online" style="font-size:11px;">'+o.id+'</span></div></td>'+
         '<td><span class="title-cell">'+row.title+'</span></td>'+
         '<td class="cell-center"><span class="cell-date">'+getUpdateTime(row.date)+'</span></td>'+
         '<td><span class="cell-dim">'+row.attachment+'</span></td>'+

@@ -2568,7 +2568,7 @@ function closePublishModal() {
     </div>
     <div class="modal-body">
       <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">
-        <label class="ed-publish-opt"><input type="checkbox"> chat挂载</label>
+        <label class="ed-publish-opt"><input type="checkbox" checked> chat挂载</label>
         <label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>
         <label class="ed-publish-opt"><input type="checkbox"> 教材精讲</label>
         <label class="ed-publish-opt"><input type="checkbox" checked> 同步学语文</label>
@@ -2581,16 +2581,37 @@ function closePublishModal() {
         <label class="ed-publish-opt"><input type="checkbox"> ZZZZ</label>
       </div>
       <div style="display:flex;gap:12px;margin-bottom:16px;">
-        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
-          <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">chat挂载封面图预览</div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">chat挂载的封面后处理</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;flex:1;">
+            <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">chat挂载封面图预览</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input class="form-input" value="https://cdn.example.com/cover/chat_mount_v1.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">
+            <button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector('input');inp.select();navigator.clipboard.writeText(inp.value);this.textContent='已复制';setTimeout(function(){this.textContent='复制'}.bind(this),1500);">复制</button>
+          </div>
         </div>
-        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
-          <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
-          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 吸色</label>、<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 加渐变蒙层</label></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">语文tab的封面后处理</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;flex:1;">
+            <div style="background:linear-gradient(135deg,#DBEAFE,#FEF3C7);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+            <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 吸色</label>、<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 加渐变蒙层</label></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input class="form-input" value="https://cdn.example.com/cover/yuwen_tab_v2.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">
+            <button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector('input');inp.select();navigator.clipboard.writeText(inp.value);this.textContent='已复制';setTimeout(function(){this.textContent='复制'}.bind(this),1500);">复制</button>
+          </div>
         </div>
-        <div style="flex:1;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;">
-          <div style="background:linear-gradient(135deg,#D1FAE5,#DBEAFE);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
-          <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 扩画布</label></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">数学tab的封面后处理</div>
+          <div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;flex:1;">
+            <div style="background:linear-gradient(135deg,#D1FAE5,#DBEAFE);height:80px;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:12px;">封面图预览</div>
+            <div style="padding:6px 8px;font-size:11px;color:#64748B;border-top:1px solid #F0F1F3;">后处理：<label style="color:#16A34A;"><input type="checkbox" checked style="accent-color:#16A34A;"> 扩画布</label></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <input class="form-input" value="https://cdn.example.com/cover/shuxue_tab_v3.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">
+            <button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector('input');inp.select();navigator.clipboard.writeText(inp.value);this.textContent='已复制';setTimeout(function(){this.textContent='复制'}.bind(this),1500);">复制</button>
+          </div>
         </div>
       </div>
       <div style="text-align:right;">

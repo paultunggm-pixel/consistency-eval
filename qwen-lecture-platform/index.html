@@ -1802,7 +1802,7 @@ function renderKepuTable() {
       '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
       '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[7]+'</div></td>'+
-      '<td><div class="cell-wrap" style="font-size:11px;line-height:1.5;white-space:normal;max-height:none;overflow:visible;">'+d[9].split('\n').slice(0,3).map(function(l){return l.replace(/</g,'&lt;').replace(/>/g,'&gt;');}).join('<br>')+'</div></td>'+
+      '<td><div class="cell-wrap" style="font-size:11px;line-height:1.5;white-space:normal;max-height:none;overflow:visible;">'+d[9].split('\\n').slice(0,3).map(function(l){return l.replace(/</g,'&lt;').replace(/>/g,'&gt;');}).join('<br>')+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap">'+d[10]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[11]+'</div></td>'+
             '<td class="cell-center sticky-preview" style="width:400px;min-width:400px;max-width:400px;"><div class="content-cards">'+objsHTML+'</div></td>'+
       '<td class="sticky-actions" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openKepuModal('+i+')">编辑</button><button class="btn-link btn-link-primary">生成新内容</button><button class="btn-link btn-link-danger">删除</button></div></td></tr>';

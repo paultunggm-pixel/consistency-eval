@@ -669,7 +669,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <svg class="connector-svg" id="connectorSvg"><line id="cl1" stroke="#F59E0B" stroke-width="1.5" stroke-dasharray="5,3"/><line id="cl2" stroke="#16A34A" stroke-width="1.5" stroke-dasharray="5,3"/><line id="cl3" stroke="#1D1D1F" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
 
         <!-- Recover Connector SVG -->
-        <svg class="connector-svg" id="recoverConnectorSvg" style="display:none;"><line id="rl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="rl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <svg class="connector-svg" id="recoverConnectorSvg" style="display:none;"><line id="rl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
         <!-- Cover ConnectID Note -->
         <div class="annotation-note" id="coverConnectNote" style="display:none;left:300px;top:400px;width:380px;max-height:220px;" onmousedown="startDragNote(event)">
           <div class="annotation-note-body" style="font-size:12px;color:#78350F;line-height:1.8;padding-top:0;">
@@ -703,6 +703,13 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         <div class="annotation-note" id="recoverHintNote" style="display:none;left:120px;top:200px;width:180px;max-height:90px;" onmousedown="startDragNote(event)">
           <div class="annotation-note-body" style="text-align:center;font-size:13px;font-weight:600;color:#92400E;padding-top:0;">
             可更新原始标题数据<br>并回捞生产
+          </div>
+        </div>
+
+        <!-- Abandoned Kepu Title Note -->
+        <div class="annotation-note" id="abandonedKepuTitleNote" style="display:none;left:200px;top:260px;width:220px;max-height:90px;" onmousedown="startDragNote(event)">
+          <div class="annotation-note-body" style="text-align:center;font-size:12px;font-weight:600;color:#92400E;padding-top:0;">
+            需算法侧确认抛弃的数据<br>是否包含"科普标题"字段
           </div>
         </div>
 
@@ -1133,7 +1140,7 @@ function selectNav(childBtn, pipeline, name, silent) {
       document.getElementById('coverHint').textContent = '请按需筛选字段后，在表单最左侧勾选相应行数据进行"批量生成原始封面图"操作';
     } else if (isRecover) {
       document.getElementById('coverHint').style.display = '';
-      document.getElementById('coverHint').textContent = '请按需筛选字段后，在表单最左侧勾选相应行数据进行"批量编辑"或"批量回捞到生产池"操作';
+      document.getElementById('coverHint').textContent = '请按需筛选字段后，在表单最左侧勾选相应行数据进行"批量回捞到生产池"操作';
     } else {
       document.getElementById('coverHint').style.display = 'none';
     }
@@ -1182,6 +1189,7 @@ function selectNav(childBtn, pipeline, name, silent) {
     }
     document.getElementById('recoverHintNote').style.display = isRecover ? '' : 'none';
     document.getElementById('recoverConnectorSvg').style.display = isRecover ? '' : 'none';
+    document.getElementById('abandonedKepuTitleNote').style.display = isRecover ? '' : 'none';
     if (isRecover) {
       document.querySelectorAll('#abandonedTableBody .sticky-actions').forEach(function(td) { td.classList.add('abandoned-action-td'); });
       setTimeout(function() {
@@ -1286,7 +1294,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
         updateBatchCount();
       }, 200);
     } else if (isRecover) {
-      document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn" onclick="openAbandonedEdit(0)">批量编辑</button><button class="batch-btn batch-btn-primary" onclick="openRecoverConfirm(0)">批量回捞到生产池</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+      document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openRecoverConfirm(0)">批量回捞到生产池</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
     } else {
       document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn">批量生成内容</button><button class="batch-btn">批量导出</button><button class="batch-btn batch-btn-danger">批量删除</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
     }
@@ -1487,16 +1495,10 @@ function drawConnectors() {
       var rCY = rnr.top - rsr.top + rnr.height/2;
       var batchBtns = document.querySelectorAll('.batch-actions .batch-btn');
       if (batchBtns.length > 0) {
-        var br1 = batchBtns[0].getBoundingClientRect(); // 批量编辑
+        var br1 = batchBtns[0].getBoundingClientRect(); // 批量回捞到生产池
         document.getElementById('rl1').setAttribute('x1', rCX); document.getElementById('rl1').setAttribute('y1', rCY);
         document.getElementById('rl1').setAttribute('x2', br1.left - rsr.left + br1.width/2);
         document.getElementById('rl1').setAttribute('y2', br1.top - rsr.top + br1.height/2);
-      }
-      if (batchBtns.length > 1) {
-        var br2 = batchBtns[1].getBoundingClientRect(); // 批量回捞到生产池
-        document.getElementById('rl2').setAttribute('x1', rCX); document.getElementById('rl2').setAttribute('y1', rCY);
-        document.getElementById('rl2').setAttribute('x2', br2.left - rsr.left + br2.width/2);
-        document.getElementById('rl2').setAttribute('y2', br2.top - rsr.top + br2.height/2);
       }
     }
   }
@@ -1707,7 +1709,7 @@ function positionAllNotes() {
   if (positionNotesRAF) cancelAnimationFrame(positionNotesRAF);
   positionNotesRAF = requestAnimationFrame(function() {
     positionNotesRAF = 0;
-    var allNotes = ['annotationNote','coverTimeNote','coverBatchNote','coverConnectNote','kepuHintNote','recoverHintNote','defaultTimeNote','publishHintNote'];
+    var allNotes = ['annotationNote','coverTimeNote','coverBatchNote','coverConnectNote','kepuHintNote','recoverHintNote','abandonedKepuTitleNote','defaultTimeNote','publishHintNote'];
     var nav = document.body.getAttribute('data-nav');
     allNotes.forEach(function(id) {
       var n = document.getElementById(id);
@@ -1725,6 +1727,8 @@ function positionAllNotes() {
       if (nav === 'auto-recover') {
         var dateTH = document.querySelectorAll('#abandonedTableWrap th')[1]; // 2nd TH = 日期
         if (dateTH) { var dr = dateTH.getBoundingClientRect(); var rn = document.getElementById('recoverHintNote'); if (rn && rn.style.display !== 'none') { var rpr = rn.offsetParent.getBoundingClientRect(); rn.style.left = (dr.left - rpr.left) + 'px'; } }
+        var kepuTH = document.querySelectorAll('#abandonedTableWrap th')[3]; // 4th TH = 科普标题
+        if (kepuTH) { var kr2 = kepuTH.getBoundingClientRect(); var akn = document.getElementById('abandonedKepuTitleNote'); if (akn && akn.style.display !== 'none') { var akpr = akn.offsetParent.getBoundingClientRect(); akn.style.left = (kr2.left - akpr.left) + 'px'; } }
       }
       if (nav === 'manual-cover' || nav === 'auto-cover') {
         var connectTH = document.querySelectorAll('#coverTableWrap th')[2];
@@ -1765,6 +1769,8 @@ setTimeout(positionAllNotes, 300);
   if (n7) { n7.style.left = ''; n7.style.top = ''; }
   var n8 = document.getElementById('defaultTimeNote');
   if (n8) { n8.style.left = ''; n8.style.top = ''; }
+  var n9 = document.getElementById('abandonedKepuTitleNote');
+  if (n9) { n9.style.left = ''; n9.style.top = ''; }
 })();
 
 // Kepu table rendering
@@ -2022,7 +2028,7 @@ function renderAbandonedTable() {
       '<td><div class="cell-wrap" style="font-size:11px;color:#991B1B;">'+d[4].slice(0,120)+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[6]+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="status-tag tag-offline">待抛弃</span></div></td>'+
-      '<td class="sticky-actions abandoned-action-td" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link" onclick="openAbandonedEdit('+i+')">编辑</button><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
+      '<td class="sticky-actions abandoned-action-td" style="width:180px;min-width:180px;max-width:180px;"><div class="action-btns"><button class="btn-link btn-link-primary" onclick="openRecoverConfirm('+i+')">回捞到生产池</button></div></td></tr>';
   }
   tbody.innerHTML = html;
 }

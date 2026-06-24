@@ -2221,13 +2221,11 @@ function openEditorDrawer(title, contentId, audit) {
         if (!savedPanelHTML) savedPanelHTML = ps.innerHTML;
         if (contentId === 'batch-gen') {
           ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
-            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">输入生成生图指令的prompt</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成生图指令 <span style="font-size:14px;">🔄</span></button></div>'+
+            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">输入生图prompt（用约定格式自行书写"参考URL"、"参考字段内容"）</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
             '<textarea class="form-input" rows="4" placeholder="请输入生图指令prompt..." style="width:100%;margin-bottom:20px;"></textarea>'+
             '<div style="clear:both;padding-top:16px;">'+
               '<div style="border-top:1px solid #E5E7EB;margin-bottom:16px;"></div>'+
-              '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;"><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
-              '<div style="display:flex;gap:12px;">'+
-                '<textarea class="form-input" rows="8" style="flex:3;background:#F8FAFC;color:#1E293B;font-size:12px;">生成一张教学封面图，主题为"三角形的定义与分类"，风格简洁现代，适合八年级数学教材使用。画面中央展示一个清晰的三角形ABC示意图，标注顶点A、B、C及三边AB、BC、CA，背景采用浅蓝色渐变，右下角放置"八年级数学·上册"文字标签。</textarea>'+
+              '<div style="display:flex;gap:12px;align-items:flex-start;">'+
                 '<div style="flex:1;border:2px dashed #D1D5DB;border-radius:12px;min-height:180px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;">原始封面图预览</div>'+
               '</div>'+
               '<div style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#64748B;"><span>原始封面图URL</span><input class="form-input" value="https://cdn.example.com/cover/triangle_abc_v2.png" readonly style="flex:1;font-size:11px;background:#F8FAFC;"><button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'},1500);">复制</button></div>'+

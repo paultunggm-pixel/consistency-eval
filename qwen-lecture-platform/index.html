@@ -2261,10 +2261,10 @@ function openEditorDrawer(title, contentId, audit) {
               '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
               '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
             '</div>'+
-            '<div style="display:flex;align-items:center;justify-content:flex-end;margin-bottom:12px;"><button class="ed-publish-btn" style="font-size:13px;">按上述消费场景生成相应的后处理封面图</button></div>'+
+            '<div style="height:12px;"></div>'+
             '<div style="display:flex;gap:12px;margin-bottom:16px;">'+
               '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
-                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式一（标题+底部logo）</div>'+
+                '<label class="ed-publish-opt" style="justify-content:center;"><input type="checkbox" checked> 样式一（标题+底部logo）</label>'+
                 '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
                   '<img src="后处理示例/01.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式一">'+
                 '</div>'+
@@ -2277,7 +2277,7 @@ function openEditorDrawer(title, contentId, audit) {
                 '</div>'+
               '</div>'+
               '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
-                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式二（标题+年级+文本标签+底部logo）</div>'+
+                '<label class="ed-publish-opt" style="justify-content:center;"><input type="checkbox" checked> 样式二（标题+年级+文本标签+底部logo）</label>'+
                 '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
                   '<img src="后处理示例/02.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式二">'+
                 '</div>'+
@@ -2290,7 +2290,7 @@ function openEditorDrawer(title, contentId, audit) {
                 '</div>'+
               '</div>'+
               '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
-                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式三（样式一的低饱和度版本）</div>'+
+                '<label class="ed-publish-opt" style="justify-content:center;"><input type="checkbox" checked> 样式三（样式一的低饱和度版本）</label>'+
                 '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
                   '<img src="后处理示例/03.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式三">'+
                 '</div>'+
@@ -2303,7 +2303,8 @@ function openEditorDrawer(title, contentId, audit) {
                 '</div>'+
               '</div>'+
             '</div>'+
-            '<div style="text-align:right;">'+
+            '<div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;">'+
+              '<button class="ed-publish-btn" style="background:#FFF;color:#0011FF;border:1px solid #0011FF;">生成后处理封面图</button>'+
               '<button class="ed-publish-btn" onclick="closeEditorDrawer()">确认发布</button>'+
             '</div>'+
           '</div>';

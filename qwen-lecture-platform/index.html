@@ -488,9 +488,9 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
             <span class="nav-child-label">生成原始封面图</span>
           </button>
-          <button class="nav-child" data-view="manual-publish-data" onclick="selectNav(this, 'manual', '发布到前端消费')">
+          <button class="nav-child" data-view="manual-publish-data" onclick="selectNav(this, 'manual', '发布到前端产品')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
-            <span class="nav-child-label">发布到前端消费</span>
+            <span class="nav-child-label">发布到前端产品</span>
           </button>
         </div>
       </div>
@@ -506,9 +506,9 @@ textarea.form-input { resize: vertical; min-height: 80px; }
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
             <span class="nav-child-label">生成原始封面图</span>
           </button>
-          <button class="nav-child" data-view="auto-publish-data" onclick="selectNav(this, 'auto', '发布到前端消费')">
+          <button class="nav-child" data-view="auto-publish-data" onclick="selectNav(this, 'auto', '发布到前端产品')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></span>
-            <span class="nav-child-label">发布到前端消费</span>
+            <span class="nav-child-label">发布到前端产品</span>
           </button>
           <button class="nav-child" data-view="auto-recover" onclick="selectNav(this, 'auto', '审核已抛弃标题（取消）')">
             <span class="nav-child-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
@@ -1225,7 +1225,7 @@ function selectNav(childBtn, pipeline, name, silent) {
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
             }
             if (opTD) {
-              opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
+              opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\');return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
             }
           });
         }, 800);
@@ -1266,7 +1266,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
                           }
             if (opTD) {
-              opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openPublishDataModal();return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
+              opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\');return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
                           }
           });
         }, 200);
@@ -1279,7 +1279,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
       document.getElementById('abandonedTableWrap').style.display = 'none';
       var isPublishData = childBtn.dataset.view === 'manual-publish-data' || childBtn.dataset.view === 'auto-publish-data';
       if (isPublishData) {
-        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openPublishDataModal()">批量发布</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\')">批量发布</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
         document.getElementById('coverConnectNote').querySelector('.annotation-note-body').innerHTML = '本页面的数据颗粒度细拆到connect_id，仅对上一环节"生成原始封面图"中已完成原始封面图生成输出的connect_id抓入本页面';
       } else {
         document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">批量生成原始封面图</button><button class="batch-btn" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">批量编辑标签</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
@@ -2221,14 +2221,88 @@ function openEditorDrawer(title, contentId, audit) {
         if (!savedPanelHTML) savedPanelHTML = ps.innerHTML;
         if (contentId === 'batch-gen') {
           ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
-            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">输入生图prompt（用约定格式自行书写"参考URL"、"参考字段内容"）</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
-            '<textarea class="form-input" rows="4" placeholder="请输入生图指令prompt..." style="width:100%;margin-bottom:20px;"></textarea>'+
+            '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">对选中的内容按需选定相应的原始封面生图SKILL</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
+            '<div style="margin-bottom:20px;">'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+                '<input type="radio" name="coverSkill" value="chinese" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">语文底图SKILL'+
+              '</label>'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+                '<input type="radio" name="coverSkill" value="math" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">数学底图SKILL'+
+              '</label>'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+                '<input type="radio" name="coverSkill" value="general" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">通用底图SKILL'+
+              '</label>'+
+            '</div>'+
             '<div style="clear:both;padding-top:16px;">'+
               '<div style="border-top:1px solid #E5E7EB;margin-bottom:16px;"></div>'+
               '<div style="display:flex;gap:12px;align-items:flex-start;">'+
                 '<div style="flex:1;border:2px dashed #D1D5DB;border-radius:12px;min-height:180px;display:flex;align-items:center;justify-content:center;color:#9CA3AF;font-size:12px;">原始封面图预览</div>'+
               '</div>'+
               '<div style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;color:#64748B;"><span>原始封面图URL</span><input class="form-input" value="https://cdn.example.com/cover/triangle_abc_v2.png" readonly style="flex:1;font-size:11px;background:#F8FAFC;"><button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'},1500);">复制</button></div>'+
+            '</div>'+
+          '</div>';
+        } else if (contentId === 'batch-publish') {
+          ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
+            '<div style="font-size:14px;font-weight:700;color:#191C1E;margin-bottom:16px;">对选中的内容发布到以下前端消费场景：</div>'+
+            '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:80px;">'+
+              '<label class="ed-publish-opt"><input type="checkbox" checked> Chat挂载</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-语文</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-数学</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 神奇的世界</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 逛逛高校</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 秒题高招</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 名著导读</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> 趣学成语</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-7天玩转AI创作</label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|1-2年级</span></label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
+              '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
+            '</div>'+
+            '<div style="font-size:14px;font-weight:700;color:#191C1E;margin-bottom:12px;">上述消费场景涉及以下封面后处理样式：</div>'+
+            '<div style="display:flex;gap:12px;margin-bottom:16px;">'+
+              '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
+                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式一（标题+底部logo）</div>'+
+                '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
+                  '<img src="后处理示例/01.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式一">'+
+                '</div>'+
+                '<div style="margin-top:2px;">'+
+                  '<input class="form-input" style="width:100%;font-size:11px;padding:6px 10px;visibility:hidden;">'+
+                '</div>'+
+                '<div style="display:flex;align-items:center;gap:6px;">'+
+                  '<input class="form-input" value="https://oss.aliyuncs.com/qwen-lecture/covers/style1_title_logo.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">'+
+                  '<button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'}.bind(this),1500);">复制</button>'+
+                '</div>'+
+              '</div>'+
+              '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
+                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式二（标题+年级+文本标签+底部logo）</div>'+
+                '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
+                  '<img src="后处理示例/02.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式二">'+
+                '</div>'+
+                '<div style="margin-top:2px;">'+
+                  '<input class="form-input" placeholder="输入文本标签" style="width:100%;font-size:11px;padding:6px 10px;">'+
+                '</div>'+
+                '<div style="display:flex;align-items:center;gap:6px;">'+
+                  '<input class="form-input" value="https://oss.aliyuncs.com/qwen-lecture/covers/style2_grade_tag_logo.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">'+
+                  '<button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'}.bind(this),1500);">复制</button>'+
+                '</div>'+
+              '</div>'+
+              '<div style="flex:1;display:flex;flex-direction:column;gap:8px;">'+
+                '<div style="font-size:12px;font-weight:600;color:#1E293B;text-align:center;">样式三（样式一的低饱和度版本）</div>'+
+                '<div style="border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:12px;">'+
+                  '<img src="后处理示例/03.png" style="width:auto;max-width:60%;height:auto;object-fit:contain;display:block;" alt="样式三">'+
+                '</div>'+
+                '<div style="margin-top:2px;">'+
+                  '<input class="form-input" style="width:100%;font-size:11px;padding:6px 10px;visibility:hidden;">'+
+                '</div>'+
+                '<div style="display:flex;align-items:center;gap:6px;">'+
+                  '<input class="form-input" value="https://oss.aliyuncs.com/qwen-lecture/covers/style3_desaturated.png" readonly style="flex:1;font-size:11px;padding:4px 8px;">'+
+                  '<button class="ed-publish-btn" style="padding:4px 12px;font-size:11px;flex-shrink:0;" onclick="var inp=this.parentElement.querySelector(\'input\');inp.select();navigator.clipboard.writeText(inp.value);this.textContent=\'已复制\';setTimeout(function(){this.textContent=\'复制\'}.bind(this),1500);">复制</button>'+
+                '</div>'+
+              '</div>'+
+            '</div>'+
+            '<div style="text-align:right;">'+
+              '<button class="ed-publish-btn" onclick="closeEditorDrawer()">确认发布</button>'+
             '</div>'+
           '</div>';
         } else if (contentId === 'batch-edit') {

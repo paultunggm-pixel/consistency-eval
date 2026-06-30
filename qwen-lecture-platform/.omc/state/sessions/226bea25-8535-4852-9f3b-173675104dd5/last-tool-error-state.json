@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd ~/Documents/Claude/consistency-eval-gh && cp ~/Documents/Claude/千问小讲堂-platform/index.html qwen-lecture-platform/index.html && git add qwen-lecture-platform/ && git commit -m \\\"彻底清除发布到前端...",
+  "error": "Exit code 128\n[main 2872056] 彻底清除发布到前端消费冻结列残留样式\n 1 file changed, 4 insertions(+)\nfatal: unable to access 'https://github.com/paultunggm-pixel/consistency-eval.git/': Failed to connect to github.com port 443 after 75001 ms: Couldn't connect to server",
+  "timestamp": "2026-06-21T09:52:45.911Z",
+  "retry_count": 1
+}

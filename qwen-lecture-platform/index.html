@@ -724,6 +724,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                   <th style="width:7%;">connect_id</th>
                   <th style="width:9%;" id="coverTitleTH">课文标题</th>
                   <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;display:none;" class="hidden-col"><span class="th-filter" onclick="toggleFilter(event)">标签<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;"><span class="th-filter" onclick="toggleFilter(event)">附件<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学段<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学期<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
@@ -1214,9 +1215,9 @@ function selectNav(childBtn, pipeline, name, silent) {
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
-            var coverTD = tds[14];
-            var opTD = tds[15];
-            var postCoverTD = tds[16];
+            var coverTD = tds[15];
+            var opTD = tds[16];
+            var postCoverTD = tds[17];
             if (coverTD) {
               coverTD.style.right = '140px';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
@@ -1238,13 +1239,16 @@ function selectNav(childBtn, pipeline, name, silent) {
       var allTHs3 = document.querySelectorAll('#coverTableWrap th');
       if (childBtn.dataset.view === 'manual-publish-data') {
         // publish-data: show 后处理封面图 TH
-        if (allTHs3.length >= 17) { allTHs3[16].style.display = ''; allTHs3[16].classList.remove('hidden-col'); }
+        if (allTHs3.length >= 18) {
+          allTHs3[17].style.display = ''; allTHs3[17].classList.remove('hidden-col');
+          allTHs3[5].style.display = ''; allTHs3[5].classList.remove('hidden-col');
+        }
       } else {
         // cover page: hide 后处理封面图 TH, adjust offsets for 2-column layout
-        if (allTHs3.length >= 17) {
-          allTHs3[16].style.display = 'none'; allTHs3[16].classList.add('hidden-col');
-          allTHs3[14].style.right = '80px';
-          allTHs3[15].style.right = '0px';
+        if (allTHs3.length >= 18) {
+          allTHs3[17].style.display = 'none'; allTHs3[17].classList.add('hidden-col');
+          allTHs3[15].style.right = '80px';
+          allTHs3[16].style.right = '0px';
         }
       }
       if (childBtn.dataset.view === 'manual-publish-data') {
@@ -1276,9 +1280,9 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             var tds = row.querySelectorAll('td');
             var visTDs = [];
             tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
-            var coverTD = tds[14];
-            var opTD = tds[15];
-            var postCoverTD = tds[16];
+            var coverTD = tds[15];
+            var opTD = tds[16];
+            var postCoverTD = tds[17];
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.className = 'cell-center pub-status-td';
@@ -1294,6 +1298,12 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
               postCoverTD.classList.remove('hidden-col');
               postCoverTD.style.cssText = 'position:sticky;right:0;background:#FFF;z-index:2;box-shadow:-4px 0 10px rgba(0,0,0,0.05);text-align:center;';
               postCoverTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;">'+(pubStatus==='已发布'?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>':'<span style="color:#9CA3AF;font-size:12px;">—</span>')+'</div>';
+            }
+            var tagTD = tds[5];
+            if (tagTD && tagTD.classList.contains('hidden-col')) {
+              tagTD.classList.remove('hidden-col');
+              tagTD.style.textAlign = 'center';
+              tagTD.innerHTML = '<div class="cell-wrap">'+(['语文','数学','英语','物理','化学','历史','地理','生物'][rowIdx % 8])+'</div>';
             }
           });
         }, 200);
@@ -1925,8 +1935,8 @@ function renderAutoCoverTable() {
   var ths = document.querySelectorAll('#coverTableWrap th');
   var isPubData = (document.body.getAttribute('data-nav') || '').indexOf('publish-data') > -1;
   var labels = isPubData
-    ? ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','发布状态','操作','后处理封面图','-','-','-']
-    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','原始封面图','操作','-','-','-','-'];
+    ? ['','GUID','connect_id','更新时间','-','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','发布状态','操作','后处理封面图','-','-']
+    : ['','GUID','connect_id','更新时间','-','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','原始封面图','操作','-','-','-','-'];
   for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
     if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
     else if (!labels[ti]) continue;
@@ -1957,6 +1967,7 @@ function renderAutoCoverTable() {
         '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
         '<td><div class="cell-wrap"><div class="co-card" style="width:auto;min-width:100px;" title="'+oid+'" onclick="openEditorDrawer(\''+d[7].replace(/'/g,"\\'")+'\',\''+oid+'\',\'已上线\')"><span class="co-card-audit online" style="font-size:11px;">'+oid+'</span></div></div></td>'+
         '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">'+getUpdateTime('2026-06-17 09:00:00')+'</span></div></td>'+
+        '<td class="hidden-col cell-center"></td>'+
         '<td><div class="cell-wrap">'+d[0]+'</div></td>'+
         '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
         '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
@@ -1997,6 +2008,7 @@ function renderCoverTable() {
         '<td><div class="co-card" style="width:auto;min-width:100px;" title="'+o.id+'" onclick="openEditorDrawer(\''+row.title.replace(/'/g,"\\'")+'\',\''+o.id+'\',\'已上线\')"><span class="co-card-audit online" style="font-size:11px;">'+o.id+'</span></div></td>'+
         '<td><span class="title-cell">'+row.title+'</span></td>'+
         '<td class="cell-center"><span class="cell-date">'+getUpdateTime(row.date)+'</span></td>'+
+        '<td class="hidden-col cell-center"></td>'+
         '<td><span class="cell-dim">'+row.attachment+'</span></td>'+
         '<td class="cell-center"><span class="cell-grade">'+row.grade+'</span></td>'+
         '<td class="cell-center"><span class="cell-meta">'+row.term+'</span></td>'+

@@ -692,10 +692,10 @@ textarea.form-input { resize: vertical; min-height: 80px; }
         </div>
 
         <!-- Cover Update Time Hint -->
-        <svg class="connector-svg" id="coverTimeSvg" style="display:none;"><line id="ctl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
-        <div class="annotation-note" id="coverTimeNote" style="display:none;left:380px;top:175px;width:200px;max-height:80px;" onmousedown="startDragNote(event)">
+        <svg class="connector-svg" id="coverTimeSvg" style="display:none;"><line id="ctl1" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/><line id="ctl2" stroke="#D97706" stroke-width="1.5" stroke-dasharray="5,3"/></svg>
+        <div class="annotation-note" id="coverTimeNote" style="display:none;left:380px;top:175px;width:220px;max-height:100px;" onmousedown="startDragNote(event)">
           <div class="annotation-note-body" style="text-align:center;font-size:12px;font-weight:600;color:#92400E;padding-top:0;">
-            新增"更新时间"字段<br>且可筛选
+            新增"更新时间"字段且可筛选；<br>新增"标签"字段，用于按需<br>生成后处理封面图
           </div>
         </div>
 
@@ -1147,9 +1147,10 @@ function selectNav(childBtn, pipeline, name, silent) {
       document.getElementById('coverTimeNote').style.display = 'none';
       document.getElementById('coverTimeSvg').style.display = 'none';
     } else {
-      document.getElementById('coverTimeNote').style.display = isCover ? '' : 'none';
-      document.getElementById('coverTimeSvg').style.display = isCover ? '' : 'none';
-      if (isCover) { document.getElementById('coverTimeNote').style.visibility = ''; document.getElementById('coverTimeSvg').style.visibility = ''; }
+      var isManualPub = childBtn.dataset.view === 'manual-publish-data';
+      document.getElementById('coverTimeNote').style.display = isManualPub ? '' : 'none';
+      document.getElementById('coverTimeSvg').style.display = isManualPub ? '' : 'none';
+      if (isManualPub) { document.getElementById('coverTimeNote').style.visibility = ''; document.getElementById('coverTimeSvg').style.visibility = ''; }
     }
     document.getElementById('coverBatchNote').style.display = isCover ? '' : 'none';
     document.getElementById('coverBatchSvg').style.display = isCover ? '' : 'none';
@@ -1303,7 +1304,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             if (tagTD && tagTD.classList.contains('hidden-col')) {
               tagTD.classList.remove('hidden-col');
               tagTD.style.textAlign = 'center';
-              tagTD.innerHTML = '<div class="cell-wrap">'+(['语文','数学','英语','物理','化学','历史','地理','生物'][rowIdx % 8])+'</div>';
+              tagTD.innerHTML = '<div class="cell-wrap">XXXX</div>';
             }
           });
         }, 200);
@@ -1557,6 +1558,15 @@ function drawConnectors() {
         document.getElementById('ctl1').setAttribute('x1', ctCX); document.getElementById('ctl1').setAttribute('y1', ctCY);
         document.getElementById('ctl1').setAttribute('x2', tr2.left - ctsr.left + tr2.width/2);
         document.getElementById('ctl1').setAttribute('y2', tr2.top - ctsr.top + tr2.height/2);
+      }
+      // ctl2: note → 标签 TH
+      var tagTh2 = null;
+      allThFilters2.forEach(function(f) { if (!tagTh2 && f.textContent.includes('标签')) tagTh2 = f; });
+      if (tagTh2) {
+        var tr3 = tagTh2.getBoundingClientRect();
+        document.getElementById('ctl2').setAttribute('x1', ctCX); document.getElementById('ctl2').setAttribute('y1', ctCY);
+        document.getElementById('ctl2').setAttribute('x2', tr3.left - ctsr.left + tr3.width/2);
+        document.getElementById('ctl2').setAttribute('y2', tr3.top - ctsr.top + tr3.height/2);
       }
     }
   }

@@ -1224,6 +1224,7 @@ function selectNav(childBtn, pipeline, name, silent) {
             var postCoverTD = tds[16];
             if (coverTD) {
               coverTD.className = 'cell-center pub-status-td';
+              coverTD.style.right = '140px';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
             }
             if (opTD) {

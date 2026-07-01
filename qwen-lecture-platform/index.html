@@ -641,6 +641,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                   <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;">意图分类</th>
                   <th style="width:8%;">科普标题</th>
+                  <th style="width:10%;">用于生成封面图的标题</th>
                   <th style="width:10%;">query采样展示</th>
                   <th style="width:4%;text-align:center;">query数量</th>
                   <th style="width:4%;text-align:center;">query占比</th>
@@ -726,6 +727,7 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                   <th style="width:7%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">更新时间<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;text-align:center;display:none;" class="hidden-col"><span class="th-filter" onclick="toggleFilter(event)">标签<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;"><span class="th-filter" onclick="toggleFilter(event)">附件<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:8%;text-align:center;display:none;" class="hidden-col">用于生成封面图的标题</th>
                   <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学段<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:4%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">学期<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">章节<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
@@ -1216,9 +1218,9 @@ function selectNav(childBtn, pipeline, name, silent) {
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
             var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
-            var coverTD = tds[15];
-            var opTD = tds[16];
-            var postCoverTD = tds[17];
+            var coverTD = tds[16];
+            var opTD = tds[17];
+            var postCoverTD = tds[18];
             if (coverTD) {
               coverTD.style.right = '140px';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
@@ -1240,16 +1242,16 @@ function selectNav(childBtn, pipeline, name, silent) {
       var allTHs3 = document.querySelectorAll('#coverTableWrap th');
       if (childBtn.dataset.view === 'manual-publish-data') {
         // publish-data: show 后处理封面图 TH
-        if (allTHs3.length >= 18) {
-          allTHs3[17].style.display = ''; allTHs3[17].classList.remove('hidden-col');
+        if (allTHs3.length >= 19) {
+          allTHs3[18].style.display = ''; allTHs3[18].classList.remove('hidden-col');
           allTHs3[5].style.display = ''; allTHs3[5].classList.remove('hidden-col');
         }
       } else {
         // cover page: hide 后处理封面图 TH, adjust offsets for 2-column layout
-        if (allTHs3.length >= 18) {
-          allTHs3[17].style.display = 'none'; allTHs3[17].classList.add('hidden-col');
-          allTHs3[15].style.right = '80px';
-          allTHs3[16].style.right = '0px';
+        if (allTHs3.length >= 19) {
+          allTHs3[18].style.display = 'none'; allTHs3[18].classList.add('hidden-col');
+          allTHs3[16].style.right = '80px';
+          allTHs3[17].style.right = '0px';
         }
       }
       if (childBtn.dataset.view === 'manual-publish-data') {
@@ -1281,9 +1283,9 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             var tds = row.querySelectorAll('td');
             var visTDs = [];
             tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
-            var coverTD = tds[15];
-            var opTD = tds[16];
-            var postCoverTD = tds[17];
+            var coverTD = tds[16];
+            var opTD = tds[17];
+            var postCoverTD = tds[18];
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
               coverTD.className = 'cell-center pub-status-td';
@@ -1849,6 +1851,7 @@ function renderKepuTable() {
       '<td><div class="cell-wrap"><span class="cell-date" style="font-size:11px;">'+Math.random().toString(16).slice(2,10)+Math.random().toString(16).slice(2,10)+'</span></div></td>'+
       '<td class="cell-center"><div class="cell-wrap"><span class="cell-date">2026-06-'+String(10+Math.floor(Math.random()*11)).padStart(2,'0')+' 0'+String(6+Math.floor(Math.random()*3))+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+':'+String(Math.floor(Math.random()*60)).padStart(2,'0')+'</span></div></td>'+
       '<td><div class="cell-wrap">'+d[0]+'</div></td><td><div class="cell-wrap">'+d[7]+'</div></td>'+
+      '<td><div class="cell-wrap">'+(d[7]||'')+'</div></td>'+
       '<td><div class="cell-wrap" style="font-size:11px;line-height:1.5;white-space:normal;max-height:none;overflow:visible;">'+d[9].split('\\n').slice(0,3).map(function(l){return l.replace(/</g,'&lt;').replace(/>/g,'&gt;');}).join('<br>')+'</div></td>'+
       '<td class="cell-center"><div class="cell-wrap">'+d[10]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[11]+'</div></td>'+
             '<td class="cell-center sticky-preview" style="width:400px;min-width:400px;max-width:400px;"><div class="content-cards">'+objsHTML+'</div></td>'+
@@ -1945,8 +1948,8 @@ function renderAutoCoverTable() {
   var ths = document.querySelectorAll('#coverTableWrap th');
   var isPubData = (document.body.getAttribute('data-nav') || '').indexOf('publish-data') > -1;
   var labels = isPubData
-    ? ['','GUID','connect_id','更新时间','意图分类','-','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','发布状态','操作','后处理封面图','-','-']
-    : ['','GUID','connect_id','更新时间','意图分类','-','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','原始封面图','操作','-','-','-','-'];
+    ? ['','GUID','connect_id','更新时间','意图分类','-','科普标题','用于生成封面图的标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','发布状态','操作','后处理封面图','-']
+    : ['','GUID','connect_id','更新时间','意图分类','-','科普标题','用于生成封面图的标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','原始封面图','操作','-','-','-','-'];
   for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
     if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
     else if (!labels[ti]) continue;
@@ -1980,6 +1983,7 @@ function renderAutoCoverTable() {
         '<td><div class="cell-wrap">'+d[0]+'</div></td>'+
         '<td class="hidden-col cell-center"></td>'+
         '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
+        '<td><div class="cell-wrap">'+(d[7]||'')+'</div></td>'+
         '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
         '<td class="cell-center"><div class="cell-wrap">'+d[4]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td>'+
         '<td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td>'+
@@ -2020,6 +2024,7 @@ function renderCoverTable() {
         '<td class="cell-center"><span class="cell-date">'+getUpdateTime(row.date)+'</span></td>'+
         '<td class="hidden-col cell-center"></td>'+
         '<td><span class="cell-dim">'+row.attachment+'</span></td>'+
+        '<td class="hidden-col cell-center"></td>'+
         '<td class="cell-center"><span class="cell-grade">'+row.grade+'</span></td>'+
         '<td class="cell-center"><span class="cell-meta">'+row.term+'</span></td>'+
         '<td class="cell-center"><span class="cell-meta">'+row.chapter+'</span></td>'+

@@ -2222,15 +2222,19 @@ function openEditorDrawer(title, contentId, audit) {
         if (contentId === 'batch-gen') {
           ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
             '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:14px;font-weight:700;color:#191C1E;">对选中的内容按需选定相应的原始封面生图SKILL</div><button class="ed-publish-btn" style="padding:6px 16px;font-size:12px;">生成原始封面图 <span style="font-size:14px;">🔄</span></button></div>'+
-            '<div style="margin-bottom:20px;">'+
-              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+            '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;">'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;white-space:nowrap;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
                 '<input type="radio" name="coverSkill" value="chinese" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">语文底图SKILL'+
               '</label>'+
-              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;white-space:nowrap;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
                 '<input type="radio" name="coverSkill" value="math" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">数学底图SKILL'+
               '</label>'+
-              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;margin-bottom:8px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;white-space:nowrap;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
                 '<input type="radio" name="coverSkill" value="general" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">通用底图SKILL'+
+              '</label>'+
+              '<label style="display:flex;align-items:center;gap:8px;padding:10px 14px;font-size:13px;color:#1E293B;cursor:pointer;border:1px solid #E5E7EB;border-radius:10px;background:#FFF;transition:background 0.15s;white-space:nowrap;" onmouseover="this.style.background=\'#F3F4F6\'" onmouseout="this.style.background=\'#FFF\'">'+
+                '<input type="radio" name="coverSkill" value="merged" style="accent-color:#0011FF;width:16px;height:16px;cursor:pointer;">合并版本SKILL'+
+              '</label>'+
               '</label>'+
             '</div>'+
             '<div style="clear:both;padding-top:16px;">'+

@@ -733,7 +733,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                   <th style="width:5%;text-align:center;">课文原文</th>
                   <th style="width:5%;text-align:center;">教案</th>
                   <th style="width:8%;text-align:center;">创建时间</th>
-                  <th style="width:6%;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);"><span class="th-filter" onclick="toggleFilter(event)">原始封面图<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:6%;text-align:center;position:sticky;right:80px;background:#E1E2E4;z-index:3;box-shadow:-2px 0 6px rgba(0,0,0,0.04);"><span class="th-filter" onclick="toggleFilter(event)">原始封面图<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:5%;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);">操作</th>
                   </tr></thead>
                 <tbody id="coverTableBody"></tbody>
               </table>
@@ -1929,7 +1930,8 @@ function renderAutoCoverTable() {
         '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
         '<td class="cell-center"><div class="cell-wrap">'+d[4]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td>'+
         '<td class="hidden-col"></td><td class="hidden-col"></td>'+
-        '<td class="cell-center cover-sticky-td" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%3!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
+        '<td class="cell-center cover-sticky-td" style="position:sticky;right:80px;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j%2!==0)?'<span style="color:#9CA3AF;font-size:12px;">—</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>')+'</td>'+
+        '<td class="cell-center" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%2!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
       totalRows++;
     }
   }
@@ -1971,7 +1973,8 @@ function renderCoverTable() {
         '<td class="cell-center"><span class="truncate-cell">'+row.textRaw+'</span></td>'+
         '<td class="cell-center"><span class="truncate-cell">'+row.plan+'</span></td>'+
         '<td class="cell-center"><span class="cell-date">'+row.date+'</span></td>'+
-        '<td class="cell-center cover-sticky-td" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%3!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
+        '<td class="cell-center cover-sticky-td" style="position:sticky;right:80px;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j%2!==0)?'<span style="color:#9CA3AF;font-size:12px;">—</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>')+'</td>'+
+        '<td class="cell-center" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%2!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
       totalRows++;
     }
   }

@@ -1242,6 +1242,11 @@ function selectNav(childBtn, pipeline, name, silent) {
       }
     } else if (childBtn.dataset.view === 'manual-cover' || childBtn.dataset.view === 'manual-publish-data') {
       renderCoverTable();
+      // Hide 后处理封面图 column for cover pages (not publish-data)
+      if (childBtn.dataset.view !== 'manual-publish-data') {
+        var allTHs = document.querySelectorAll('#coverTableWrap th');
+        if (allTHs.length >= 17) { allTHs[16].style.display = 'none'; allTHs[16].classList.add('hidden-col'); }
+      }
       if (childBtn.dataset.view === 'manual-publish-data') {
         setTimeout(function() {
 var fr2 = document.querySelectorAll('#coverTableBody tr')[0];

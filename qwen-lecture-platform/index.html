@@ -2221,7 +2221,7 @@ function openEditorDrawer(title, contentId, audit) {
             '<div style="font-size:14px;font-weight:700;color:#191C1E;margin-bottom:16px;">对选中的内容发布到以下前端消费场景：</div>'+
             '<div id="scenarioList">'+
               '<div class="scenario-item" style="display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;" data-sid="1">'+
-                '<div style="flex:1;min-width:0;">'+
+                '<div style="flex:3;min-width:0;">'+
                   '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">消费场景 1</div>'+
                   '<label class="ed-publish-opt" style="border-color:#93C5FD;background:#EFF6FF;" onclick="updateRightDefaults(this.closest(\'.scenario-item\'),true)"><input type="radio" name="chat_s1" value="chat" checked onchange="updateRightDefaults(this.closest(\'.scenario-item\'),true)"> Chat挂载</label>'+
                   '<div style="width:100%;height:1px;background:#E5E7EB;margin:8px 0;"></div>'+
@@ -2243,7 +2243,7 @@ function openEditorDrawer(title, contentId, audit) {
                   '</div>'+
                 '</div>'+
                 '<div style="width:1px;background:#E5E7EB;flex-shrink:0;"></div>'+
-                '<div style="flex:1.2;min-width:0;">'+
+                '<div style="flex:2;min-width:0;">'+
                   '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
                   '<div style="margin-bottom:12px;">'+
                     '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
@@ -2264,12 +2264,12 @@ function openEditorDrawer(title, contentId, audit) {
                 '</div>'+
               '</div>'+
               '<div class="scenario-item" style="display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;" data-sid="2">'+
-                '<div style="flex:1;min-width:0;">'+
+                '<div style="flex:3;min-width:0;">'+
                   '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">'+
                     '<span style="font-size:12px;font-weight:700;color:#4F5F7B;">消费场景 2</span>'+
                     '<button style="font-size:11px;color:#EF4444;background:none;border:none;cursor:pointer;padding:2px 6px;" onclick="this.closest(\'.scenario-item\').remove()">删除</button>'+
                   '</div>'+
-                  '<label class="ed-publish-opt" style="border-color:#93C5FD;background:#EFF6FF;" onclick="updateRightDefaults(this.closest(\'.scenario-item\'),true)"><input type="radio" name="chat_s2" value="chat" onchange="updateRightDefaults(this.closest(\'.scenario-item\'),true)"> Chat挂载</label>'+
+                  '<label class="ed-publish-opt" onclick="updateRightDefaults(this.closest(\'.scenario-item\'),true)"><input type="radio" name="chat_s2" value="chat" onchange="updateRightDefaults(this.closest(\'.scenario-item\'),true)"> Chat挂载</label>'+
                   '<div style="width:100%;height:1px;background:#E5E7EB;margin:8px 0;"></div>'+
                   '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
                     '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 教材精讲同步学-语文</label>'+
@@ -2289,7 +2289,7 @@ function openEditorDrawer(title, contentId, audit) {
                   '</div>'+
                 '</div>'+
                 '<div style="width:1px;background:#E5E7EB;flex-shrink:0;"></div>'+
-                '<div style="flex:1.2;min-width:0;">'+
+                '<div style="flex:2;min-width:0;">'+
                   '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
                   '<div style="margin-bottom:12px;">'+
                     '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
@@ -2364,7 +2364,7 @@ function addScenario() {
   div.className = 'scenario-item';
   div.setAttribute('data-sid', scenarioCount);
   div.style.cssText = 'display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;';
-  div.innerHTML = '<div style="flex:1;min-width:0;">'+
+  div.innerHTML = '<div style="flex:3;min-width:0;">'+
     '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">'+
       '<span style="font-size:12px;font-weight:700;color:#4F5F7B;">消费场景 '+scenarioCount+'</span>'+
       '<button style="font-size:11px;color:#EF4444;background:none;border:none;cursor:pointer;padding:2px 6px;" onclick="this.closest(\'.scenario-item\').remove()">删除</button>'+
@@ -2389,7 +2389,7 @@ function addScenario() {
     '</div>'+
   '</div>'+
   '<div style="width:1px;background:#E5E7EB;flex-shrink:0;"></div>'+
-  '<div style="flex:1.2;min-width:0;">'+
+  '<div style="flex:2;min-width:0;">'+
     '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
     '<div style="margin-bottom:12px;">'+
       '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+

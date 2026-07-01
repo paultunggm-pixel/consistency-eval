@@ -732,13 +732,8 @@ textarea.form-input { resize: vertical; min-height: 80px; }
                   <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">内容类型<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   <th style="width:5%;text-align:center;">课文原文</th>
                   <th style="width:5%;text-align:center;">教案</th>
-                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">审核状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">上线状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                  <th style="width:5%;text-align:center;"><span class="th-filter" onclick="toggleFilter(event)">生成状态<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                  <th style="width:4%;text-align:center;">内容数量</th>
                   <th style="width:8%;text-align:center;">创建时间</th>
-                  <th style="width:6%;text-align:center;position:sticky;right:110px;background:#E1E2E4;z-index:3;box-shadow:-2px 0 6px rgba(0,0,0,0.04);"><span class="th-filter" onclick="toggleFilter(event)">原始封面图<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
-                  <th style="width:5%;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);"><span class="th-filter" onclick="toggleFilter(event)">标签<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
+                  <th style="width:6%;text-align:center;position:sticky;right:0;background:#E1E2E4;z-index:3;box-shadow:-4px 0 10px rgba(0,0,0,0.06);"><span class="th-filter" onclick="toggleFilter(event)">原始封面图<svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M7 10l5 5 5-5z"/></svg></span></th>
                   </tr></thead>
                 <tbody id="coverTableBody"></tbody>
               </table>
@@ -1282,7 +1277,7 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
         document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\')">批量发布</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
         document.getElementById('coverConnectNote').querySelector('.annotation-note-body').innerHTML = '本页面的数据颗粒度细拆到connect_id，仅对上一环节"生成原始封面图"中已完成原始封面图生成输出的connect_id抓入本页面';
       } else {
-        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">批量生成原始封面图</button><button class="batch-btn" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">批量编辑标签</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
+        document.querySelector('.batch-actions').innerHTML = '<button class="batch-btn batch-btn-primary" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">批量生成原始封面图</button><button class="batch-btn batch-btn-cancel" onclick="uncheckAll()">取消选择</button>';
         document.getElementById('coverConnectNote').querySelector('.annotation-note-body').innerHTML = '本页面的数据颗粒度细拆到connect_id，仅对上一环节"内容生产编辑"中内容状态为"已上线"的connect_id抓入本页面（待审核、已下线的不出现），按connect_id进行批量选择（对于一个guid生成了多个connect_id的情况，guid等字段会出现几行相同的情况）';
       }
     } else if (isKepu && !isRecover) {
@@ -1899,7 +1894,7 @@ function renderAutoCoverTable() {
   var isPubData = (document.body.getAttribute('data-nav') || '').indexOf('publish-data') > -1;
   var labels = isPubData
     ? ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','发布状态','操作','-','-','-']
-    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','标签','-','-','-'];
+    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','-','-','-','-'];
   for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
     if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
     else if (!labels[ti]) continue;
@@ -1933,9 +1928,8 @@ function renderAutoCoverTable() {
         '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
         '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
         '<td class="cell-center"><div class="cell-wrap">'+d[4]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td>'+
-        '<td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td>'+
-        '<td class="cell-center cover-sticky-td" style="position:sticky;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j%3!==0)?'<span style="color:#9CA3AF;font-size:12px;">待生成</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td>'+
-        '<td class="cell-center tag-sticky-td">'+((j%2===0)?'<span style="color:#9CA3AF;font-size:12px;">待生成</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">编辑</a>')+'</td></tr>';
+        '<td class="hidden-col"></td><td class="hidden-col"></td>'+
+        '<td class="cell-center cover-sticky-td" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%3!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
       totalRows++;
     }
   }
@@ -1947,15 +1941,8 @@ function renderAutoCoverTable() {
     document.querySelectorAll('#coverTableWrap th').forEach(function(th) { th.style.position=''; th.style.right=''; th.style.zIndex=''; th.style.boxShadow=''; th.classList.remove('cover-sticky-th'); th.classList.remove('tag-sticky-th'); });
     document.querySelectorAll('#coverTableBody td').forEach(function(d) { d.style.position=''; d.style.right=''; d.style.zIndex=''; d.style.boxShadow=''; d.style.marginRight=''; d.style.borderBottomColor=''; d.classList.remove('cover-sticky-td'); d.classList.remove('tag-sticky-td'); });
   }
-  // Update right offset for frozen columns
+  // Update right offset for frozen columns (no tag column, cover col at right:0)
   setTimeout(function() {
-    var tagTH = document.querySelector('#coverTableWrap .tag-sticky-th');
-    var coverTH = document.querySelector('#coverTableWrap .cover-sticky-th');
-    if (!tagTH || !coverTH) return;
-    var tagW = tagTH.offsetWidth;
-    coverTH.style.right = tagW + 'px';
-    var coverTDs = document.querySelectorAll('.cover-sticky-td');
-    coverTDs.forEach(function(td) { td.style.right = tagW + 'px'; });
   }, 200);
 }
 
@@ -1983,13 +1970,8 @@ function renderCoverTable() {
         '<td class="cell-center"><span class="cell-meta">'+row.contentType+'</span></td>'+
         '<td class="cell-center"><span class="truncate-cell">'+row.textRaw+'</span></td>'+
         '<td class="cell-center"><span class="truncate-cell">'+row.plan+'</span></td>'+
-        '<td class="cell-center"><span class="status-tag tag-unreviewed">'+row.audit+'</span></td>'+
-        '<td class="cell-center">'+(row.online==='已上线'?'<span class="status-tag tag-online">已上线</span>':'<span class="status-tag tag-offline">'+row.online+'</span>')+'</td>'+
-        '<td class="cell-center"><span class="status-tag '+(row.genStatus==='生成失败'?'tag-gen-fail':'tag-gen-done')+'">'+row.genStatus+'</span></td>'+
-        '<td class="cell-center"><span class="cell-count">1</span></td>'+
         '<td class="cell-center"><span class="cell-date">'+row.date+'</span></td>'+
-        '<td class="cell-center cover-sticky-td" style="position:sticky;background:#FFF;z-index:0;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j % 3 !== 0) ? '<span style="color:#9CA3AF;font-size:12px;">待生成</span>' : '<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td>'+
-        '<td class="cell-center" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j % 2 === 0) ? '<span style="color:#9CA3AF;font-size:12px;">待生成</span>' : '<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量编辑\',\'batch-edit\',\'待审核\')">编辑</a>')+'</td></tr>';
+        '<td class="cell-center cover-sticky-td" style="position:sticky;right:0;background:#FFF;z-index:0;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%3!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
       totalRows++;
     }
   }
@@ -2001,17 +1983,6 @@ function renderCoverTable() {
     document.querySelectorAll('#coverTableWrap th').forEach(function(th) { th.style.position=''; th.style.right=''; th.style.zIndex=''; th.style.boxShadow=''; th.classList.remove('cover-sticky-th'); th.classList.remove('tag-sticky-th'); });
     document.querySelectorAll('#coverTableBody td').forEach(function(d) { d.style.position=''; d.style.right=''; d.style.zIndex=''; d.style.boxShadow=''; d.style.marginRight=''; d.style.borderBottomColor=''; d.classList.remove('cover-sticky-td'); d.classList.remove('tag-sticky-td'); });
   }
-  // Dynamically set right offset for 原始封面图 based on 标签 column width
-  setTimeout(function() {
-    var tagTH = document.querySelector('#coverTableWrap th:nth-last-child(1)');
-    var coverTH = document.querySelector('#coverTableWrap th:nth-last-child(2)');
-    if (tagTH && coverTH) {
-      var tagW = tagTH.offsetWidth;
-      coverTH.style.right = tagW + 'px';
-      var coverTDs = document.querySelectorAll('#coverTableBody td.cover-sticky-td');
-      coverTDs.forEach(function(td) { td.style.right = tagW + 'px'; });
-    }
-  }, 200);
 }
 
 // Abandoned table rendering

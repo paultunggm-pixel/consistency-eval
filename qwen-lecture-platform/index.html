@@ -2220,52 +2220,60 @@ function openEditorDrawer(title, contentId, audit) {
           ps.innerHTML = '<div style="background:#FFF;border-radius:12px;padding:20px;border:1px solid #E5E7EB;">'+
             '<div style="font-size:14px;font-weight:700;color:#191C1E;margin-bottom:16px;">对选中的内容发布到以下前端消费场景：</div>'+
             '<div id="scenarioList">'+
-              '<div class="scenario-item" style="display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;">'+
+              '<div class="scenario-item" style="display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;" data-sid="1">'+
                 '<div style="flex:1;min-width:0;">'+
                   '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">消费场景 1</div>'+
+                  '<label class="ed-publish-opt" style="border-color:#93C5FD;background:#EFF6FF;" onclick="updateRightDefaults(this.closest(\'.scenario-item\'),true)"><input type="radio" name="chat_s1" value="chat" checked onchange="updateRightDefaults(this.closest(\'.scenario-item\'),true)"> Chat挂载</label>'+
+                  '<div style="width:100%;height:1px;background:#E5E7EB;margin:8px 0;"></div>'+
                   '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
-                    '<label class="ed-publish-opt"><input type="checkbox" checked> Chat挂载</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-语文</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-数学</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 神奇的世界</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 逛逛高校</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 秒题高招</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 名著导读</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 趣学成语</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 写作通关</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> 精品课</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-7天玩转AI创作</label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|1-2年级</span></label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
-                    '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 教材精讲同步学-语文</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))" data-trigger="math"> 教材精讲同步学-数学</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 神奇的世界</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 逛逛高校</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 秒题高招</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 必背古诗</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 名著导读</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 趣学成语</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 写作通关</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 精品课</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-7天玩转AI创作</label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|1-2年级</span></label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
+                    '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
                   '</div>'+
                 '</div>'+
                 '<div style="width:1px;background:#E5E7EB;flex-shrink:0;"></div>'+
-                '<div style="flex:1;min-width:0;">'+
-                  '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
-                  '<div style="margin-bottom:12px;">'+
-                    '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
-                    '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
-                      '<label class="ed-publish-opt"><input type="checkbox" checked> 标题</label>'+
-                      '<label class="ed-publish-opt"><input type="checkbox" checked> 年级</label>'+
-                      '<label class="ed-publish-opt"><input type="checkbox"> 标签</label>'+
-                      '<label class="ed-publish-opt"><input type="checkbox" checked> 小讲堂logo</label>'+
+                '<div style="flex:1;min-width:0;display:flex;gap:12px;">'+
+                  '<div style="flex:1;min-width:0;">'+
+                    '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
+                    '<div style="margin-bottom:12px;">'+
+                      '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
+                      '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
+                        '<label class="ed-publish-opt"><input type="checkbox" class="el-title" checked> 标题</label>'+
+                        '<label class="ed-publish-opt"><input type="checkbox" class="el-grade"> 年级</label>'+
+                        '<label class="ed-publish-opt"><input type="checkbox" class="el-tag"> 标签</label>'+
+                        '<label class="ed-publish-opt"><input type="checkbox" class="el-logo" checked> 小讲堂logo</label>'+
+                      '</div>'+
+                    '</div>'+
+                    '<div>'+
+                      '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">封面字体（单选）</div>'+
+                      '<div style="display:flex;gap:6px;">'+
+                        '<label class="ed-publish-opt"><input type="radio" name="font_s1" value="heiti" checked> 黑体</label>'+
+                        '<label class="ed-publish-opt"><input type="radio" name="font_s1" value="songti"> 宋体</label>'+
+                      '</div>'+
                     '</div>'+
                   '</div>'+
-                  '<div>'+
-                    '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">封面字体（单选）</div>'+
-                    '<div style="display:flex;gap:6px;">'+
-                      '<label class="ed-publish-opt"><input type="radio" name="font_s1" value="heiti" checked> 黑体</label>'+
-                      '<label class="ed-publish-opt"><input type="radio" name="font_s1" value="songti"> 宋体</label>'+
+                  '<div style="width:100px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">'+
+                    '<div style="font-size:10px;color:#94A3B8;">预览图</div>'+
+                    '<div style="border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;width:80px;height:106px;display:flex;align-items:center;justify-content:center;background:#F8FAFC;">'+
+                      '<span style="font-size:10px;color:#CBD5E1;">封面示意</span>'+
                     '</div>'+
                   '</div>'+
                 '</div>'+
               '</div>'+
             '</div>'+
             '<button class="ed-publish-opt" style="width:100%;justify-content:center;padding:10px;font-size:13px;font-weight:600;color:#0011FF;border:1px dashed #93C5FD;border-radius:10px;background:#EFF6FF;cursor:pointer;margin-bottom:16px;" onclick="addScenario()">+ 新增消费场景</button>'+
-            '<div style="display:flex;align-items:center;justify-content:flex-end;gap:12px;">'+
-              '<button class="ed-publish-btn" style="background:#FFF;color:#0011FF;border:1px solid #0011FF;">生成后处理封面图</button>'+
+            '<div style="text-align:right;">'+
               '<button class="ed-publish-btn" onclick="closeEditorDrawer()">确认发布</button>'+
             '</div>'+
           '</div>';
@@ -2316,51 +2324,110 @@ function addScenario() {
   if (!container) return;
   var div = document.createElement('div');
   div.className = 'scenario-item';
+  div.setAttribute('data-sid', scenarioCount);
   div.style.cssText = 'display:flex;gap:16px;border:1px solid #E5E7EB;border-radius:12px;padding:16px;margin-bottom:12px;background:#FAFBFC;';
   div.innerHTML = '<div style="flex:1;min-width:0;">'+
     '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">'+
       '<span style="font-size:12px;font-weight:700;color:#4F5F7B;">消费场景 '+scenarioCount+'</span>'+
       '<button style="font-size:11px;color:#EF4444;background:none;border:none;cursor:pointer;padding:2px 6px;" onclick="this.closest(\'.scenario-item\').remove()">删除</button>'+
     '</div>'+
+    '<label class="ed-publish-opt" style="border-color:#93C5FD;background:#EFF6FF;" onclick="updateRightDefaults(this.closest(\'.scenario-item\'),true)"><input type="radio" name="chat_s'+scenarioCount+'" value="chat" onchange="updateRightDefaults(this.closest(\'.scenario-item\'),true)"> Chat挂载</label>'+
+    '<div style="width:100%;height:1px;background:#E5E7EB;margin:8px 0;"></div>'+
     '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
-      '<label class="ed-publish-opt"><input type="checkbox" checked> Chat挂载</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-语文</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 教材精讲同步学-数学</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 神奇的世界</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 逛逛高校</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 秒题高招</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 必背古诗</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 名著导读</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 趣学成语</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 写作通关</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> 精品课</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-7天玩转AI创作</label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|1-2年级</span></label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
-      '<label class="ed-publish-opt"><input type="checkbox"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 教材精讲同步学-语文</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))" data-trigger="math"> 教材精讲同步学-数学</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 神奇的世界</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 逛逛高校</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 秒题高招</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 必背古诗</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 名著导读</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 趣学成语</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 写作通关</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> 精品课</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-7天玩转AI创作</label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|1-2年级</span></label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|3-4年级</span></label>'+
+      '<label class="ed-publish-opt"><input type="checkbox" onchange="updateRightDefaults(this.closest(\'.scenario-item\'))"> AI训练营-用AI轻松学<span style="color:#94A3B8;">|5-6年级</span></label>'+
     '</div>'+
   '</div>'+
   '<div style="width:1px;background:#E5E7EB;flex-shrink:0;"></div>'+
-  '<div style="flex:1;min-width:0;">'+
-    '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
-    '<div style="margin-bottom:12px;">'+
-      '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
-      '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
-        '<label class="ed-publish-opt"><input type="checkbox" checked> 标题</label>'+
-        '<label class="ed-publish-opt"><input type="checkbox" checked> 年级</label>'+
-        '<label class="ed-publish-opt"><input type="checkbox"> 标签</label>'+
-        '<label class="ed-publish-opt"><input type="checkbox" checked> 小讲堂logo</label>'+
+  '<div style="flex:1;min-width:0;display:flex;gap:12px;">'+
+    '<div style="flex:1;min-width:0;">'+
+      '<div style="font-size:12px;font-weight:700;color:#4F5F7B;margin-bottom:10px;">后处理封面图生成规范</div>'+
+      '<div style="margin-bottom:12px;">'+
+        '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">后处理元素（可多选）</div>'+
+        '<div style="display:flex;flex-wrap:wrap;gap:6px;">'+
+          '<label class="ed-publish-opt"><input type="checkbox" class="el-title" checked> 标题</label>'+
+          '<label class="ed-publish-opt"><input type="checkbox" class="el-grade"> 年级</label>'+
+          '<label class="ed-publish-opt"><input type="checkbox" class="el-tag"> 标签</label>'+
+          '<label class="ed-publish-opt"><input type="checkbox" class="el-logo" checked> 小讲堂logo</label>'+
+        '</div>'+
+      '</div>'+
+      '<div>'+
+        '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">封面字体（单选）</div>'+
+        '<div style="display:flex;gap:6px;">'+
+          '<label class="ed-publish-opt"><input type="radio" name="font_s'+scenarioCount+'" value="heiti" checked> 黑体</label>'+
+          '<label class="ed-publish-opt"><input type="radio" name="font_s'+scenarioCount+'" value="songti"> 宋体</label>'+
+        '</div>'+
       '</div>'+
     '</div>'+
-    '<div>'+
-      '<div style="font-size:11px;font-weight:600;color:#94A3B8;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.04em;">封面字体（单选）</div>'+
-      '<div style="display:flex;gap:6px;">'+
-        '<label class="ed-publish-opt"><input type="radio" name="font_s'+scenarioCount+'" value="heiti" checked> 黑体</label>'+
-        '<label class="ed-publish-opt"><input type="radio" name="font_s'+scenarioCount+'" value="songti"> 宋体</label>'+
+    '<div style="width:100px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;gap:4px;">'+
+      '<div style="font-size:10px;color:#94A3B8;">预览图</div>'+
+      '<div style="border:1px solid #E5E7EB;border-radius:8px;overflow:hidden;width:80px;height:106px;display:flex;align-items:center;justify-content:center;background:#F8FAFC;">'+
+        '<span style="font-size:10px;color:#CBD5E1;">封面示意</span>'+
       '</div>'+
     '</div>'+
   '</div>';
   container.appendChild(div);
+  // Init right defaults for new scenario
+  updateRightDefaults(div);
+}
+function updateRightDefaults(item, fromChat) {
+  if (!item) return;
+  var chatRadio = item.querySelector('input[type="radio"]');
+  var leftPanel = item.firstElementChild;
+  var leftChecks = leftPanel ? leftPanel.querySelectorAll('input[type="checkbox"]') : [];
+  var mathCheck = item.querySelector('input[data-trigger="math"]');
+
+  if (fromChat) {
+    // Chat radio just clicked → clear all left checkboxes
+    leftChecks.forEach(function(c) { c.checked = false; });
+  } else {
+    // A checkbox changed
+    var anyLeftChecked = false;
+    leftChecks.forEach(function(c) { if (c.checked) anyLeftChecked = true; });
+    if (anyLeftChecked && chatRadio) {
+      chatRadio.checked = false;
+    } else if (!anyLeftChecked && chatRadio) {
+      chatRadio.checked = true;
+    }
+  }
+
+  var isChat = chatRadio && chatRadio.checked;
+  var isMath = mathCheck && mathCheck.checked;
+
+  var elTitle = item.querySelector('.el-title');
+  var elGrade = item.querySelector('.el-grade');
+  var elTag = item.querySelector('.el-tag');
+  var elLogo = item.querySelector('.el-logo');
+  if (!elTitle) return;
+
+  if (isChat) {
+    elTitle.checked = true;
+    elGrade.checked = false;
+    elTag.checked = false;
+    elLogo.checked = true;
+  } else if (isMath) {
+    elTitle.checked = true;
+    elGrade.checked = true;
+    elTag.checked = true;
+    elLogo.checked = false;
+  } else {
+    elTitle.checked = true;
+    elGrade.checked = true;
+    elTag.checked = false;
+    elLogo.checked = true;
+  }
 }
 </script>
 

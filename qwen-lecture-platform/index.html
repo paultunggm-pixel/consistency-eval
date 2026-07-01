@@ -1894,8 +1894,8 @@ function renderAutoCoverTable() {
   var ths = document.querySelectorAll('#coverTableWrap th');
   var isPubData = (document.body.getAttribute('data-nav') || '').indexOf('publish-data') > -1;
   var labels = isPubData
-    ? ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','发布状态','操作','-','-','-']
-    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','-','原始封面图','','-','-','-'];
+    ? ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','发布状态','操作','-','-','-','-']
+    : ['','GUID','connect_id','更新时间','意图分类','科普标题','用户query示例','主题query数量','主题query占比','-','-','-','-','-','原始封面图','','-','-','-','-'];
   for (var ti = 0; ti < Math.min(ths.length, labels.length); ti++) {
     if (labels[ti] === '-') { ths[ti].style.display = 'none'; ths[ti].classList.add('hidden-col'); }
     else if (!labels[ti]) continue;
@@ -1929,7 +1929,7 @@ function renderAutoCoverTable() {
         '<td><div class="cell-wrap">'+d[7]+'</div></td>'+
         '<td><div class="cell-wrap" style="font-size:12px;">'+d[6].slice(0,80)+'</div></td>'+
         '<td class="cell-center"><div class="cell-wrap">'+d[4]+'</div></td><td class="cell-center"><div class="cell-wrap">'+d[5]+'</div></td>'+
-        '<td class="hidden-col"></td><td class="hidden-col"></td>'+
+        '<td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td><td class="hidden-col"></td>'+
         '<td class="cell-center cover-sticky-td" style="position:sticky;right:80px;background:#FFF;z-index:2;box-shadow:-2px 0 6px rgba(0,0,0,0.04);">'+((j%2!==0)?'<span style="color:#9CA3AF;font-size:12px;">—</span>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>')+'</td>'+
         '<td class="cell-center" style="position:sticky;right:0;background:#FFF;z-index:2;box-shadow:-4px 0 10px rgba(0,0,0,0.05);">'+((j%2!==0)?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">生成</a>':'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量生成\',\'batch-gen\',\'待审核\')">编辑</a>')+'</td></tr>';
       totalRows++;

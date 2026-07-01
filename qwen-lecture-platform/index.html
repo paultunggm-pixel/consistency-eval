@@ -259,6 +259,11 @@ html, body {
 .cell-count { font-weight: 600; color: var(--cms-on-surface); }
 .cell-date { color: var(--cms-outline); }
 
+/* Publish-data frozen columns */
+.pub-status-td { position: sticky; right: 140px; background: #FFF; z-index: 2; box-shadow: -2px 0 6px rgba(0,0,0,0.04); text-align: center; }
+.pub-action-td { position: sticky; right: 80px; background: #FFF; z-index: 2; box-shadow: -2px 0 6px rgba(0,0,0,0.04); text-align: center; }
+.pub-postcover-td { position: sticky; right: 0; background: #FFF; z-index: 2; box-shadow: -4px 0 10px rgba(0,0,0,0.05); text-align: center; }
+
 /* Truncated cell */
 .truncate-cell { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -1213,21 +1218,22 @@ function selectNav(childBtn, pipeline, name, silent) {
           var rows = document.querySelectorAll('#coverTableBody tr');
           rows.forEach(function(row, rowIdx) {
             var tds = row.querySelectorAll('td');
-            var visTDs = [];
-            tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
-            var coverTD = visTDs[visTDs.length - 2];
-            var opTD = visTDs[visTDs.length - 1];
-            var postCoverTD = tds[tds.length - 1];
+            var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
+            var coverTD = tds[14];
+            var opTD = tds[15];
+            var postCoverTD = tds[16];
             if (coverTD) {
-              var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
+              coverTD.className = 'cell-center pub-status-td';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
             }
             if (opTD) {
+              opTD.className = 'cell-center pub-action-td';
+              opTD.style.right = '80px';
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\');return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
             }
-            if (postCoverTD && postCoverTD.classList.contains('hidden-col')) {
-              postCoverTD.classList.remove('hidden-col');
-              postCoverTD.style.cssText = 'position:sticky;right:0;background:#FFF;z-index:2;box-shadow:-4px 0 10px rgba(0,0,0,0.05);text-align:center;';
+            if (postCoverTD) {
+              postCoverTD.className = 'cell-center pub-postcover-td';
+              postCoverTD.style.right = '0px';
               postCoverTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;">'+(pubStatus==='已发布'?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>':'<span style="color:#9CA3AF;font-size:12px;">—</span>')+'</div>';
             }
           });
@@ -1264,19 +1270,23 @@ var opW2 = allTDs2.length > 1 ? allTDs2[allTDs2.length - 1].offsetWidth : 64;
             var tds = row.querySelectorAll('td');
             var visTDs = [];
             tds.forEach(function(td) { if (td.style.display !== 'none' && td.offsetParent !== null) visTDs.push(td); });
-            var coverTD = visTDs[visTDs.length - 2];
-            var opTD = visTDs[visTDs.length - 1];
-            var postCoverTD = tds[tds.length - 1]; // last TD is the hidden-col cell
+            var coverTD = tds[14];
+            var opTD = tds[15];
+            var postCoverTD = tds[16];
             if (coverTD) {
               var pubStatus = (rowIdx % 2 === 0) ? '已发布' : '未发布';
+              coverTD.className = 'cell-center pub-status-td';
+              coverTD.style.right = '140px';
               coverTD.innerHTML = '<div class="cell-wrap"><span style="color:'+(pubStatus==='已发布'?'#16A34A':'#9CA3AF')+';font-size:12px;font-weight:500;">'+pubStatus+'</span></div>';
-                          }
+            }
             if (opTD) {
+              opTD.className = 'cell-center pub-action-td';
+              opTD.style.right = '80px';
               opTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;"><a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;" onclick="openEditorDrawer(\'批量发布\',\'batch-publish\',\'已上线\');return false;">'+(pubStatus==='已发布'?'编辑':'发布')+'</a></div>';
-                          }
-            if (postCoverTD && postCoverTD.classList.contains('hidden-col')) {
-              postCoverTD.classList.remove('hidden-col');
-              postCoverTD.style.cssText = 'position:sticky;right:0;background:#FFF;z-index:2;box-shadow:-4px 0 10px rgba(0,0,0,0.05);text-align:center;';
+            }
+            if (postCoverTD) {
+              postCoverTD.className = 'cell-center pub-postcover-td';
+              postCoverTD.style.right = '0px';
               postCoverTD.innerHTML = '<div class="cell-wrap" style="background:#FFF;">'+(pubStatus==='已发布'?'<a href="#" style="color:#1D4ED8;font-size:12px;font-weight:500;text-decoration:none;">预览</a>':'<span style="color:#9CA3AF;font-size:12px;">—</span>')+'</div>';
             }
           });

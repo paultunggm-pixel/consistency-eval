@@ -1955,6 +1955,7 @@ function renderAutoCoverTable() {
     else if (!labels[ti]) continue;
     else {
       ths[ti].style.display = '';
+      ths[ti].classList.remove('hidden-col');
       if (labels[ti] === '原始封面图') { ths[ti].classList.add('cover-sticky-th'); ths[ti].style.right = '80px'; }
       if (labels[ti] === '发布状态') { ths[ti].classList.add('cover-sticky-th'); ths[ti].style.right = '140px'; }
       if (labels[ti] === '标签' || labels[ti] === '操作') { ths[ti].classList.add('tag-sticky-th'); ths[ti].style.right = (isPubData ? '80px' : '0px'); }

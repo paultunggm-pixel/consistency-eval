@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cd ~/Documents/Claude/consistency-eval-gh && grep -c \\\"renderUncomparables\\\\|uncomp.total\\\\|\\\\.total\\\\|\\\\|0\\\\|switchUncompTab\\\\|alertHtml\\\\|renderAnomaly\\\" index.html\",\"description\":\"用正确的模...",
-  "error": "Exit code 2\nugrep: error: error at position 49\nles\\|uncomp.total\\|\\.total\\|\\|0\\|switchUncompTab\\|alertHtml\\|renderAnomaly\n    empty (sub)expression___/",
-  "timestamp": "2026-06-15T15:43:01.042Z",
-  "retry_count": 1
-}
